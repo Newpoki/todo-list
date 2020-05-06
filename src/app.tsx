@@ -1,4 +1,5 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
 // import { useApp } from "./hooks";
 
 import * as Styled from "./app.styles";
@@ -64,19 +65,33 @@ const fourthTodoListPreview: ITodoListPreviewProps = {
 };
 
 export const App = () => {
+  const isLoading = true;
   // const { openAppMenu } = useApp();
 
   return (
     <Styled.Wrapper>
       <Styled.Header>
-        <Styled.Title>Bonjour, Jason</Styled.Title>
+        <Styled.Title>{isLoading ? <Skeleton width="70%" /> : <>Bonjour, Jason</>}</Styled.Title>
+
         <Styled.TotalTodoListsNumber>
-          <strong>3 </strong>
-          tâches en cours
+          {isLoading ? (
+            <Skeleton width="40%" />
+          ) : (
+            <>
+              <strong>3 </strong>
+              tâches en cours
+            </>
+          )}
         </Styled.TotalTodoListsNumber>
         <Styled.TotalTodoListsNumber>
-          <strong>1 </strong>
-          tâches terminée
+          {isLoading ? (
+            <Skeleton width="40%" />
+          ) : (
+            <>
+              <strong>1 </strong>
+              tâches terminée
+            </>
+          )}
         </Styled.TotalTodoListsNumber>
       </Styled.Header>
 

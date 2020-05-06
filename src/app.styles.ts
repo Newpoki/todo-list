@@ -43,6 +43,8 @@ export const TodoListPreviewWrapper = styled.div`
   margin-bottom: 12px;
   background-color: ${theme.colors.light000};
   border-radius: 4px;
+  max-height: 120px;
+  overflow: hidden;
 `;
 
 export const Footer = styled.footer`
