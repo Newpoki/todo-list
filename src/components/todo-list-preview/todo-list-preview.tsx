@@ -4,10 +4,16 @@ import * as Styled from "./todo-list-preview.styles";
 
 export type ITodoState = "DONE" | "ON_GOING";
 
-interface ITodo {
+export interface ITodo {
   id: string;
   label: string;
   state: ITodoState;
+}
+
+/** Interface temporaire d'une task lors de la création d'une task  */
+export interface ITodoTemp {
+  id: ITodo["id"];
+  label: ITodo["label"];
 }
 
 const getPreviewDate = (createdAt: number, updatedAt?: number) => {
