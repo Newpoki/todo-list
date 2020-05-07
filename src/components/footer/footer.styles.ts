@@ -2,6 +2,12 @@ import styled, { css } from "styled-components";
 
 import { theme } from "theme";
 
+// Style commun au wrapper et au wrapper de l'icone
+const disabledStyle = css`
+  background-color: lightgrey;
+  opacity: 0.5;
+`;
+
 export const Wrapper = styled.footer<{ isDisabled: boolean }>`
   display: flex;
   position: fixed;
@@ -11,13 +17,10 @@ export const Wrapper = styled.footer<{ isDisabled: boolean }>`
   width: 100%;
   background-color: ${theme.colors.light000};
   transition: 0.3s;
+  cursor: pointer;
+  cursor: initial;
 
-  ${({ isDisabled }) =>
-    isDisabled &&
-    css`
-      background-color: lightgrey;
-      opacity: 0.5;
-    `}
+  ${({ isDisabled }) => isDisabled && disabledStyle}
 `;
 
 export const ContentWrapper = styled.div`
@@ -37,14 +40,7 @@ export const IconWrapper = styled.div<{ isDisabled: boolean }>`
   font-size: 36px;
   bottom: 25px;
   background-color: ${theme.colors.light000};
-  cursor: pointer;
   transition: 0.3s;
 
-  ${({ isDisabled }) =>
-    isDisabled &&
-    css`
-      background-color: lightgrey;
-      opacity: 0.5;
-      cursor: initial;
-    `}
+  ${({ isDisabled }) => isDisabled && disabledStyle}
 `;

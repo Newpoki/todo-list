@@ -17,11 +17,9 @@ export const Footer = ({
   );
 
   return (
-    <Styled.Wrapper isDisabled={isDisabled}>
+    <Styled.Wrapper onClick={handleIconClick} isDisabled={isDisabled}>
       <Styled.ContentWrapper>{children}</Styled.ContentWrapper>
-      <Styled.IconWrapper onClick={handleIconClick} isDisabled={isDisabled}>
-        {iconComponent}
-      </Styled.IconWrapper>
+      <Styled.IconWrapper isDisabled={isDisabled}>{iconComponent}</Styled.IconWrapper>
     </Styled.Wrapper>
   );
 };
