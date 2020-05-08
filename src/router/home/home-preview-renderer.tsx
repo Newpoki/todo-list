@@ -6,6 +6,7 @@ import * as Styled from "./home-preview-renderer.styles";
 import { TodoListPreview } from "components";
 import { RouteComponentProps } from "react-router-dom";
 import { ITodoList } from "store";
+import { ButtonBase } from "@material-ui/core";
 
 interface IHomePreviewRendererProps {
   history: RouteComponentProps["history"];
@@ -48,16 +49,18 @@ export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
   }
 
   return (
-    <div>
+    <Styled.Wrapper>
       {todosLists.map((todosList) => {
         return (
-          <Styled.TodoListPreviewWrapper onClick={() => handlePreviewClick(todosList.id)}>
-            <Styled.TodoListPreviewContentWrapper>
-              <TodoListPreview {...todosList} />
-            </Styled.TodoListPreviewContentWrapper>
-          </Styled.TodoListPreviewWrapper>
+          <ButtonBase onClick={() => handlePreviewClick(todosList.id)}>
+            <Styled.TodoListPreviewWrapper>
+              <Styled.TodoListPreviewContentWrapper>
+                <TodoListPreview {...todosList} />
+              </Styled.TodoListPreviewContentWrapper>
+            </Styled.TodoListPreviewWrapper>
+          </ButtonBase>
         );
       })}
-    </div>
+    </Styled.Wrapper>
   );
 };

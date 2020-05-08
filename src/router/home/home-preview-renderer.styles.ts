@@ -5,17 +5,25 @@ import { theme } from "theme";
 const todoListPreviewMaxHeight = "150px";
 const todoListPreviewPadding = theme.spacing("XS-8");
 
+export const Wrapper = styled.div`
+  .MuiButtonBase-root {
+    text-align: left;
+    width: 100%;
+    margin-bottom: ${theme.spacing("S-12")};
+  }
+`;
+
 export const TodoListsPreviewWrapper = styled.div`
   padding: ${theme.spacing("XL-24")};
   padding-top: 0;
 `;
 
 export const TodoListPreviewWrapper = styled.div`
-  margin-bottom: 12px;
   background-color: ${theme.colors.light000};
   border-radius: 4px;
   max-height: ${todoListPreviewMaxHeight};
   padding: ${todoListPreviewPadding};
+  width: 100%;
 `;
 
 // Styled component qui sert à faire fonctionner correctement l'overflow hidden avec un padding.
@@ -30,7 +38,6 @@ export const EmptyPreviewRendererWrapper = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: ${theme.spacing("XL-24")};
 `;
 
 export const EmptyPreviewRendererText = styled.h2`
