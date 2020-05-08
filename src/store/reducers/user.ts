@@ -53,8 +53,8 @@ export const user = createSlice({
       state.todosLists.push(payload);
     },
 
-    removeTodosList: (state: IUserReducerState, { payload }: { payload: ITodoList["id"] }) => {
-      const filteredTodosLists = state.todosLists.filter((todosList) => todosList.id === payload);
+    deleteTodosList: (state: IUserReducerState, { payload }: { payload: ITodoList["id"] }) => {
+      const filteredTodosLists = state.todosLists.filter((todosList) => todosList.id !== payload);
       state.todosLists = filteredTodosLists;
     },
 

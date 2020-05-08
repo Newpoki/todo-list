@@ -1,9 +1,8 @@
 import React, { useCallback } from "react";
 import Skeleton from "react-loading-skeleton";
-
 import { useUser } from "hooks";
 import * as Styled from "./home-preview-renderer.styles";
-import { TodoListPreview } from "components";
+import { TodosListPreview } from "components";
 import { RouteComponentProps } from "react-router-dom";
 import { ITodoList } from "store";
 import { ButtonBase } from "@material-ui/core";
@@ -13,7 +12,7 @@ interface IHomePreviewRendererProps {
 }
 
 export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
-  const { getRequestStatus, todosLists } = useUser();
+  const { getRequestStatus, todosLists, deleteTodosList } = useUser();
 
   const handlePreviewClick = useCallback(
     (todosListId: ITodoList["id"]) => {
@@ -22,18 +21,26 @@ export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
     [history]
   );
 
+  const handleDeleteTodosList = useCallback(
+    (todosListId: ITodoList["id"]) => {
+      console.log("click");
+      deleteTodosList(todosListId);
+    },
+    [deleteTodosList]
+  );
+
   if (getRequestStatus === "PENDING") {
     return (
       <>
-        <Styled.TodoListPreviewWrapper>
+        <Styled.TodosListPreviewWrapper>
           <Skeleton height="120px" />
-        </Styled.TodoListPreviewWrapper>
-        <Styled.TodoListPreviewWrapper>
+        </Styled.TodosListPreviewWrapper>
+        <Styled.TodosListPreviewWrapper>
           <Skeleton height="120px" />
-        </Styled.TodoListPreviewWrapper>
-        <Styled.TodoListPreviewWrapper>
+        </Styled.TodosListPreviewWrapper>
+        <Styled.TodosListPreviewWrapper>
           <Skeleton height="120px" />
-        </Styled.TodoListPreviewWrapper>
+        </Styled.TodosListPreviewWrapper>
       </>
     );
   }
@@ -53,11 +60,11 @@ export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
       {todosLists.map((todosList) => {
         return (
           <ButtonBase onClick={() => handlePreviewClick(todosList.id)}>
-            <Styled.TodoListPreviewWrapper>
-              <Styled.TodoListPreviewContentWrapper>
-                <TodoListPreview {...todosList} />
-              </Styled.TodoListPreviewContentWrapper>
-            </Styled.TodoListPreviewWrapper>
+            <Styled.TodosListPreviewWrapper>
+              <Styled.TodosListPreviewContentWrapper>
+                <TodosListPreview {...todosList} onDeleteIconClick={handleDeleteTodosList} />
+              </Styled.TodosListPreviewContentWrapper>
+            </Styled.TodosListPreviewWrapper>
           </ButtonBase>
         );
       })}

@@ -4,11 +4,28 @@ export const Wrapper = styled.div`
   width: 100%;
 `;
 
+export const TitleAndCloseIconWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
 export const Title = styled.h2`
   margin: 0;
   font-family: "Open sans";
   font-weight: 700;
   font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+export const DeleteIconWrapper = styled.div`
+  display: flex;
+  margin-left: auto;
+
+  .MuiSvgIcon-root {
+    font-size: 20px;
+  }
 `;
 
 export const Date = styled.h2`

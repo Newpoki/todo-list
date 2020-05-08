@@ -26,9 +26,9 @@ export const useUser = () => {
     [dispatch]
   );
 
-  const removeTodosList = useCallback(
+  const deleteTodosList = useCallback(
     (todosListId: ITodoList["id"]) => {
-      dispatch(userActions.removeTodosList(todosListId));
+      dispatch(userActions.deleteTodosList(todosListId));
     },
     [dispatch]
   );
@@ -43,7 +43,7 @@ export const useUser = () => {
   return useMemo(
     () => ({
       addNewTodosList,
-      removeTodosList,
+      deleteTodosList,
       updateTodoState,
       todosLists,
       getRequestStatus,
@@ -53,7 +53,7 @@ export const useUser = () => {
     }),
     [
       addNewTodosList,
-      removeTodosList,
+      deleteTodosList,
       updateTodoState,
       todosLists,
       getRequestStatus,

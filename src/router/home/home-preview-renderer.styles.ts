@@ -18,7 +18,7 @@ export const TodoListsPreviewWrapper = styled.div`
   padding-top: 0;
 `;
 
-export const TodoListPreviewWrapper = styled.div`
+export const TodosListPreviewWrapper = styled.div`
   background-color: ${theme.colors.light000};
   border-radius: 4px;
   max-height: ${todoListPreviewMaxHeight};
@@ -27,7 +27,7 @@ export const TodoListPreviewWrapper = styled.div`
 `;
 
 // Styled component qui sert à faire fonctionner correctement l'overflow hidden avec un padding.
-export const TodoListPreviewContentWrapper = styled.div`
+export const TodosListPreviewContentWrapper = styled.div`
   overflow: hidden;
   /* Permet d'avoir la bonne taille compte tenu du padding du parent */
   max-height: ${`calc(${todoListPreviewMaxHeight} - (${todoListPreviewPadding} * 2))`};
