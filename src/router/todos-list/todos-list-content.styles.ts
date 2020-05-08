@@ -7,7 +7,11 @@ const commonTextStyles = css`
   margin: 0;
 `;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
 
 export const Title = styled.h1`
   ${commonTextStyles};
@@ -19,6 +23,21 @@ export const TodosWrapper = styled.ul`
   margin: 0;
   padding: 0;
   margin-top: ${theme.spacing("L-20")};
+`;
+
+export const EmptyTodosListWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmptyTodosListText = styled.h2`
+  color: ${theme.colors.light000};
+  font-family: ${theme.fontFamilies.open};
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
 `;
 
 export const TodoWrapper = styled.li`

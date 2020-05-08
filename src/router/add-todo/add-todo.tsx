@@ -45,7 +45,6 @@ export const AddTodo = ({ history }: IAddTodoProps) => {
       if (evt.key === "Enter") {
         evt.preventDefault();
         const newTodoLabelMeta = form.getFieldState(addTodoLabelNameAndId);
-        console.log(form.getFieldState("addTodoLabel"));
         // On peut caster en string car le champ que l'on séléctionne existe forcément
         const newTodoLabel = newTodoLabelMeta?.value as string;
 

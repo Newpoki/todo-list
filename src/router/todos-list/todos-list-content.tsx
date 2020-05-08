@@ -52,29 +52,39 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
   return (
     <Styled.Wrapper>
       <Styled.Title>{todosList.title}</Styled.Title>
-      <Styled.TodosWrapper>
-        {todosList.list.map((todo) => {
-          return (
-            <Styled.TodoWrapper key={todo.id}>
-              <Styled.TodoStateIconWrapper
-                state={todo.state}
-                onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
-              >
-                <CheckCircleOutlineIcon />
-              </Styled.TodoStateIconWrapper>
+      {todosList.list.length === 0 && (
+        <Styled.EmptyTodosListWrapper>
+          <Styled.EmptyTodosListText>
+            Vous n'avez aucune tâches dans cette liste
+          </Styled.EmptyTodosListText>
+        </Styled.EmptyTodosListWrapper>
+      )}
 
-              <Styled.TodoLabel state={todo.state}>{todo.label}</Styled.TodoLabel>
+      {todosList.list.length > 0 && (
+        <Styled.TodosWrapper>
+          {todosList.list.map((todo) => {
+            return (
+              <Styled.TodoWrapper key={todo.id}>
+                <Styled.TodoStateIconWrapper
+                  state={todo.state}
+                  onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
+                >
+                  <CheckCircleOutlineIcon />
+                </Styled.TodoStateIconWrapper>
 
-              <Styled.DeleteTodoIconWrapper
-                state={todo.state}
-                onClick={() => handleDeleteTodo(todosList.id, todo.id)}
-              >
-                <CloseIcon />
-              </Styled.DeleteTodoIconWrapper>
-            </Styled.TodoWrapper>
-          );
-        })}
-      </Styled.TodosWrapper>
+                <Styled.TodoLabel state={todo.state}>{todo.label}</Styled.TodoLabel>
+
+                <Styled.DeleteTodoIconWrapper
+                  state={todo.state}
+                  onClick={() => handleDeleteTodo(todosList.id, todo.id)}
+                >
+                  <CloseIcon />
+                </Styled.DeleteTodoIconWrapper>
+              </Styled.TodoWrapper>
+            );
+          })}
+        </Styled.TodosWrapper>
+      )}
     </Styled.Wrapper>
   );
 };
