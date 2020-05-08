@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getTodosListState } from "common-utils";
 
 export type IAnyRequestStatus = "NOT_CALLED" | "PENDING" | "SUCCESS" | "ERROR";
 
@@ -39,7 +40,7 @@ export interface IUpdateTodoStatePayload {
 export const userInitialState: IUserReducerState = {
   firstName: "",
   lastName: "",
-  displayName: "",
+  displayName: "Jason",
   todosLists: [],
   getRequestStatus: "NOT_CALLED",
 };
@@ -48,16 +49,19 @@ export const user = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    addNewTodosList: (state, { payload }: { payload: ITodoList }) => {
+    addNewTodosList: (state: IUserReducerState, { payload }: { payload: ITodoList }) => {
       state.todosLists.push(payload);
     },
 
-    removeTodosList: (state, { payload }: { payload: ITodoList["id"] }) => {
+    removeTodosList: (state: IUserReducerState, { payload }: { payload: ITodoList["id"] }) => {
       const filteredTodosLists = state.todosLists.filter((todosList) => todosList.id === payload);
       state.todosLists = filteredTodosLists;
     },
 
-    updateTodoState: (state, { payload }: { payload: IUpdateTodoStatePayload }) => {
+    updateTodoState: (
+      state: IUserReducerState,
+      { payload }: { payload: IUpdateTodoStatePayload }
+    ) => {
       // On trouve la todosList concerné
       const concernedTodosList: ITodoList | undefined = state.todosLists.find(
         (todosList) => todosList.id === payload.todosListId
@@ -82,17 +86,21 @@ export const user = createSlice({
             updatedAt: actualTimeStamp,
           };
 
+          // Liste de todos de la todoList mise à jour
+          const updatedList = concernedTodosList.list.map((todo) =>
+            todo.id === payload.todoId ? updatedTodo : todo
+          );
+
           // La todosList mise à jour
           const updatedTodosList: ITodoList = {
             ...concernedTodosList,
-            list: concernedTodosList.list.map((todo) =>
-              todo.id === payload.todoId ? updatedTodo : todo
-            ),
+            list: updatedList,
             updatedAt: actualTimeStamp,
+            state: getTodosListState(updatedList),
           };
 
           // Les todosLists à jour
-          const updatedTodosLists: ITodoList[] = [...todosListsWithoutUpdatedOne, updatedTodosList];
+          const updatedTodosLists: ITodoList[] = [updatedTodosList, ...todosListsWithoutUpdatedOne];
 
           state.todosLists = updatedTodosLists;
         }

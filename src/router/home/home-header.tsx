@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 
 import * as Styled from "./home-header.styles";
 import { useUser } from "hooks";
-import { getTasksNumberSentence } from "./utils/get-tasks-number-sentence";
+import { getTodosListsNumberSentence } from "./utils/get-todos-lists-number-sentence";
 
 export const HomeHeader = () => {
   const {
@@ -23,13 +23,13 @@ export const HomeHeader = () => {
           <Skeleton width="70%" />
         </Styled.Title>
 
-        <Styled.TotalTodoListsNumber>
+        <Styled.TotalTodosListsNumber>
           <Skeleton width="40%" />
-        </Styled.TotalTodoListsNumber>
+        </Styled.TotalTodosListsNumber>
 
-        <Styled.TotalTodoListsNumber>
+        <Styled.TotalTodosListsNumber>
           <Skeleton width="40%" />
-        </Styled.TotalTodoListsNumber>
+        </Styled.TotalTodosListsNumber>
       </Styled.Wrapper>
     );
   }
@@ -40,8 +40,8 @@ export const HomeHeader = () => {
 
       {todosLists.length > 0 && (
         <>
-          {getTasksNumberSentence(onGoingTodosListsNumber, "ON_GOING")}
-          {getTasksNumberSentence(doneTodosListsNumber, "DONE")}
+          {getTodosListsNumberSentence(onGoingTodosListsNumber, "ON_GOING")}
+          {getTodosListsNumberSentence(doneTodosListsNumber, "DONE")}
         </>
       )}
     </Styled.Wrapper>

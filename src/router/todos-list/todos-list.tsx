@@ -24,11 +24,11 @@ export const TodosList = ({ match }: ITodosListProps) => {
 
   return (
     <Styled.Wrapper>
-      <TodosListDate date={todosList?.createdAt} getRequestStatus={getRequestStatus} />
+      <Styled.TodosListDateWrapper>
+        <TodosListDate todosList={todosList} getRequestStatus={getRequestStatus} />
+      </Styled.TodosListDateWrapper>
 
-      <Styled.TodosListContentWrapper>
-        <TodosListContent getRequestStatus={getRequestStatus} todosList={todosList} />
-      </Styled.TodosListContentWrapper>
+      <TodosListContent getRequestStatus={getRequestStatus} todosList={todosList} />
     </Styled.Wrapper>
   );
 };

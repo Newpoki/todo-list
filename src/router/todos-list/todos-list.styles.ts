@@ -8,6 +8,6 @@ export const Wrapper = styled(StyledRouter.Wrapper)`
   padding: ${theme.spacing("XL-24")};
 `;
 
-export const TodosListContentWrapper = styled.div`
-  margin-top: ${theme.spacing("XL-24")};
+export const TodosListDateWrapper = styled.div`
+  margin-bottom: ${theme.spacing("XL-24")};
 `;

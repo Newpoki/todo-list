@@ -39,7 +39,7 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
   }
 
   if (getRequestStatus === "ERROR" || !todosList) {
-    return <Styled.Wrapper>Wolah y'a pas de date c chop</Styled.Wrapper>;
+    return <Styled.Wrapper>Wolah y'a pas de content c chop</Styled.Wrapper>;
   }
 
   return (
@@ -49,6 +49,7 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
         {todosList.list.map((todo) => {
           return (
             <Styled.TodoWrapper
+              key={todo.id}
               onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
             >
               <Styled.TodoStateIconWrapper state={todo.state}>

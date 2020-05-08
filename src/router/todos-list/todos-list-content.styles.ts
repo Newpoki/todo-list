@@ -2,11 +2,15 @@ import styled, { css } from "styled-components";
 import { theme } from "theme";
 import { ITodoState } from "store";
 
+const commonTextStyles = css`
+  font-family: ${theme.fontFamilies.open};
+  margin: 0;
+`;
+
 export const Wrapper = styled.div``;
 
 export const Title = styled.h1`
-  margin: 0;
-  font-family: ${theme.fontFamilies.open};
+  ${commonTextStyles};
   color: ${theme.colors.light000};
   font-size: 24px;
 `;
@@ -25,7 +29,7 @@ export const TodoWrapper = styled.li`
 `;
 
 export const TodoLabel = styled.span<{ state: ITodoState }>`
-  font-family: ${theme.fontFamilies.open};
+  ${commonTextStyles}
   color: ${theme.colors.light000};
 
   ${({ state }) =>

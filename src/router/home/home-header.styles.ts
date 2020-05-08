@@ -15,7 +15,7 @@ export const Title = styled.h1`
   margin-bottom: ${theme.spacing("XS-8")};
 `;
 
-export const TotalTodoListsNumber = styled.h2`
+export const TotalTodosListsNumber = styled.h2`
   font-family: "Open sans";
   font-weight: 400;
   margin: 0;

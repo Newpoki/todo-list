@@ -7,7 +7,9 @@ const commonFontStyles = css`
   font-family: ${theme.fontFamilies.open};
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div``;
+
+export const DateWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -50,4 +52,19 @@ export const GoToHome = styled(NavLink)`
   &:visited {
     color: ${commonFontStyles};
   }
+`;
+
+export const UpdatedAt = styled.h2<{ isDisplayed: boolean }>`
+  ${commonFontStyles};
+  font-size: 14px;
+  font-weight: 600;
+  color: ${theme.colors.light300};
+  margin: 0;
+  margin-top: ${theme.spacing("XS-8")};
+
+  ${({ isDisplayed }) =>
+    isDisplayed &&
+    css`
+      visibility: hidden;
+    `}
 `;

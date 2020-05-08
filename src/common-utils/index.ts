@@ -10,3 +10,6 @@ export * from "./form/validators/todo-title";
 // Autres utils
 export * from "./create-todos-list";
 export * from "./create-todo";
+export * from "./format-to-fr-date";
+export * from "./get-todos-list-displayed-date";
+export * from "./get-todos-list-state";
