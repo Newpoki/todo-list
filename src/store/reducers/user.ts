@@ -30,6 +30,12 @@ export interface IUserReducerState {
   getRequestStatus: IAnyRequestStatus;
 }
 
+export interface IUpdateTodoStatePayload {
+  todosListId: ITodoList["id"];
+  todoId: ITodo["id"];
+  newTodoState: ITodoState;
+}
+
 export const userInitialState: IUserReducerState = {
   firstName: "",
   lastName: "",
@@ -45,9 +51,47 @@ export const user = createSlice({
     addNewTodosList: (state, { payload }: { payload: ITodoList }) => {
       state.todosLists.push(payload);
     },
+
     removeTodosList: (state, { payload }: { payload: ITodoList["id"] }) => {
       const filteredTodosLists = state.todosLists.filter((todosList) => todosList.id === payload);
       state.todosLists = filteredTodosLists;
+    },
+
+    updateTodoState: (state, { payload }: { payload: IUpdateTodoStatePayload }) => {
+      // On trouve la todosList concerné
+      const concernedTodosList: ITodoList | undefined = state.todosLists.find(
+        (todosList) => todosList.id === payload.todosListId
+      );
+
+      // Toutes les todosList sauf celle contenant le todo à mettre à jour
+      const todosListsWithoutUpdatedOne: ITodoList[] = state.todosLists.filter(
+        (todosList) => todosList.id !== payload.todosListId
+      );
+
+      if (concernedTodosList) {
+        // Le todo à mettre à jour
+        const concernedTodo = concernedTodosList.list.find((todo) => todo.id === payload.todoId);
+
+        if (concernedTodo) {
+          // La todosList sans le todo à mettre à jour
+          const todosListWithoutUpdatedOne: ITodo[] = concernedTodosList.list.filter(
+            (todo) => todo.id !== payload.todoId
+          );
+          // Le todo mis à jour
+          const updatedTodo: ITodo = { ...concernedTodo, state: payload.newTodoState };
+
+          // La todosList mise à jour
+          const updatedTodosList: ITodoList = {
+            ...concernedTodosList,
+            list: [...todosListWithoutUpdatedOne, updatedTodo],
+          };
+
+          // Les todosLists à jour
+          const updatedTodosLists: ITodoList[] = [...todosListsWithoutUpdatedOne, updatedTodosList];
+
+          state.todosLists = updatedTodosLists;
+        }
+      }
     },
   },
 });

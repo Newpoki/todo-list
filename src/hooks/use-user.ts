@@ -6,6 +6,7 @@ import {
   getUserGetRequestStatus,
   getUserPersonalInformations,
   getTodosListsNumberByState,
+  IUpdateTodoStatePayload,
 } from "store";
 import { useMemo, useCallback } from "react";
 
@@ -26,8 +27,15 @@ export const useUser = () => {
   );
 
   const removeTodosList = useCallback(
-    (todosListId) => {
+    (todosListId: ITodoList["id"]) => {
       dispatch(userActions.removeTodosList(todosListId));
+    },
+    [dispatch]
+  );
+
+  const updateTodoState = useCallback(
+    (payload: IUpdateTodoStatePayload) => {
+      dispatch(userActions.updateTodoState(payload));
     },
     [dispatch]
   );
@@ -36,6 +44,7 @@ export const useUser = () => {
     () => ({
       addNewTodosList,
       removeTodosList,
+      updateTodoState,
       todosLists,
       getRequestStatus,
       userPersonalInformations,
@@ -45,6 +54,7 @@ export const useUser = () => {
     [
       addNewTodosList,
       removeTodosList,
+      updateTodoState,
       todosLists,
       getRequestStatus,
       userPersonalInformations,
