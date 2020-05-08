@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import AddIcon from "@material-ui/icons/Add";
 import { RouteComponentProps } from "react-router-dom";
 
 import * as Styled from "./home.styles";
@@ -20,7 +19,7 @@ export const Home = ({ history }: IHomeProps) => {
       <HomePreviewRenderer />
 
       <Styled.FooterPlaceholder />
-      <Footer onIconClick={handleRedirection} iconComponent={<AddIcon />}>
+      <Footer onClick={handleRedirection}>
         <Styled.FooterContent>Ajouter une nouvelle liste</Styled.FooterContent>
       </Footer>
     </Styled.Wrapper>

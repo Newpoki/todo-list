@@ -1,7 +1,6 @@
 import React, { useCallback, KeyboardEvent, useState } from "react";
 import { Form } from "react-final-form";
 import { FormApi } from "final-form";
-import AddIcon from "@material-ui/icons/Add";
 import { RouteComponentProps } from "react-router-dom";
 
 import * as Styled from "./add-todo.styles";
@@ -105,11 +104,7 @@ export const AddTodo = ({ history }: IAddTodoProps) => {
 
                 <AddTodoTasksRenderer tasks={tasks} onRemoveTask={handleRemoveTask} />
                 <Styled.Placeholder />
-                <Footer
-                  onIconClick={handleSubmit}
-                  iconComponent={<AddIcon />}
-                  isDisabled={tasks.length === 0}
-                >
+                <Footer onClick={handleSubmit} isDisabled={tasks.length === 0}>
                   <Styled.FooterContent>Créér la nouvelle liste</Styled.FooterContent>
                 </Footer>
               </>

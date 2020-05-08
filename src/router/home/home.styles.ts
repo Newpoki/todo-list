@@ -19,7 +19,7 @@ export const FooterPlaceholder = styled.div`
 `;
 
 export const FooterContent = styled.h2`
-  color: ${theme.colors.light900};
+  color: ${theme.colors.purple900};
   font-family: ${theme.fontFamilies.open};
   font-size: 16px;
   margin: 0;

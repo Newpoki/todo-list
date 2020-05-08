@@ -48,7 +48,7 @@ export const FooterContent = styled.p`
   justify-content: center;
   width: 100%;
   font-family: ${theme.fontFamilies.open};
-  color: ${theme.colors.light900};
+  color: ${theme.colors.purple900};
   font-size: 16px;
   margin: 0;
 `;
