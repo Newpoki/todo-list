@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Skeleton from "react-loading-skeleton";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-
+import CloseIcon from "@material-ui/icons/Close";
 import * as Styled from "./todos-list-content.styles";
 import { IAnyRequestStatus, ITodoList, IUpdateTodoStatePayload, ITodoState, ITodo } from "store";
 import { useUser } from "hooks";
@@ -12,7 +12,7 @@ interface ITodosListContentProps {
 }
 
 export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListContentProps) => {
-  const { updateTodoState } = useUser();
+  const { updateTodoState, deleteTodo } = useUser();
 
   const toggleTodosListState = useCallback(
     (todosListId: ITodoList["id"], todoId: ITodo["id"], todoState: ITodoState) => {
@@ -25,6 +25,13 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
       updateTodoState(payload);
     },
     [updateTodoState]
+  );
+
+  const handleDeleteTodo = useCallback(
+    (todosListId: ITodoList["id"], todoId: ITodo["id"]) => {
+      deleteTodo({ todosListId, todoId });
+    },
+    [deleteTodo]
   );
 
   if (getRequestStatus === "PENDING") {
@@ -48,15 +55,22 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
       <Styled.TodosWrapper>
         {todosList.list.map((todo) => {
           return (
-            <Styled.TodoWrapper
-              key={todo.id}
-              onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
-            >
-              <Styled.TodoStateIconWrapper state={todo.state}>
+            <Styled.TodoWrapper key={todo.id}>
+              <Styled.TodoStateIconWrapper
+                state={todo.state}
+                onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
+              >
                 <CheckCircleOutlineIcon />
               </Styled.TodoStateIconWrapper>
 
               <Styled.TodoLabel state={todo.state}>{todo.label}</Styled.TodoLabel>
+
+              <Styled.DeleteTodoIconWrapper
+                state={todo.state}
+                onClick={() => handleDeleteTodo(todosList.id, todo.id)}
+              >
+                <CloseIcon />
+              </Styled.DeleteTodoIconWrapper>
             </Styled.TodoWrapper>
           );
         })}

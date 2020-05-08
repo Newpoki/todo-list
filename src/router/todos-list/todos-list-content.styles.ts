@@ -40,6 +40,19 @@ export const TodoLabel = styled.span<{ state: ITodoState }>`
     `}
 `;
 
+export const DeleteTodoIconWrapper = styled.div<{ state: ITodoState }>`
+  display: flex;
+  margin-left: auto;
+  padding-left: ${theme.spacing("XS-8")};
+  color: ${theme.colors.light000};
+
+  ${({ state }) =>
+    state === "DONE" &&
+    css`
+      color: ${theme.colors.light300};
+    `}
+`;
+
 export const TodoStateIconWrapper = styled.div<{ state: ITodoState }>`
   display: flex;
   margin-right: ${theme.spacing("XS-8")};
