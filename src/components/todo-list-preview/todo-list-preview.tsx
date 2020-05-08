@@ -1,20 +1,7 @@
 import React from "react";
 import { format } from "date-fns";
 import * as Styled from "./todo-list-preview.styles";
-
-export type ITodoState = "DONE" | "ON_GOING";
-
-export interface ITodo {
-  id: string;
-  label: string;
-  state: ITodoState;
-}
-
-/** Interface temporaire d'une task lors de la création d'une task  */
-export interface ITodoTemp {
-  id: ITodo["id"];
-  label: ITodo["label"];
-}
+import { ITodoList } from "store";
 
 const getPreviewDate = (createdAt: number, updatedAt?: number) => {
   if (updatedAt) {
@@ -26,13 +13,7 @@ const getPreviewDate = (createdAt: number, updatedAt?: number) => {
   }
 };
 
-export interface ITodoListPreviewProps {
-  id: string;
-  title: string;
-  list: ITodo[];
-  createdAt: number;
-  updatedAt?: number;
-}
+export type ITodoListPreviewProps = ITodoList;
 
 export const TodoListPreview = ({ title, list, createdAt, updatedAt }: ITodoListPreviewProps) => {
   return (

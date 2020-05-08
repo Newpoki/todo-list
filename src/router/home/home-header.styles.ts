@@ -4,7 +4,6 @@ import { theme } from "theme";
 
 export const Wrapper = styled.header`
   margin-bottom: ${theme.spacing("L-20")};
-  padding: ${theme.spacing("XL-24")};
 `;
 
 export const Title = styled.h1`

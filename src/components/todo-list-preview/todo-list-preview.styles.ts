@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  border-radius: 4px;
   width: 100%;
-  padding: 8px;
 `;
 
 export const Title = styled.h2`

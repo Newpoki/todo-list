@@ -1,17 +1,16 @@
-import { composeWithDevTools } from "redux-devtools-extension";
-import { createStore, combineReducers } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 
-import { appReducer, IAppReducerState } from "./reducers";
+import { userReducer, IUserReducerState } from "./reducers";
 
 /** Interface du state du store de l'application */
 export interface IStoreState {
-  app: IAppReducerState;
+  user: IUserReducerState;
 }
 
 const rootReducerState = {
-  app: appReducer,
+  user: userReducer,
 };
 
-const rootReducer = combineReducers(rootReducerState);
-
-export const store = createStore(rootReducer, composeWithDevTools());
+export const store = configureStore({
+  reducer: rootReducerState,
+});

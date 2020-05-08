@@ -2,50 +2,59 @@ import React, { useCallback, KeyboardEvent, useState } from "react";
 import { Form } from "react-final-form";
 import { FormApi } from "final-form";
 import AddIcon from "@material-ui/icons/Add";
+import { RouteComponentProps } from "react-router-dom";
 
 import * as Styled from "./add-todo.styles";
-import { FinalFormInput, Footer, ITodoTemp } from "components";
-import { todoTitleValidator, checkIsEmpty } from "common-utils";
+import { FinalFormInput, Footer } from "components";
+import { todoTitleValidator, checkIsEmpty, createTodosList, createTodo } from "common-utils";
 import { AddTodoTasksRenderer } from "./add-todo-tasks-renderer";
+import { useUser } from "hooks";
+import { ITodo } from "store";
 
 interface IAddTodoForm {
   addTodoTitle: string;
-  addTodoTask: string;
+  addTodoLabel: string;
 }
+
+type IAddTodoProps = RouteComponentProps;
+
+const addTodoLabelNameAndId = "addTodoLabel";
 
 const addTodoInitialValues: IAddTodoForm = {
   addTodoTitle: "",
-  addTodoTask: "",
+  [addTodoLabelNameAndId]: "",
 };
 
-const addTodoTaskNameAndId = "addTodoTask";
+export const AddTodo = ({ history }: IAddTodoProps) => {
+  const user = useUser();
+  const [tasks, updateTasks] = useState<ITodo[]>([]);
 
-export const AddTodo = () => {
-  const [tasks, updateTasks] = useState<ITodoTemp[]>([]);
+  const onSubmit = useCallback(
+    (form: IAddTodoForm) => {
+      const todoList = createTodosList(form.addTodoTitle, tasks);
 
-  const onSubmit = useCallback(() => {
-    // TODO: Doit ajouter en bdd et dans le reducer approprié la nouvelle tâche, puis rediriger vers la page de la nouvelle tâche
-    console.log("submit");
-  }, []);
+      // TODO: Dispatch une action qui ajoute la todosList en bdd
+      // TODO: Déplacer la redirection dans le thunk qui fait l'ajout en bdd
+      user.addNewTodosList(todoList);
+      history.push("/");
+    },
+    [tasks, user, history]
+  );
 
   const handleAddNewTask = useCallback(
     (evt: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, form: FormApi<IAddTodoForm>) => {
       if (evt.key === "Enter") {
         evt.preventDefault();
-        const newTaskMeta = form.getFieldState(addTodoTaskNameAndId);
+        const newTodoLabelMeta = form.getFieldState(addTodoLabelNameAndId);
+        console.log(form.getFieldState("addTodoLabel"));
         // On peut caster en string car le champ que l'on séléctionne existe forcément
-        const newTaskLabel = newTaskMeta?.value as string;
+        const newTodoLabel = newTodoLabelMeta?.value as string;
 
         // On vérifie car l'api form peut retourner undefined si le champ n'existe pas
-        if (!checkIsEmpty(newTaskLabel)) {
-          const id = `${Date.now()}-${newTaskLabel}`;
-          const newTask: ITodoTemp = {
-            id,
-            label: newTaskLabel,
-          };
-
-          updateTasks([...tasks, newTask]);
-          form.change(addTodoTaskNameAndId, "");
+        if (!checkIsEmpty(newTodoLabel)) {
+          const newTodo = createTodo(newTodoLabel);
+          updateTasks([...tasks, newTodo]);
+          form.change(addTodoLabelNameAndId, "");
         }
       }
     },
@@ -87,8 +96,8 @@ export const AddTodo = () => {
                 <Styled.InputWrapper>
                   <FinalFormInput
                     label="Nouvelle tâche"
-                    name="addTodoTask"
-                    id="addTodoTask"
+                    name={addTodoLabelNameAndId}
+                    id={addTodoLabelNameAndId}
                     onKeyUp={(evt) => handleAddNewTask(evt, form)}
                     fullWidth
                   />
