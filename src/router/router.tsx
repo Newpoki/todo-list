@@ -9,7 +9,7 @@ export const Router = () => {
   return (
     <Switch>
       <Route path="/add-todo" component={AddTodo} exact />
-      <Route path="/todos-list" component={TodosList} exact />
+      <Route path="/todos-list/:id" component={TodosList} exact />
       <Route path="/" component={Home} exact />
     </Switch>
   );

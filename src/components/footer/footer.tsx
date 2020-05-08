@@ -1,10 +1,10 @@
-import React, { useCallback, MouseEvent } from "react";
+import React, { useCallback, MouseEvent, memo } from "react";
 
 import * as Styled from "./footer.styles";
 import { IFooterProps } from "./footer.interfaces";
 import { ButtonBase } from "@material-ui/core";
 
-export const Footer = ({ children, onClick, isDisabled = false }: IFooterProps) => {
+export const Footer = memo(({ children, onClick, isDisabled = false }: IFooterProps) => {
   const handleClick = useCallback(
     (evt: MouseEvent<HTMLDivElement>) => {
       !isDisabled && onClick(evt);
@@ -19,4 +19,4 @@ export const Footer = ({ children, onClick, isDisabled = false }: IFooterProps) 
       </ButtonBase>
     </Styled.Wrapper>
   );
-};
+});

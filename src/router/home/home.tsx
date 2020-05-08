@@ -16,7 +16,7 @@ export const Home = ({ history }: IHomeProps) => {
   return (
     <Styled.Wrapper>
       <HomeHeader />
-      <HomePreviewRenderer />
+      <HomePreviewRenderer history={history} />
 
       <Styled.FooterPlaceholder />
       <Footer onClick={handleRedirection}>
