@@ -55,7 +55,7 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
                 <CheckCircleOutlineIcon />
               </Styled.TodoStateIconWrapper>
 
-              <Styled.TodoLabel>{todo.label}</Styled.TodoLabel>
+              <Styled.TodoLabel state={todo.state}>{todo.label}</Styled.TodoLabel>
             </Styled.TodoWrapper>
           );
         })}

@@ -73,17 +73,22 @@ export const user = createSlice({
         const concernedTodo = concernedTodosList.list.find((todo) => todo.id === payload.todoId);
 
         if (concernedTodo) {
-          // La todosList sans le todo à mettre à jour
-          const todosListWithoutUpdatedOne: ITodo[] = concernedTodosList.list.filter(
-            (todo) => todo.id !== payload.todoId
-          );
+          const actualTimeStamp = Date.now();
+
           // Le todo mis à jour
-          const updatedTodo: ITodo = { ...concernedTodo, state: payload.newTodoState };
+          const updatedTodo: ITodo = {
+            ...concernedTodo,
+            state: payload.newTodoState,
+            updatedAt: actualTimeStamp,
+          };
 
           // La todosList mise à jour
           const updatedTodosList: ITodoList = {
             ...concernedTodosList,
-            list: [...todosListWithoutUpdatedOne, updatedTodo],
+            list: concernedTodosList.list.map((todo) =>
+              todo.id === payload.todoId ? updatedTodo : todo
+            ),
+            updatedAt: actualTimeStamp,
           };
 
           // Les todosLists à jour
