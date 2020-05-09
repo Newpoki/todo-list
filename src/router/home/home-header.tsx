@@ -1,6 +1,6 @@
 import React from "react";
-import Skeleton from "react-loading-skeleton";
 
+import { SkeletonLoader } from "components";
 import * as Styled from "./home-header.styles";
 import { useUser } from "hooks";
 import { getTodosListsNumberSentence } from "./utils/get-todos-lists-number-sentence";
@@ -20,15 +20,15 @@ export const HomeHeader = () => {
     return (
       <Styled.Wrapper>
         <Styled.Title>
-          <Skeleton width="70%" />
+          <SkeletonLoader width="70%" />
         </Styled.Title>
 
         <Styled.TotalTodosListsNumber>
-          <Skeleton width="40%" />
+          <SkeletonLoader width="40%" />
         </Styled.TotalTodosListsNumber>
 
         <Styled.TotalTodosListsNumber>
-          <Skeleton width="40%" />
+          <SkeletonLoader width="40%" />
         </Styled.TotalTodosListsNumber>
       </Styled.Wrapper>
     );

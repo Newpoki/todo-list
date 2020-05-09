@@ -30,7 +30,7 @@ export const TodosList = ({ match }: ITodosListProps) => {
       </Styled.TodosListDateWrapper>
 
       <TodosListContent getRequestStatus={getRequestStatus} todosList={todosList} />
-      <TodosListAddTodoForm todosList={todosList} />
+      <TodosListAddTodoForm todosList={todosList} getRequestStatus={getRequestStatus} />
     </Styled.Wrapper>
   );
 };

@@ -7,7 +7,7 @@ import * as Styled from "./todos-list-add-todo-form.styles";
 import { FinalFormInput } from "components";
 import { todoContentValidator, createTodo, scrollToBottom } from "common-utils";
 import { useUser } from "hooks";
-import { ITodoList } from "store";
+import { ITodoList, IAnyRequestStatus } from "store";
 import { FormApi } from "final-form";
 
 // Name et Id du champ d'ajout de todo
@@ -19,13 +19,17 @@ interface ITodosListAddTodoForm {
 
 interface ITodosListAddTodoFormProps {
   todosList?: ITodoList;
+  getRequestStatus: IAnyRequestStatus;
 }
 
 const todosListAddTodoFormInitialValues: ITodosListAddTodoForm = {
   todosListAddTodoLabel: "",
 };
 
-export const TodosListAddTodoForm = ({ todosList }: ITodosListAddTodoFormProps) => {
+export const TodosListAddTodoForm = ({
+  todosList,
+  getRequestStatus,
+}: ITodosListAddTodoFormProps) => {
   const [isFormDisplayed, toggleFormDisplay] = useState(false);
 
   const { addTodo } = useUser();
@@ -59,7 +63,7 @@ export const TodosListAddTodoForm = ({ todosList }: ITodosListAddTodoFormProps) 
   );
 
   // On cache le formulaire s'il n'y a pas de todoList. On ne veut pas de skeletonLoader ici.
-  if (!todosList) return null;
+  if (!todosList || getRequestStatus === "PENDING") return null;
 
   return (
     <>

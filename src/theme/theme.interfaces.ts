@@ -4,6 +4,8 @@ import { IGetSpacingInPixels } from "./get-spacing-in-pixels";
 export interface IThemeProps {
   colors: {
     aqua: "rgba(0, 230, 168, 1)";
+    pink500: "rgba(234, 197, 255, 1)";
+    pink600: "rgba(199, 168, 216, 1)";
     purpleToPink: "linear-gradient(0deg, rgba(234, 197, 255, 1) 0%, rgba(102, 86, 171, 1) 100%)";
     purple900: "rgba(102, 86, 171, 1)";
     light000: "rgba(255, 255, 255)";

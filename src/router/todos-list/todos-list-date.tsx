@@ -1,6 +1,6 @@
 import React from "react";
-import Skeleton from "react-loading-skeleton";
 
+import { SkeletonLoader } from "components";
 import * as Styled from "./todos-list-date.styles";
 import { ITodoList, IAnyRequestStatus } from "store";
 import { getDateData } from "./utils/get-date-data";
@@ -17,14 +17,14 @@ export const TodosListDate = ({ todosList, getRequestStatus }: ITodosListDatePro
       <Styled.Wrapper>
         <Styled.DayNumberMonthYearWrapper>
           <Styled.DayNumber>
-            <Skeleton width="50px" />
+            <SkeletonLoader width="50px" />
           </Styled.DayNumber>
           <Styled.MonthYearWrapper>
             <Styled.Month>
-              <Skeleton width="50px" />
+              <SkeletonLoader width="50px" />
             </Styled.Month>
             <Styled.Year>
-              <Skeleton />
+              <SkeletonLoader />
             </Styled.Year>
           </Styled.MonthYearWrapper>
         </Styled.DayNumberMonthYearWrapper>

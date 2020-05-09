@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
-import Skeleton from "react-loading-skeleton";
+import { SkeletonLoader } from "components";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
+
 import * as Styled from "./todos-list-content.styles";
 import { IAnyRequestStatus, ITodoList, IUpdateTodoStatePayload, ITodoState, ITodo } from "store";
 import { useUser } from "hooks";
@@ -38,9 +39,9 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
     return (
       <Styled.Wrapper style={{ lineHeight: 2.5 }}>
         <Styled.Title>
-          <Skeleton width="50%" height="30px" />
+          <SkeletonLoader width="50%" height="30px" />
         </Styled.Title>
-        <Skeleton count={10} height="20px" />
+        <SkeletonLoader count={10} height="20px" />
       </Styled.Wrapper>
     );
   }

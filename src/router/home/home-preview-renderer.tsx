@@ -1,8 +1,7 @@
 import React, { useCallback } from "react";
-import Skeleton from "react-loading-skeleton";
 import { useUser } from "hooks";
 import * as Styled from "./home-preview-renderer.styles";
-import { TodosListPreview } from "components";
+import { TodosListPreview, SkeletonLoader } from "components";
 import { RouteComponentProps } from "react-router-dom";
 import { ITodoList } from "store";
 import { ButtonBase } from "@material-ui/core";
@@ -33,13 +32,13 @@ export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
     return (
       <>
         <Styled.TodosListPreviewWrapper>
-          <Skeleton height="120px" />
+          <SkeletonLoader height="120px" />
         </Styled.TodosListPreviewWrapper>
         <Styled.TodosListPreviewWrapper>
-          <Skeleton height="120px" />
+          <SkeletonLoader height="120px" />
         </Styled.TodosListPreviewWrapper>
         <Styled.TodosListPreviewWrapper>
-          <Skeleton height="120px" />
+          <SkeletonLoader height="120px" />
         </Styled.TodosListPreviewWrapper>
       </>
     );
