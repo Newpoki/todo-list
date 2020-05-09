@@ -60,7 +60,8 @@ export const user = createSlice({
   initialState: userInitialState,
   reducers: {
     addNewTodosList: (state: IUserReducerState, { payload }: { payload: ITodoList }) => {
-      state.todosLists.push(payload);
+      const newTodosLists = [payload, ...state.todosLists];
+      state.todosLists = newTodosLists;
     },
 
     deleteTodosList: (state: IUserReducerState, { payload }: { payload: ITodoList["id"] }) => {

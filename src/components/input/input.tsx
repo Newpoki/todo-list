@@ -50,7 +50,7 @@ export const Input = memo(
 
     return (
       <TextField
-        name={name}
+        name={name + Math.random()}
         label={label}
         onChange={onChange}
         variant={variant}
