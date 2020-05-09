@@ -8,6 +8,7 @@ import {
   getTodosListsNumberByState,
   IUpdateTodoStatePayload,
   IDeleteTodoPayload,
+  IAddTodoPayload,
 } from "store";
 import { useMemo, useCallback } from "react";
 
@@ -34,6 +35,13 @@ export const useUser = () => {
     [dispatch]
   );
 
+  const addTodo = useCallback(
+    (payload: IAddTodoPayload) => {
+      dispatch(userActions.addTodo(payload));
+    },
+    [dispatch]
+  );
+
   const deleteTodo = useCallback(
     (payload: IDeleteTodoPayload) => {
       dispatch(userActions.deleteTodo(payload));
@@ -52,6 +60,7 @@ export const useUser = () => {
     () => ({
       addNewTodosList,
       deleteTodosList,
+      addTodo,
       deleteTodo,
       updateTodoState,
       todosLists,
@@ -63,6 +72,7 @@ export const useUser = () => {
     [
       addNewTodosList,
       deleteTodosList,
+      addTodo,
       deleteTodo,
       updateTodoState,
       todosLists,

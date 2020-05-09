@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { getTodosListById } from "store";
 import { useUser } from "hooks";
 import { TodosListContent } from "./todos-list-content";
+import { TodosListAddTodoForm } from "./todos-list-add-todo-form";
 
 interface ITodosListMatchParams {
   id: string;
@@ -29,6 +30,7 @@ export const TodosList = ({ match }: ITodosListProps) => {
       </Styled.TodosListDateWrapper>
 
       <TodosListContent getRequestStatus={getRequestStatus} todosList={todosList} />
+      <TodosListAddTodoForm todosList={todosList} />
     </Styled.Wrapper>
   );
 };

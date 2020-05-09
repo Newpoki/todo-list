@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   min-height: 100vh;
+
   body {
     margin: 0;
     

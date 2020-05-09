@@ -19,12 +19,6 @@ export const Title = styled.h1`
   font-size: 24px;
 `;
 
-export const TodosWrapper = styled.ul`
-  margin: 0;
-  padding: 0;
-  margin-top: ${theme.spacing("L-20")};
-`;
-
 export const EmptyTodosListWrapper = styled.div`
   display: flex;
   flex: 1;
@@ -38,6 +32,12 @@ export const EmptyTodosListText = styled.h2`
   font-weight: 400;
   margin: 0;
   text-align: center;
+`;
+
+export const TodosWrapper = styled.ul`
+  margin: 0;
+  padding: 0;
+  margin-top: ${theme.spacing("L-20")};
 `;
 
 export const TodoWrapper = styled.li`
@@ -59,6 +59,13 @@ export const TodoLabel = styled.span<{ state: ITodoState }>`
     `}
 `;
 
+export const TodoStateIconWrapper = styled.div<{ state: ITodoState }>`
+  display: flex;
+  margin-right: ${theme.spacing("XS-8")};
+  color: ${({ state }) => (state === "DONE" ? theme.colors.aqua : theme.colors.light000)};
+  cursor: pointer;
+`;
+
 export const DeleteTodoIconWrapper = styled.div<{ state: ITodoState }>`
   display: flex;
   margin-left: auto;
@@ -70,10 +77,4 @@ export const DeleteTodoIconWrapper = styled.div<{ state: ITodoState }>`
     css`
       color: ${theme.colors.light300};
     `}
-`;
-
-export const TodoStateIconWrapper = styled.div<{ state: ITodoState }>`
-  display: flex;
-  margin-right: ${theme.spacing("XS-8")};
-  color: ${({ state }) => (state === "DONE" ? theme.colors.aqua : theme.colors.light000)};
 `;

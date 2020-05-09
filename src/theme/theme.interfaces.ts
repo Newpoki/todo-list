@@ -8,6 +8,7 @@ export interface IThemeProps {
     purple900: "rgba(102, 86, 171, 1)";
     light000: "rgba(255, 255, 255)";
     light300: "rgba(218, 219, 225, 1)";
+    light700: "rgba(60, 60, 60, 1)";
     light900: "rgba(0, 0, 0, 0.9)";
     red500: "rgb(255, 48, 33)";
   };

@@ -37,6 +37,11 @@ export interface IUpdateTodoStatePayload {
   newTodoState: ITodoState;
 }
 
+export interface IAddTodoPayload {
+  todosListId: ITodoList["id"];
+  todo: ITodo;
+}
+
 export interface IDeleteTodoPayload {
   todosListId: ITodoList["id"];
   todoId: ITodo["id"];
@@ -61,6 +66,36 @@ export const user = createSlice({
     deleteTodosList: (state: IUserReducerState, { payload }: { payload: ITodoList["id"] }) => {
       const filteredTodosLists = state.todosLists.filter((todosList) => todosList.id !== payload);
       state.todosLists = filteredTodosLists;
+    },
+
+    addTodo: (state: IUserReducerState, { payload }: { payload: IAddTodoPayload }) => {
+      // On trouve la todosList concerné
+      const concernedTodosList: ITodoList | undefined = state.todosLists.find(
+        (todosList) => todosList.id === payload.todosListId
+      );
+
+      // Toutes les todosList sauf celle contenant le todo à mettre à jour
+      const todosListsWithoutUpdatedOne: ITodoList[] = state.todosLists.filter(
+        (todosList) => todosList.id !== payload.todosListId
+      );
+
+      if (concernedTodosList) {
+        // On ajoute la tâche à la fin de la liste
+        const updatedList: ITodo[] = [...concernedTodosList.list, payload.todo];
+
+        // La todosList mise à jour
+        const updatedTodosList: ITodoList = {
+          ...concernedTodosList,
+          list: updatedList,
+          updatedAt: Date.now(),
+          state: getTodosListState(updatedList),
+        };
+
+        // Les todosLists à jour
+        const updatedTodosLists: ITodoList[] = [updatedTodosList, ...todosListsWithoutUpdatedOne];
+
+        state.todosLists = updatedTodosLists;
+      }
     },
 
     deleteTodo: (state: IUserReducerState, { payload }: { payload: IDeleteTodoPayload }) => {

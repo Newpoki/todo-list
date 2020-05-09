@@ -18,7 +18,7 @@ export const getTodosListsNumberSentence = (
   return (
     <Styled.TotalTodosListsNumber>
       <strong>{todosListsNumber} </strong>
-      {todosListsNumber > 1 ? "listes terminées" : "liste terminée"}
+      {todosListsNumber > 1 ? "listes terminées ou vides" : "liste terminée ou vide"}
     </Styled.TotalTodosListsNumber>
   );
 };

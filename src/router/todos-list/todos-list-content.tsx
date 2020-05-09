@@ -62,7 +62,7 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
 
       {todosList.list.length > 0 && (
         <Styled.TodosWrapper>
-          {todosList.list.map((todo) => {
+          {todosList.list.map((todo, index) => {
             return (
               <Styled.TodoWrapper key={todo.id}>
                 <Styled.TodoStateIconWrapper
