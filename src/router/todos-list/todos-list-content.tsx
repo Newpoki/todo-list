@@ -64,11 +64,11 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
         <Styled.TodosWrapper>
           {todosList.list.map((todo, index) => {
             return (
-              <Styled.TodoWrapper key={todo.id}>
-                <Styled.TodoStateIconWrapper
-                  state={todo.state}
-                  onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
-                >
+              <Styled.TodoWrapper
+                key={todo.id}
+                onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
+              >
+                <Styled.TodoStateIconWrapper state={todo.state}>
                   <CheckCircleOutlineIcon />
                 </Styled.TodoStateIconWrapper>
 
