@@ -37,9 +37,13 @@ export const Date = styled.h2`
   color: grey;
 `;
 
-export const ListWrapper = styled.div``;
+export const ListWrapper = styled.ul`
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+`;
 
-export const TodoLabel = styled.p`
+export const TodoLabel = styled.li`
   margin: 0;
   font-family: "Open sans";
   font-size: 12px;
