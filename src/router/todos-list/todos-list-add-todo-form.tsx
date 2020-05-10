@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Form } from "react-final-form";
 import { Collapse } from "react-collapse";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
+import { ClickAwayListener } from "@material-ui/core";
 import { FormApi } from "final-form";
 
 import { FinalFormInput } from "components";
@@ -71,36 +72,41 @@ export const TodosListAddTodoForm = ({ todosList, isLoading }: ITodosListAddTodo
   return (
     <>
       <Styled.FixedContentPusher />
-      <Form
-        onSubmit={handleAddTodo}
-        initialValues={todosListAddTodoFormInitialValues}
-        render={({ handleSubmit, form }) => {
-          return (
-            <Styled.Wrapper>
-              <Styled.ToggleFormButton
-                role="button"
-                onClick={() => handleToggleForm(form)}
-                isFormDisplayed={isFormDisplayed}
-              >
-                <span>Ajouter une tâche</span>
-                <ExpandLessOutlinedIcon />
-              </Styled.ToggleFormButton>
+      <ClickAwayListener onClickAway={() => toggleFormDisplay(false)}>
+        {/* ClickAwayListerner n'utilise pas forwardRef en interne, donc obligé d'avoir un div pour le faire fonctionner */}
+        <div>
+          <Form
+            onSubmit={handleAddTodo}
+            initialValues={todosListAddTodoFormInitialValues}
+            render={({ handleSubmit, form }) => {
+              return (
+                <Styled.Wrapper>
+                  <Styled.ToggleFormButton
+                    role="button"
+                    onClick={() => handleToggleForm(form)}
+                    isFormDisplayed={isFormDisplayed}
+                  >
+                    <span>Ajouter une tâche</span>
+                    <ExpandLessOutlinedIcon />
+                  </Styled.ToggleFormButton>
 
-              <Collapse isOpened={isFormDisplayed}>
-                <Styled.Form onSubmit={handleSubmit}>
-                  <FinalFormInput
-                    label="Nouvelle tâche"
-                    name={todosListAddTodoLabel}
-                    id={todosListAddTodoLabel}
-                    validate={todoContentValidator}
-                    fullWidth
-                  />
-                </Styled.Form>
-              </Collapse>
-            </Styled.Wrapper>
-          );
-        }}
-      />
+                  <Collapse isOpened={isFormDisplayed}>
+                    <Styled.Form onSubmit={handleSubmit}>
+                      <FinalFormInput
+                        label="Nouvelle tâche"
+                        name={todosListAddTodoLabel}
+                        id={todosListAddTodoLabel}
+                        validate={todoContentValidator}
+                        fullWidth
+                      />
+                    </Styled.Form>
+                  </Collapse>
+                </Styled.Wrapper>
+              );
+            }}
+          />
+        </div>
+      </ClickAwayListener>
     </>
   );
 };

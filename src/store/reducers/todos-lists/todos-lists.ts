@@ -1,6 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
+  IServiceResponse,
+  getTodosLists,
+  postTodosLists,
+  deleteTodosLists,
+  postTodo,
+  deleteTodo,
+  putTodoState,
+} from "services";
+
+import {
   ITodosListsReducerState,
   ITodosList,
   IAddTodoPayload,
@@ -10,15 +20,6 @@ import {
   IAddTodosListPayload,
   IDeleteTodosListPayload,
 } from "./todos-lists.interfaces";
-import {
-  IServiceResponse,
-  getTodosLists,
-  postTodosLists,
-  deleteTodosLists,
-  postTodo,
-  deleteTodo,
-  putTodoState,
-} from "services";
 
 export const todosListsInitialState: ITodosListsReducerState = {
   data: [],
@@ -32,7 +33,6 @@ const fetchTodosLists = createAsyncThunk<IServiceResponse<ITodosList[]>, IFetchT
   "todosLists/fetchTodosLists",
   async ({ userId }) => {
     const response = await getTodosLists(userId);
-    console.log(response);
     return response;
   }
 );
