@@ -24,3 +24,7 @@ yarn-error.log*
 
 # todo file
 project.todo
+
+
+# firebase
+firebase-config.ts

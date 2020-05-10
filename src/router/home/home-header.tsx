@@ -7,14 +7,14 @@ import { getTodosListsNumberSentence } from "./utils/get-todos-lists-number-sent
 
 export const HomeHeader = () => {
   const {
-    userPersonalInformations,
+    userData,
     getRequestStatus,
     todosLists,
     onGoingTodosListsNumber,
     doneTodosListsNumber,
   } = useUser();
 
-  const { displayName } = userPersonalInformations;
+  const { displayName } = userData;
 
   if (getRequestStatus === "PENDING") {
     return (

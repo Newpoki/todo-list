@@ -4,11 +4,12 @@ import {
   ITodoList,
   getUserTodosLists,
   getUserGetRequestStatus,
-  getUserPersonalInformations,
+  getUserData,
   getTodosListsNumberByState,
   IUpdateTodoStatePayload,
   IDeleteTodoPayload,
   IAddTodoPayload,
+  userThunks,
 } from "store";
 import { useMemo, useCallback } from "react";
 
@@ -16,7 +17,7 @@ export const useUser = () => {
   const dispatch = useDispatch();
 
   const todosLists = useSelector(getUserTodosLists);
-  const userPersonalInformations = useSelector(getUserPersonalInformations);
+  const userData = useSelector(getUserData);
   const getRequestStatus = useSelector(getUserGetRequestStatus);
   const onGoingTodosListsNumber = useSelector(getTodosListsNumberByState("ON_GOING"));
   const doneTodosListsNumber = useSelector(getTodosListsNumberByState("DONE"));
@@ -56,8 +57,13 @@ export const useUser = () => {
     [dispatch]
   );
 
+  const startConnection = useCallback(() => {
+    dispatch(userThunks.connection());
+  }, [dispatch]);
+
   return useMemo(
     () => ({
+      startConnection,
       addNewTodosList,
       deleteTodosList,
       addTodo,
@@ -65,11 +71,12 @@ export const useUser = () => {
       updateTodoState,
       todosLists,
       getRequestStatus,
-      userPersonalInformations,
+      userData,
       onGoingTodosListsNumber,
       doneTodosListsNumber,
     }),
     [
+      startConnection,
       addNewTodosList,
       deleteTodosList,
       addTodo,
@@ -77,7 +84,7 @@ export const useUser = () => {
       updateTodoState,
       todosLists,
       getRequestStatus,
-      userPersonalInformations,
+      userData,
       onGoingTodosListsNumber,
       doneTodosListsNumber,
     ]

@@ -6,6 +6,12 @@ import * as serviceWorker from "./serviceWorker";
 import { App } from "./app";
 import { store } from "./store";
 import { GlobalStyles } from "./theme";
+import firebase from "firebase/app";
+import "firebase/auth";
+
+import { firebaseConfig } from "./firebase-config";
+
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <React.StrictMode>

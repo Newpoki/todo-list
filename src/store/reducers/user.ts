@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getTodosListState } from "common-utils";
+import { getUserInformations, IServiceResponse } from "services";
 
 export type IAnyRequestStatus = "NOT_CALLED" | "PENDING" | "SUCCESS" | "ERROR";
 
@@ -24,11 +25,9 @@ export interface ITodoList {
 }
 
 export interface IUserReducerState {
-  firstName: string;
-  lastName: string;
-  displayName: string;
   todosLists: Array<ITodoList>;
   getRequestStatus: IAnyRequestStatus;
+  data: IUser;
 }
 
 export interface IUpdateTodoStatePayload {
@@ -47,13 +46,29 @@ export interface IDeleteTodoPayload {
   todoId: ITodo["id"];
 }
 
+export interface IUser {
+  id: string;
+  displayName: string;
+  email: string;
+  photoUrl: string;
+}
+
 export const userInitialState: IUserReducerState = {
-  firstName: "",
-  lastName: "",
-  displayName: "Jason",
+  data: {
+    displayName: "",
+    email: "",
+    id: "",
+    photoUrl: "",
+  },
   todosLists: [],
   getRequestStatus: "NOT_CALLED",
 };
+
+const connection = createAsyncThunk<IServiceResponse<IUser>>("cv/updateCvData", async () => {
+  const response = await getUserInformations();
+  console.log(response);
+  return response;
+});
 
 export const user = createSlice({
   name: "user",
@@ -178,7 +193,26 @@ export const user = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(connection.fulfilled, (state: IUserReducerState, { payload }) => {
+      if (payload.data) {
+        state.data = payload.data;
+        state.getRequestStatus = "SUCCESS";
+      } else {
+        state.getRequestStatus = "ERROR";
+      }
+    });
+    builder.addCase(connection.rejected, (state) => {
+      state.getRequestStatus = "ERROR";
+    });
+    builder.addCase(connection.pending, (state) => {
+      state.getRequestStatus = "PENDING";
+    });
+  },
 });
 
 export const userReducer = user.reducer;
 export const userActions = user.actions;
+export const userThunks = {
+  connection,
+};
