@@ -2,17 +2,18 @@ import React from "react";
 
 import { SkeletonLoader } from "components";
 import * as Styled from "./home-header.styles";
-import { useUser } from "hooks";
+import { useUser, useTodosLists } from "hooks";
 import { getTodosListsNumberSentence } from "./utils/get-todos-lists-number-sentence";
 
 export const HomeHeader = () => {
+  const { userData } = useUser();
+
   const {
-    userData,
-    getRequestStatus,
     todosLists,
     onGoingTodosListsNumber,
     doneTodosListsNumber,
-  } = useUser();
+    getRequestStatus,
+  } = useTodosLists();
 
   const { displayName } = userData;
 

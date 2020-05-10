@@ -4,3 +4,5 @@ export interface IServiceResponse<IData> {
     code: number;
   };
 }
+
+export type IAnyRequestStatus = "NOT_CALLED" | "PENDING" | "SUCCESS" | "ERROR";

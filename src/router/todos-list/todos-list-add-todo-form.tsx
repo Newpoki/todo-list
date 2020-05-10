@@ -2,13 +2,14 @@ import React, { useCallback, useState } from "react";
 import { Form } from "react-final-form";
 import { Collapse } from "react-collapse";
 import ExpandLessOutlinedIcon from "@material-ui/icons/ExpandLessOutlined";
+import { FormApi } from "final-form";
 
-import * as Styled from "./todos-list-add-todo-form.styles";
 import { FinalFormInput } from "components";
 import { todoContentValidator, createTodo, scrollToBottom } from "common-utils";
-import { useUser } from "hooks";
-import { ITodoList, IAnyRequestStatus } from "store";
-import { FormApi } from "final-form";
+import { useTodosLists } from "hooks";
+import { ITodoList } from "store";
+import { IAnyRequestStatus } from "services";
+import * as Styled from "./todos-list-add-todo-form.styles";
 
 // Name et Id du champ d'ajout de todo
 const todosListAddTodoLabel = "todosListAddTodoLabel";
@@ -32,7 +33,7 @@ export const TodosListAddTodoForm = ({
 }: ITodosListAddTodoFormProps) => {
   const [isFormDisplayed, toggleFormDisplay] = useState(false);
 
-  const { addTodo } = useUser();
+  const { addTodo } = useTodosLists();
 
   /** Ajoute le todo à la todosList et vide le champ du formulaire*/
   const handleAddTodo = useCallback(

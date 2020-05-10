@@ -4,8 +4,9 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 
 import * as Styled from "./todos-list-content.styles";
-import { IAnyRequestStatus, ITodoList, IUpdateTodoStatePayload, ITodoState, ITodo } from "store";
-import { useUser } from "hooks";
+import { ITodoList, IUpdateTodoStatePayload, ITodoState, ITodo } from "store";
+import { useTodosLists } from "hooks";
+import { IAnyRequestStatus } from "services";
 
 interface ITodosListContentProps {
   getRequestStatus: IAnyRequestStatus;
@@ -13,7 +14,7 @@ interface ITodosListContentProps {
 }
 
 export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListContentProps) => {
-  const { updateTodoState, deleteTodo } = useUser();
+  const { updateTodoState, deleteTodo } = useTodosLists();
 
   const toggleTodosListState = useCallback(
     (todosListId: ITodoList["id"], todoId: ITodo["id"], todoState: ITodoState) => {

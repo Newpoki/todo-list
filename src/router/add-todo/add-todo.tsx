@@ -7,7 +7,7 @@ import * as Styled from "./add-todo.styles";
 import { FinalFormInput, Footer } from "components";
 import { todoTitleValidator, checkIsEmpty, createTodosList, createTodo } from "common-utils";
 import { AddTodoTasksRenderer } from "./add-todo-tasks-renderer";
-import { useUser } from "hooks";
+import { useTodosLists } from "hooks";
 import { ITodo } from "store";
 
 interface IAddTodoForm {
@@ -25,7 +25,7 @@ const addTodoInitialValues: IAddTodoForm = {
 };
 
 export const AddTodo = ({ history }: IAddTodoProps) => {
-  const user = useUser();
+  const { addNewTodosList } = useTodosLists();
   const [tasks, updateTasks] = useState<ITodo[]>([]);
 
   const onSubmit = useCallback(
@@ -34,10 +34,10 @@ export const AddTodo = ({ history }: IAddTodoProps) => {
 
       // TODO: Dispatch une action qui ajoute la todosList en bdd
       // TODO: Déplacer la redirection dans le thunk qui fait l'ajout en bdd
-      user.addNewTodosList(todoList);
+      addNewTodosList(todoList);
       history.push("/");
     },
-    [tasks, user, history]
+    [tasks, addNewTodosList, history]
   );
 
   const handleAddNewTask = useCallback(

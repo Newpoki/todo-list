@@ -1,17 +1,18 @@
 import React, { useCallback } from "react";
-import { useUser } from "hooks";
+import { RouteComponentProps } from "react-router-dom";
+import { ButtonBase } from "@material-ui/core";
+import { useTodosLists } from "hooks";
+
 import * as Styled from "./home-preview-renderer.styles";
 import { TodosListPreview, SkeletonLoader } from "components";
-import { RouteComponentProps } from "react-router-dom";
 import { ITodoList } from "store";
-import { ButtonBase } from "@material-ui/core";
 
 interface IHomePreviewRendererProps {
   history: RouteComponentProps["history"];
 }
 
 export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
-  const { getRequestStatus, todosLists, deleteTodosList } = useUser();
+  const { getRequestStatus, todosLists, deleteTodosList } = useTodosLists();
 
   const handlePreviewClick = useCallback(
     (todosListId: ITodoList["id"]) => {
@@ -22,7 +23,6 @@ export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
 
   const handleDeleteTodosList = useCallback(
     (todosListId: ITodoList["id"]) => {
-      console.log("click");
       deleteTodosList(todosListId);
     },
     [deleteTodosList]
