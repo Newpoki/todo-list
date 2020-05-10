@@ -10,7 +10,7 @@ export const Title = styled.h1`
   font-family: "Open sans";
   font-weight: 400;
   margin: 0;
-  font-size: 28px;
+  font-size: 22px;
   color: ${theme.colors.light000};
   margin-bottom: ${theme.spacing("XS-8")};
 `;

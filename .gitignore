@@ -28,3 +28,7 @@ project.todo
 
 # firebase
 firebase-config.ts
+.firebase
+.firebaserc
+firebase.json
+firebase-debug.log

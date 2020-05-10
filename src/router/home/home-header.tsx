@@ -36,7 +36,7 @@ export const HomeHeader = ({ isLoading }: IHomeHeaderProps) => {
 
   return (
     <Styled.Wrapper>
-      <Styled.Title>Bonjour, {displayName}</Styled.Title>
+      <Styled.Title>Hello {displayName.split(" ")[0]}</Styled.Title>
 
       {todosLists.length > 0 && (
         <>
