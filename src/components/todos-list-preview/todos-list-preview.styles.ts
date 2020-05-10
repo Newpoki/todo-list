@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { theme } from "theme";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -17,6 +18,7 @@ export const Title = styled.h2`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  color: ${theme.colors.light900};
 `;
 
 export const DeleteIconWrapper = styled.div`
@@ -25,6 +27,7 @@ export const DeleteIconWrapper = styled.div`
 
   .MuiSvgIcon-root {
     font-size: 20px;
+    color: ${theme.colors.light900};
   }
 `;
 
@@ -33,7 +36,7 @@ export const Date = styled.h2`
   font-family: "Open sans";
   font-weight: 600;
   font-size: 12px;
-  margin-bottom: 8px;
+  margin-bottom: ${theme.spacing("XS-8")};
   color: grey;
 `;
 
@@ -47,4 +50,5 @@ export const TodoLabel = styled.li`
   margin: 0;
   font-family: "Open sans";
   font-size: 12px;
+  color: ${theme.colors.light900};
 `;

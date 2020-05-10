@@ -1,18 +1,20 @@
 import React, { useCallback } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { ButtonBase } from "@material-ui/core";
-import { useTodosLists } from "hooks";
+import { useTodosLists, useUser } from "hooks";
 
 import * as Styled from "./home-preview-renderer.styles";
 import { TodosListPreview, SkeletonLoader } from "components";
-import { ITodosList } from "store";
+import { ITodosList, IDeleteTodosListPayload } from "store";
 
 interface IHomePreviewRendererProps {
   history: RouteComponentProps["history"];
+  isLoading: boolean;
 }
 
-export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
-  const { getRequestStatus, todosLists, deleteTodosList } = useTodosLists();
+export const HomePreviewRenderer = ({ history, isLoading }: IHomePreviewRendererProps) => {
+  const { todosLists, deleteTodosList } = useTodosLists();
+  const { userData } = useUser();
 
   const handlePreviewClick = useCallback(
     (todosListId: ITodosList["id"]) => {
@@ -23,34 +25,38 @@ export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
 
   const handleDeleteTodosList = useCallback(
     (todosListId: ITodosList["id"]) => {
-      deleteTodosList(todosListId);
+      const payload: IDeleteTodosListPayload = {
+        todosListId,
+        userId: userData.id,
+      };
+      deleteTodosList(payload);
     },
-    [deleteTodosList]
+    [deleteTodosList, userData.id]
   );
 
-  if (getRequestStatus === "PENDING") {
+  if (isLoading) {
     return (
       <>
-        <Styled.TodosListPreviewWrapper>
+        <Styled.EmptyTodoListsPreviewWrapper>
           <SkeletonLoader height="120px" />
-        </Styled.TodosListPreviewWrapper>
-        <Styled.TodosListPreviewWrapper>
+        </Styled.EmptyTodoListsPreviewWrapper>
+        <Styled.EmptyTodoListsPreviewWrapper>
           <SkeletonLoader height="120px" />
-        </Styled.TodosListPreviewWrapper>
-        <Styled.TodosListPreviewWrapper>
+        </Styled.EmptyTodoListsPreviewWrapper>
+        <Styled.EmptyTodoListsPreviewWrapper>
           <SkeletonLoader height="120px" />
-        </Styled.TodosListPreviewWrapper>
+        </Styled.EmptyTodoListsPreviewWrapper>
       </>
     );
   }
 
   if (todosLists.length === 0) {
     return (
-      <Styled.EmptyPreviewRendererWrapper>
+      <Styled.EmptyWrapper>
         <Styled.EmptyPreviewRendererText>
           Vous n'avez aucune liste de créée.
         </Styled.EmptyPreviewRendererText>
-      </Styled.EmptyPreviewRendererWrapper>
+      </Styled.EmptyWrapper>
     );
   }
 
@@ -58,7 +64,7 @@ export const HomePreviewRenderer = ({ history }: IHomePreviewRendererProps) => {
     <Styled.Wrapper>
       {todosLists.map((todosList) => {
         return (
-          <ButtonBase onClick={() => handlePreviewClick(todosList.id)}>
+          <ButtonBase onClick={() => handlePreviewClick(todosList.id)} key={todosList.id}>
             <Styled.TodosListPreviewWrapper>
               <Styled.TodosListPreviewContentWrapper>
                 <TodosListPreview {...todosList} onDeleteIconClick={handleDeleteTodosList} />

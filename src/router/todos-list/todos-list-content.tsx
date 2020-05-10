@@ -1,24 +1,25 @@
-import React, { useCallback } from "react";
+import React, { useCallback, MouseEvent } from "react";
 import { SkeletonLoader } from "components";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 
 import * as Styled from "./todos-list-content.styles";
-import { ITodosList, IUpdateTodoStatePayload, ITodoState, ITodo } from "store";
-import { useTodosLists } from "hooks";
-import { IAnyRequestStatus } from "services";
+import { ITodosList, IUpdateTodoStatePayload, ITodoState, ITodo, IDeleteTodoPayload } from "store";
+import { useTodosLists, useUser } from "hooks";
 
 interface ITodosListContentProps {
-  getRequestStatus: IAnyRequestStatus;
+  isLoading: boolean;
   todosList?: ITodosList;
 }
 
-export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListContentProps) => {
+export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProps) => {
   const { updateTodoState, deleteTodo } = useTodosLists();
+  const { userData } = useUser();
 
   const toggleTodosListState = useCallback(
     (todosListId: ITodosList["id"], todoId: ITodo["id"], todoState: ITodoState) => {
       const payload: IUpdateTodoStatePayload = {
+        userId: userData.id,
         todosListId,
         todoId,
         newTodoState: todoState === "ON_GOING" ? "DONE" : "ON_GOING",
@@ -26,17 +27,25 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
 
       updateTodoState(payload);
     },
-    [updateTodoState]
+    [updateTodoState, userData.id]
   );
 
   const handleDeleteTodo = useCallback(
-    (todosListId: ITodosList["id"], todoId: ITodo["id"]) => {
-      deleteTodo({ todosListId, todoId });
+    (evt: MouseEvent<HTMLDivElement>, todosListId: ITodosList["id"], todoId: ITodo["id"]) => {
+      // Empêche le toggle du state du todo
+      evt.stopPropagation();
+
+      const payload: IDeleteTodoPayload = {
+        userId: userData.id,
+        todoId,
+        todosListId,
+      };
+      deleteTodo(payload);
     },
-    [deleteTodo]
+    [deleteTodo, userData.id]
   );
 
-  if (getRequestStatus === "PENDING") {
+  if (isLoading) {
     return (
       <Styled.Wrapper style={{ lineHeight: 2.5 }}>
         <Styled.Title>
@@ -47,7 +56,8 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
     );
   }
 
-  if (getRequestStatus === "ERROR" || !todosList) {
+  if (!todosList) {
+    // TODO: faire en sorte que la todolist soit obligatoire sinon rediriger 404
     return <Styled.Wrapper>Wolah y'a pas de content c chop</Styled.Wrapper>;
   }
 
@@ -78,7 +88,7 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
 
                 <Styled.DeleteTodoIconWrapper
                   state={todo.state}
-                  onClick={() => handleDeleteTodo(todosList.id, todo.id)}
+                  onClick={(evt) => handleDeleteTodo(evt, todosList.id, todo.id)}
                 >
                   <CloseIcon />
                 </Styled.DeleteTodoIconWrapper>

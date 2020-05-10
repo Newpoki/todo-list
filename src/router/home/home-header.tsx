@@ -5,19 +5,18 @@ import * as Styled from "./home-header.styles";
 import { useUser, useTodosLists } from "hooks";
 import { getTodosListsNumberSentence } from "./utils/get-todos-lists-number-sentence";
 
-export const HomeHeader = () => {
+interface IHomeHeaderProps {
+  isLoading: boolean;
+}
+
+export const HomeHeader = ({ isLoading }: IHomeHeaderProps) => {
   const { userData } = useUser();
 
-  const {
-    todosLists,
-    onGoingTodosListsNumber,
-    doneTodosListsNumber,
-    getRequestStatus,
-  } = useTodosLists();
+  const { todosLists, onGoingTodosListsNumber, doneTodosListsNumber } = useTodosLists();
 
   const { displayName } = userData;
 
-  if (getRequestStatus === "PENDING") {
+  if (isLoading) {
     return (
       <Styled.Wrapper>
         <Styled.Title>

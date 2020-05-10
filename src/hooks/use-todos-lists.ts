@@ -1,80 +1,90 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ITodosList,
   IUpdateTodoStatePayload,
   IDeleteTodoPayload,
   IAddTodoPayload,
-  todosListsActions,
   getTodosLists,
   getTodosListsNumberByState,
   getTodosListsRequestStatus,
+  todosListsThunks,
+  IFetchTodosListsPayload,
+  IAddTodosListPayload,
+  IDeleteTodosListPayload,
 } from "store";
 import { useMemo, useCallback } from "react";
-import {} from "store/selectors/get-todos-lists-request-status";
 
 export const useTodosLists = () => {
   const dispatch = useDispatch();
 
-  const getRequestStatus = useSelector(getTodosListsRequestStatus);
+  const requestsStatus = useSelector(getTodosListsRequestStatus);
   const todosLists = useSelector(getTodosLists);
   const onGoingTodosListsNumber = useSelector(getTodosListsNumberByState("ON_GOING"));
   const doneTodosListsNumber = useSelector(getTodosListsNumberByState("DONE"));
 
-  const addNewTodosList = useCallback(
-    (todosList: ITodosList) => {
-      dispatch(todosListsActions.addNewTodosList(todosList));
+  const fetchTodosLists = useCallback(
+    (payload: IFetchTodosListsPayload) => {
+      dispatch(todosListsThunks.fetchTodosLists(payload));
+    },
+    [dispatch]
+  );
+
+  const addTodosList = useCallback(
+    (payload: IAddTodosListPayload) => {
+      dispatch(todosListsThunks.addTodosList(payload));
     },
     [dispatch]
   );
 
   const deleteTodosList = useCallback(
-    (todosListId: ITodosList["id"]) => {
-      dispatch(todosListsActions.deleteTodosList(todosListId));
+    (payload: IDeleteTodosListPayload) => {
+      dispatch(todosListsThunks.deleteTodosList(payload));
     },
     [dispatch]
   );
 
   const addTodo = useCallback(
     (payload: IAddTodoPayload) => {
-      dispatch(todosListsActions.addTodo(payload));
+      dispatch(todosListsThunks.addTodo(payload));
     },
     [dispatch]
   );
 
   const deleteTodo = useCallback(
     (payload: IDeleteTodoPayload) => {
-      dispatch(todosListsActions.deleteTodo(payload));
+      dispatch(todosListsThunks.deleteTodoRequest(payload));
     },
     [dispatch]
   );
 
   const updateTodoState = useCallback(
     (payload: IUpdateTodoStatePayload) => {
-      dispatch(todosListsActions.updateTodoState(payload));
+      dispatch(todosListsThunks.updateTodoState(payload));
     },
     [dispatch]
   );
 
   return useMemo(
     () => ({
-      addNewTodosList,
+      fetchTodosLists,
+      addTodosList,
       deleteTodosList,
       addTodo,
       deleteTodo,
       updateTodoState,
       todosLists,
-      getRequestStatus,
+      requestsStatus,
       onGoingTodosListsNumber,
       doneTodosListsNumber,
     }),
     [
-      addNewTodosList,
+      fetchTodosLists,
+      addTodosList,
       deleteTodosList,
       addTodo,
       deleteTodo,
       updateTodoState,
       todosLists,
-      getRequestStatus,
+      requestsStatus,
       onGoingTodosListsNumber,
       doneTodosListsNumber,
     ]

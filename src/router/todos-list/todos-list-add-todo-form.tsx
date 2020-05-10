@@ -6,9 +6,8 @@ import { FormApi } from "final-form";
 
 import { FinalFormInput } from "components";
 import { todoContentValidator, createTodo, scrollToBottom } from "common-utils";
-import { useTodosLists } from "hooks";
-import { ITodosList } from "store";
-import { IAnyRequestStatus } from "services";
+import { useTodosLists, useUser } from "hooks";
+import { ITodosList, IAddTodoPayload } from "store";
 import * as Styled from "./todos-list-add-todo-form.styles";
 
 // Name et Id du champ d'ajout de todo
@@ -20,28 +19,31 @@ interface ITodosListAddTodoForm {
 
 interface ITodosListAddTodoFormProps {
   todosList?: ITodosList;
-  getRequestStatus: IAnyRequestStatus;
+  isLoading: boolean;
 }
 
 const todosListAddTodoFormInitialValues: ITodosListAddTodoForm = {
   todosListAddTodoLabel: "",
 };
 
-export const TodosListAddTodoForm = ({
-  todosList,
-  getRequestStatus,
-}: ITodosListAddTodoFormProps) => {
+export const TodosListAddTodoForm = ({ todosList, isLoading }: ITodosListAddTodoFormProps) => {
   const [isFormDisplayed, toggleFormDisplay] = useState(false);
-
   const { addTodo } = useTodosLists();
+  const { userData } = useUser();
 
   /** Ajoute le todo à la todosList et vide le champ du formulaire*/
   const handleAddTodo = useCallback(
     (formValues: ITodosListAddTodoForm, form: FormApi<ITodosListAddTodoForm>) => {
-      const newTodo = createTodo(formValues.todosListAddTodoLabel);
+      const todo = createTodo(formValues.todosListAddTodoLabel);
 
-      // On retourne null dans le render, donc todosList.id est forcément défini lorsqu'on appelle cette fonction
-      addTodo({ todo: newTodo, todosListId: todosList?.id as ITodosList["id"] });
+      const payload: IAddTodoPayload = {
+        todo,
+        // On retourne null dans le render, donc todosList.id est forcément défini lorsqu'on appelle cette fonction
+        todosListId: todosList?.id as ITodosList["id"],
+        userId: userData.id,
+      };
+
+      addTodo(payload);
       // On reset le champ après l'ajout
       form.change(todosListAddTodoLabel, todosListAddTodoFormInitialValues.todosListAddTodoLabel);
 
@@ -50,7 +52,7 @@ export const TodosListAddTodoForm = ({
         scrollToBottom();
       }, 50);
     },
-    [addTodo, todosList]
+    [addTodo, todosList, userData.id]
   );
 
   /** Affiche ou cache le formulaire et reset l'état du champ du todo
@@ -64,7 +66,7 @@ export const TodosListAddTodoForm = ({
   );
 
   // On cache le formulaire s'il n'y a pas de todoList. On ne veut pas de skeletonLoader ici.
-  if (!todosList || getRequestStatus === "PENDING") return null;
+  if (!todosList) return null;
 
   return (
     <>

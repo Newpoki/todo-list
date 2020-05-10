@@ -6,11 +6,18 @@ const todoListPreviewMaxHeight = "150px";
 const todoListPreviewPadding = theme.spacing("XS-8");
 
 export const Wrapper = styled.div`
+  /* Permet de changer la couleur du ripple effect */
+  color: ${theme.colors.pink600};
+
   .MuiButtonBase-root {
     text-align: left;
     width: 100%;
     margin-bottom: ${theme.spacing("S-12")};
   }
+`;
+
+export const EmptyTodoListsPreviewWrapper = styled.div`
+  margin-bottom: ${theme.spacing("S-12")};
 `;
 
 export const TodoListsPreviewWrapper = styled.div`
@@ -33,7 +40,7 @@ export const TodosListPreviewContentWrapper = styled.div`
   max-height: ${`calc(${todoListPreviewMaxHeight} - (${todoListPreviewPadding} * 2))`};
 `;
 
-export const EmptyPreviewRendererWrapper = styled.div`
+export const EmptyWrapper = styled.div`
   display: flex;
   flex: 1;
   align-items: center;

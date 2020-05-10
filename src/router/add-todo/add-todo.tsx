@@ -7,8 +7,8 @@ import * as Styled from "./add-todo.styles";
 import { FinalFormInput, Footer } from "components";
 import { todoTitleValidator, checkIsEmpty, createTodosList, createTodo } from "common-utils";
 import { AddTodoTasksRenderer } from "./add-todo-tasks-renderer";
-import { useTodosLists } from "hooks";
-import { ITodo } from "store";
+import { useTodosLists, useUser } from "hooks";
+import { ITodo, IAddTodosListPayload } from "store";
 
 interface IAddTodoForm {
   addTodoTitle: string;
@@ -25,19 +25,20 @@ const addTodoInitialValues: IAddTodoForm = {
 };
 
 export const AddTodo = ({ history }: IAddTodoProps) => {
-  const { addNewTodosList } = useTodosLists();
+  const { addTodosList } = useTodosLists();
+  const { userData } = useUser();
   const [tasks, updateTasks] = useState<ITodo[]>([]);
 
   const onSubmit = useCallback(
     (form: IAddTodoForm) => {
-      const todoList = createTodosList(form.addTodoTitle, tasks);
-
+      const todosList = createTodosList(form.addTodoTitle, tasks);
+      const payload: IAddTodosListPayload = { userId: userData.id, todosList };
       // TODO: Dispatch une action qui ajoute la todosList en bdd
       // TODO: Déplacer la redirection dans le thunk qui fait l'ajout en bdd
-      addNewTodosList(todoList);
+      addTodosList(payload);
       history.push("/");
     },
-    [tasks, addNewTodosList, history]
+    [tasks, userData.id, addTodosList, history]
   );
 
   const handleAddNewTask = useCallback(

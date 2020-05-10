@@ -13,16 +13,19 @@ export const userInitialState: IUserReducerState = {
   getRequestStatus: "NOT_CALLED",
 };
 
-const connection = createAsyncThunk<IServiceResponse<IUser>>("cv/updateCvData", async () => {
+const connection = createAsyncThunk<IServiceResponse<IUser>>("user/connection", async () => {
   const response = await getUserInformations();
-  console.log(response);
   return response;
 });
 
 export const user = createSlice({
   name: "user",
   initialState: userInitialState,
-  reducers: {},
+  reducers: {
+    updateUser: (state, { payload }: { payload: IUser }) => {
+      state.data = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(connection.fulfilled, (state: IUserReducerState, { payload }) => {
       if (payload.data) {

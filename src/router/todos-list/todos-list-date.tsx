@@ -3,17 +3,16 @@ import React from "react";
 import { SkeletonLoader } from "components";
 import { ITodosList } from "store";
 import { formatToFrDate } from "common-utils";
-import { IAnyRequestStatus } from "services";
 import * as Styled from "./todos-list-date.styles";
 import { getDateData } from "./utils/get-date-data";
 
 interface ITodosListDateProps {
   todosList?: ITodosList;
-  getRequestStatus: IAnyRequestStatus;
+  isLoading: boolean;
 }
 
-export const TodosListDate = ({ todosList, getRequestStatus }: ITodosListDateProps) => {
-  if (getRequestStatus === "PENDING") {
+export const TodosListDate = ({ todosList, isLoading }: ITodosListDateProps) => {
+  if (isLoading) {
     return (
       <Styled.Wrapper>
         <Styled.DayNumberMonthYearWrapper>

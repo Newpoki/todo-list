@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 
 import { IUser } from "store";
 import { IServiceResponse } from "./interfaces";
+import { formatFirebaseUser } from "common-utils";
 
 export const getUserInformations = async () => {
   try {
@@ -11,7 +12,6 @@ export const getUserInformations = async () => {
 
     const firebaseResponse = await firebase.auth().signInWithPopup(provider);
     const { user } = firebaseResponse;
-
     if (!user) {
       const response: IServiceResponse<IUser> = {
         error: {
@@ -22,12 +22,7 @@ export const getUserInformations = async () => {
     }
 
     const response: IServiceResponse<IUser> = {
-      data: {
-        id: user.uid,
-        displayName: user.displayName ?? "",
-        email: user.email ?? "",
-        photoUrl: user.photoURL ?? "",
-      },
+      data: formatFirebaseUser(user),
     };
 
     return response;

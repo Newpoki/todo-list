@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getUserGetRequestStatus, getUserData, userThunks } from "store";
+import { getUserGetRequestStatus, getUserData, userThunks, userActions, IUser } from "store";
 import { useMemo, useCallback } from "react";
 
 export const useUser = () => {
@@ -12,12 +12,20 @@ export const useUser = () => {
     dispatch(userThunks.connection());
   }, [dispatch]);
 
+  const updateUser = useCallback(
+    (payload: IUser) => {
+      dispatch(userActions.updateUser(payload));
+    },
+    [dispatch]
+  );
+
   return useMemo(
     () => ({
       startConnection,
+      updateUser,
       getRequestStatus,
       userData,
     }),
-    [startConnection, getRequestStatus, userData]
+    [startConnection, updateUser, getRequestStatus, userData]
   );
 };

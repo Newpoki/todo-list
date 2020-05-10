@@ -1,4 +1,5 @@
 import { IAnyRequestStatus } from "services";
+import { IUser } from "../user/user.interfaces";
 
 export type ITodoState = "DONE" | "ON_GOING";
 
@@ -20,26 +21,43 @@ export interface ITodosList {
   state: ITodoState;
 }
 
+export interface IFetchTodosListsPayload {
+  userId: IUser["id"];
+}
+
+export interface IAddTodosListPayload {
+  userId: IUser["id"];
+  todosList: ITodosList;
+}
+
+export interface IDeleteTodosListPayload {
+  userId: IUser["id"];
+  todosListId: ITodosList["id"];
+}
+
 export interface IUpdateTodoStatePayload {
+  userId: IUser["id"];
   todosListId: ITodosList["id"];
   todoId: ITodo["id"];
   newTodoState: ITodoState;
 }
 
 export interface IAddTodoPayload {
+  userId: IUser["id"];
   todosListId: ITodosList["id"];
   todo: ITodo;
 }
 
 export interface IDeleteTodoPayload {
+  userId: IUser["id"];
   todosListId: ITodosList["id"];
   todoId: ITodo["id"];
 }
 
 export interface ITodosListsReducerState {
-  userId: string;
   data: ITodosList[];
   getRequestStatus: IAnyRequestStatus;
   postRequestStatus: IAnyRequestStatus;
   putRequestStatus: IAnyRequestStatus;
+  deleteRequestStatus: IAnyRequestStatus;
 }
