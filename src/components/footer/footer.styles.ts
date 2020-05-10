@@ -19,6 +19,9 @@ export const Wrapper = styled.footer<{ isDisabled: boolean }>`
   cursor: pointer;
   cursor: initial;
 
+  /* Couleur du ripple effect du BaseButton */
+  color: ${theme.colors.pink600};
+
   ${({ isDisabled }) => isDisabled && disabledStyle}
 `;
 
