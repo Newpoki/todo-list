@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import firebase from "firebase/app";
 
 import { useTodosLists, useUser } from "hooks";
@@ -11,6 +11,7 @@ import { TodosList } from "./todos-list/todos-list";
 import { OnlyPrivateRoute } from "./only-private-route";
 import { OnlyPublicRoute } from "./only-public-route";
 import { Login } from "./login/login";
+import { Unknown } from "./unknown/unknown";
 
 export const Router = () => {
   const [isAppLoaded, changeIsAppLoaded] = React.useState(false);
@@ -40,6 +41,7 @@ export const Router = () => {
       <OnlyPrivateRoute path="/todos-list/:id" render={(props) => <TodosList {...props} />} exact />
       <OnlyPrivateRoute path="/" render={(props) => <Home {...props} />} exact />
       <OnlyPublicRoute path="/login" render={() => <Login />} exact />
+      <Route component={Unknown} />
     </Switch>
   );
 };
