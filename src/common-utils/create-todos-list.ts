@@ -1,11 +1,12 @@
 import { ITodosList } from "store";
+import { createId } from "./create-id";
 
 export const createTodosList = (title: ITodosList["title"], list: ITodosList["list"]) => {
   const actualTimestamp = Date.now();
 
   const todosList: ITodosList = {
     createdAt: actualTimestamp,
-    id: `${actualTimestamp}-${Math.random()}`,
+    id: createId(actualTimestamp),
     isFavorite: false,
     list,
     title,
