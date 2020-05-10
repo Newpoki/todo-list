@@ -4,20 +4,20 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 
 import * as Styled from "./todos-list-content.styles";
-import { ITodoList, IUpdateTodoStatePayload, ITodoState, ITodo } from "store";
+import { ITodosList, IUpdateTodoStatePayload, ITodoState, ITodo } from "store";
 import { useTodosLists } from "hooks";
 import { IAnyRequestStatus } from "services";
 
 interface ITodosListContentProps {
   getRequestStatus: IAnyRequestStatus;
-  todosList?: ITodoList;
+  todosList?: ITodosList;
 }
 
 export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListContentProps) => {
   const { updateTodoState, deleteTodo } = useTodosLists();
 
   const toggleTodosListState = useCallback(
-    (todosListId: ITodoList["id"], todoId: ITodo["id"], todoState: ITodoState) => {
+    (todosListId: ITodosList["id"], todoId: ITodo["id"], todoState: ITodoState) => {
       const payload: IUpdateTodoStatePayload = {
         todosListId,
         todoId,
@@ -30,7 +30,7 @@ export const TodosListContent = ({ getRequestStatus, todosList }: ITodosListCont
   );
 
   const handleDeleteTodo = useCallback(
-    (todosListId: ITodoList["id"], todoId: ITodo["id"]) => {
+    (todosListId: ITodosList["id"], todoId: ITodo["id"]) => {
       deleteTodo({ todosListId, todoId });
     },
     [deleteTodo]

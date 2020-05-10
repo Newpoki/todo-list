@@ -10,7 +10,7 @@ export interface ITodo {
   updatedAt?: number;
 }
 
-export interface ITodoList {
+export interface ITodosList {
   id: string;
   title: string;
   createdAt: number;
@@ -21,24 +21,24 @@ export interface ITodoList {
 }
 
 export interface IUpdateTodoStatePayload {
-  todosListId: ITodoList["id"];
+  todosListId: ITodosList["id"];
   todoId: ITodo["id"];
   newTodoState: ITodoState;
 }
 
 export interface IAddTodoPayload {
-  todosListId: ITodoList["id"];
+  todosListId: ITodosList["id"];
   todo: ITodo;
 }
 
 export interface IDeleteTodoPayload {
-  todosListId: ITodoList["id"];
+  todosListId: ITodosList["id"];
   todoId: ITodo["id"];
 }
 
 export interface ITodosListsReducerState {
   userId: string;
-  data: ITodoList[];
+  data: ITodosList[];
   getRequestStatus: IAnyRequestStatus;
   postRequestStatus: IAnyRequestStatus;
   putRequestStatus: IAnyRequestStatus;

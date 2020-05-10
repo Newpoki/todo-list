@@ -2,10 +2,10 @@ import React from "react";
 
 import * as Styled from "./add-todo-tasks-renderer.styles";
 import ClearIcon from "@material-ui/icons/Clear";
-import { ITodo, ITodoList } from "store";
+import { ITodo, ITodosList } from "store";
 
 interface IAddTodoTasksRendererProps {
-  tasks: ITodoList["list"];
+  tasks: ITodosList["list"];
   onRemoveTask: (taskId: string) => void;
 }
 

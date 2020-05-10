@@ -7,7 +7,7 @@ import { FormApi } from "final-form";
 import { FinalFormInput } from "components";
 import { todoContentValidator, createTodo, scrollToBottom } from "common-utils";
 import { useTodosLists } from "hooks";
-import { ITodoList } from "store";
+import { ITodosList } from "store";
 import { IAnyRequestStatus } from "services";
 import * as Styled from "./todos-list-add-todo-form.styles";
 
@@ -19,7 +19,7 @@ interface ITodosListAddTodoForm {
 }
 
 interface ITodosListAddTodoFormProps {
-  todosList?: ITodoList;
+  todosList?: ITodosList;
   getRequestStatus: IAnyRequestStatus;
 }
 
@@ -41,7 +41,7 @@ export const TodosListAddTodoForm = ({
       const newTodo = createTodo(formValues.todosListAddTodoLabel);
 
       // On retourne null dans le render, donc todosList.id est forcément défini lorsqu'on appelle cette fonction
-      addTodo({ todo: newTodo, todosListId: todosList?.id as ITodoList["id"] });
+      addTodo({ todo: newTodo, todosListId: todosList?.id as ITodosList["id"] });
       // On reset le champ après l'ajout
       form.change(todosListAddTodoLabel, todosListAddTodoFormInitialValues.todosListAddTodoLabel);
 

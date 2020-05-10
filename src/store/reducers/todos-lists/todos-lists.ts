@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
   ITodosListsReducerState,
-  ITodoList,
+  ITodosList,
   IAddTodoPayload,
   ITodo,
   IUpdateTodoStatePayload,
@@ -22,14 +22,14 @@ export const todosLists = createSlice({
   name: "todosLists",
   initialState: todosListsInitialState,
   reducers: {
-    addNewTodosList: (state: ITodosListsReducerState, { payload }: { payload: ITodoList }) => {
+    addNewTodosList: (state: ITodosListsReducerState, { payload }: { payload: ITodosList }) => {
       const newTodosLists = [payload, ...state.data];
       state.data = newTodosLists;
     },
 
     deleteTodosList: (
       state: ITodosListsReducerState,
-      { payload }: { payload: ITodoList["id"] }
+      { payload }: { payload: ITodosList["id"] }
     ) => {
       const filteredTodosLists = state.data.filter((todosList) => todosList.id !== payload);
       state.data = filteredTodosLists;
@@ -37,12 +37,12 @@ export const todosLists = createSlice({
 
     addTodo: (state: ITodosListsReducerState, { payload }: { payload: IAddTodoPayload }) => {
       // On trouve la todosList concerné
-      const concernedTodosList: ITodoList | undefined = state.data.find(
+      const concernedTodosList: ITodosList | undefined = state.data.find(
         (todosList) => todosList.id === payload.todosListId
       );
 
       // Toutes les todosList sauf celle contenant le todo à mettre à jour
-      const todosListsWithoutUpdatedOne: ITodoList[] = state.data.filter(
+      const todosListsWithoutUpdatedOne: ITodosList[] = state.data.filter(
         (todosList) => todosList.id !== payload.todosListId
       );
 
@@ -51,7 +51,7 @@ export const todosLists = createSlice({
         const updatedList: ITodo[] = [...concernedTodosList.list, payload.todo];
 
         // La todosList mise à jour
-        const updatedTodosList: ITodoList = {
+        const updatedTodosList: ITodosList = {
           ...concernedTodosList,
           list: updatedList,
           updatedAt: Date.now(),
@@ -59,7 +59,7 @@ export const todosLists = createSlice({
         };
 
         // Les todosLists à jour
-        const updatedTodosLists: ITodoList[] = [updatedTodosList, ...todosListsWithoutUpdatedOne];
+        const updatedTodosLists: ITodosList[] = [updatedTodosList, ...todosListsWithoutUpdatedOne];
 
         state.data = updatedTodosLists;
       }
@@ -67,12 +67,12 @@ export const todosLists = createSlice({
 
     deleteTodo: (state: ITodosListsReducerState, { payload }: { payload: IDeleteTodoPayload }) => {
       // On trouve la todosList concerné
-      const concernedTodosList: ITodoList | undefined = state.data.find(
+      const concernedTodosList: ITodosList | undefined = state.data.find(
         (todosList) => todosList.id === payload.todosListId
       );
 
       // Toutes les todosList sauf celle contenant le todo à mettre à jour
-      const todosListsWithoutUpdatedOne: ITodoList[] = state.data.filter(
+      const todosListsWithoutUpdatedOne: ITodosList[] = state.data.filter(
         (todosList) => todosList.id !== payload.todosListId
       );
 
@@ -81,7 +81,7 @@ export const todosLists = createSlice({
         const updatedList = concernedTodosList.list.filter((todo) => todo.id !== payload.todoId);
 
         // La todosList mise à jour
-        const updatedTodosList: ITodoList = {
+        const updatedTodosList: ITodosList = {
           ...concernedTodosList,
           list: updatedList,
           updatedAt: Date.now(),
@@ -89,7 +89,7 @@ export const todosLists = createSlice({
         };
 
         // Les todosLists à jour
-        const updatedTodosLists: ITodoList[] = [updatedTodosList, ...todosListsWithoutUpdatedOne];
+        const updatedTodosLists: ITodosList[] = [updatedTodosList, ...todosListsWithoutUpdatedOne];
 
         state.data = updatedTodosLists;
       }
@@ -100,12 +100,12 @@ export const todosLists = createSlice({
       { payload }: { payload: IUpdateTodoStatePayload }
     ) => {
       // On trouve la todosList concerné
-      const concernedTodosList: ITodoList | undefined = state.data.find(
+      const concernedTodosList: ITodosList | undefined = state.data.find(
         (todosList) => todosList.id === payload.todosListId
       );
 
       // Toutes les todosList sauf celle contenant le todo à mettre à jour
-      const todosListsWithoutUpdatedOne: ITodoList[] = state.data.filter(
+      const todosListsWithoutUpdatedOne: ITodosList[] = state.data.filter(
         (todosList) => todosList.id !== payload.todosListId
       );
 
@@ -129,7 +129,7 @@ export const todosLists = createSlice({
           );
 
           // La todosList mise à jour
-          const updatedTodosList: ITodoList = {
+          const updatedTodosList: ITodosList = {
             ...concernedTodosList,
             list: updatedList,
             updatedAt: actualTimeStamp,
@@ -137,7 +137,10 @@ export const todosLists = createSlice({
           };
 
           // Les todosLists à jour
-          const updatedTodosLists: ITodoList[] = [updatedTodosList, ...todosListsWithoutUpdatedOne];
+          const updatedTodosLists: ITodosList[] = [
+            updatedTodosList,
+            ...todosListsWithoutUpdatedOne,
+          ];
 
           state.data = updatedTodosLists;
         }

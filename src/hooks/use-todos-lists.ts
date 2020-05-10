@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ITodoList,
+  ITodosList,
   IUpdateTodoStatePayload,
   IDeleteTodoPayload,
   IAddTodoPayload,
@@ -21,14 +21,14 @@ export const useTodosLists = () => {
   const doneTodosListsNumber = useSelector(getTodosListsNumberByState("DONE"));
 
   const addNewTodosList = useCallback(
-    (todosList: ITodoList) => {
+    (todosList: ITodosList) => {
       dispatch(todosListsActions.addNewTodosList(todosList));
     },
     [dispatch]
   );
 
   const deleteTodosList = useCallback(
-    (todosListId: ITodoList["id"]) => {
+    (todosListId: ITodosList["id"]) => {
       dispatch(todosListsActions.deleteTodosList(todosListId));
     },
     [dispatch]

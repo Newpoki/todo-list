@@ -2,11 +2,11 @@ import React, { memo, useCallback, MouseEvent } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 
 import * as Styled from "./todos-list-preview.styles";
-import { ITodoList } from "store";
+import { ITodosList } from "store";
 import { getTodosListdisplayedDate } from "common-utils";
 
-export interface ITodosListPreviewProps extends ITodoList {
-  onDeleteIconClick: (id: ITodoList["id"]) => void;
+export interface ITodosListPreviewProps extends ITodosList {
+  onDeleteIconClick: (id: ITodosList["id"]) => void;
 }
 
 export const TodosListPreview = memo(

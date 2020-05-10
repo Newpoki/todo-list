@@ -1,14 +1,14 @@
 import React from "react";
 
 import { SkeletonLoader } from "components";
-import { ITodoList } from "store";
+import { ITodosList } from "store";
 import { formatToFrDate } from "common-utils";
 import { IAnyRequestStatus } from "services";
 import * as Styled from "./todos-list-date.styles";
 import { getDateData } from "./utils/get-date-data";
 
 interface ITodosListDateProps {
-  todosList?: ITodoList;
+  todosList?: ITodosList;
   getRequestStatus: IAnyRequestStatus;
 }
 

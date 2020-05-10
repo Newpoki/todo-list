@@ -1,9 +1,9 @@
-import { ITodoList } from "store";
+import { ITodosList } from "store";
 
-export const createTodosList = (title: ITodoList["title"], list: ITodoList["list"]) => {
+export const createTodosList = (title: ITodosList["title"], list: ITodosList["list"]) => {
   const actualTimestamp = Date.now();
 
-  const todosList: ITodoList = {
+  const todosList: ITodosList = {
     createdAt: actualTimestamp,
     id: `${actualTimestamp}-${Math.random()}`,
     isFavorite: false,
