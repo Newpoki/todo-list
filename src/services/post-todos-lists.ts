@@ -6,9 +6,10 @@ import { IServiceResponse } from "./interfaces";
 export const postTodosLists = async ({ userId, todosList }: IAddTodosListPayload) => {
   try {
     const collection = firebase.firestore().collection("/todosLists");
-    const existingData = (await collection.doc(userId).get()).data()?.data as ITodosList[];
+    const existingData: ITodosList[] | undefined = (await collection.doc(userId).get()).data()
+      ?.data;
 
-    const updatedTodosLists = [todosList, ...existingData];
+    const updatedTodosLists = existingData ? [todosList, ...existingData] : [todosList];
 
     await collection.doc(userId).set({ data: updatedTodosLists });
 
@@ -16,6 +17,7 @@ export const postTodosLists = async ({ userId, todosList }: IAddTodosListPayload
 
     return response;
   } catch (err) {
+    console.log(err);
     const response: IServiceResponse<ITodosList> = {
       error: {
         code: 500,
