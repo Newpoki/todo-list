@@ -149,31 +149,31 @@ export const todosLists = createSlice({
     builder.addCase(deleteTodoRequest.fulfilled, (state: ITodosListsReducerState, { payload }) => {
       if (payload.data) {
         state.data = payload.data;
-        state.postRequestStatus = "SUCCESS";
+        state.deleteRequestStatus = "SUCCESS";
       } else {
-        state.postRequestStatus = "ERROR";
+        state.deleteRequestStatus = "ERROR";
       }
     });
     builder.addCase(deleteTodoRequest.pending, (state: ITodosListsReducerState) => {
-      state.postRequestStatus = "PENDING";
+      state.deleteRequestStatus = "PENDING";
     });
     builder.addCase(deleteTodoRequest.rejected, (state: ITodosListsReducerState) => {
-      state.postRequestStatus = "ERROR";
+      state.deleteRequestStatus = "ERROR";
     });
 
     builder.addCase(updateTodoState.fulfilled, (state: ITodosListsReducerState, { payload }) => {
       if (payload.data) {
         state.data = payload.data;
-        state.postRequestStatus = "SUCCESS";
+        state.putRequestStatus = "SUCCESS";
       } else {
-        state.postRequestStatus = "ERROR";
+        state.putRequestStatus = "ERROR";
       }
     });
     builder.addCase(updateTodoState.pending, (state: ITodosListsReducerState) => {
-      state.postRequestStatus = "PENDING";
+      state.putRequestStatus = "PENDING";
     });
     builder.addCase(updateTodoState.rejected, (state: ITodosListsReducerState) => {
-      state.postRequestStatus = "ERROR";
+      state.putRequestStatus = "ERROR";
     });
   },
 });

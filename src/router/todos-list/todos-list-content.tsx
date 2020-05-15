@@ -49,7 +49,7 @@ export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProp
     return (
       <Styled.Wrapper style={{ lineHeight: 2.5 }}>
         <Styled.Title>
-          <SkeletonLoader width="50%" height="30px" />
+          <SkeletonLoader width="60%" height="30px" />
         </Styled.Title>
         <SkeletonLoader count={10} height="20px" />
       </Styled.Wrapper>

@@ -21,7 +21,7 @@ const testLol = async () => {
 
 const notificationDefaultOptions: ToastOptions = {
   position: "top-center",
-  autoClose: 3000,
+  autoClose: 2000,
   hideProgressBar: false,
   closeOnClick: true,
   transition: Slide,

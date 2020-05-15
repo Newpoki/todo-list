@@ -20,7 +20,11 @@ interface ITodosListProps extends RouteComponentProps {
 export const TodosList = ({ match }: ITodosListProps) => {
   const { requestsStatus } = useTodosLists();
 
-  const isLoading = requestsStatus.get === "PENDING" || requestsStatus.delete === "PENDING";
+  const isLoading =
+    requestsStatus.get === "PENDING" ||
+    requestsStatus.delete === "PENDING" ||
+    requestsStatus.put === "PENDING";
+
   const todosListId = match.params.id;
   const todosList = useSelector(getTodosListById(todosListId));
 

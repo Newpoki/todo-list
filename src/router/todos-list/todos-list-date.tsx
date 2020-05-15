@@ -15,19 +15,25 @@ export const TodosListDate = ({ todosList, isLoading }: ITodosListDateProps) => 
   if (isLoading) {
     return (
       <Styled.Wrapper>
-        <Styled.DayNumberMonthYearWrapper>
-          <Styled.DayNumber>
-            <SkeletonLoader width="50px" />
-          </Styled.DayNumber>
-          <Styled.MonthYearWrapper>
-            <Styled.Month>
+        <Styled.DateWrapper>
+          <Styled.DayNumberMonthYearWrapper>
+            <Styled.DayNumber>
               <SkeletonLoader width="50px" />
-            </Styled.Month>
-            <Styled.Year>
-              <SkeletonLoader />
-            </Styled.Year>
-          </Styled.MonthYearWrapper>
-        </Styled.DayNumberMonthYearWrapper>
+            </Styled.DayNumber>
+            <Styled.MonthYearWrapper>
+              <Styled.Month>
+                <SkeletonLoader width="50px" />
+              </Styled.Month>
+              <Styled.Year>
+                <SkeletonLoader />
+              </Styled.Year>
+            </Styled.MonthYearWrapper>
+          </Styled.DayNumberMonthYearWrapper>
+        </Styled.DateWrapper>
+
+        <Styled.UpdatedAt isDisplayed={false}>
+          <SkeletonLoader width="70%" />
+        </Styled.UpdatedAt>
       </Styled.Wrapper>
     );
   }

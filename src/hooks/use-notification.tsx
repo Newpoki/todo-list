@@ -13,10 +13,5 @@ export const useNotification = () => {
     []
   );
 
-  return useMemo(
-    () => ({
-      addNotification,
-    }),
-    [addNotification]
-  );
+  return useMemo(() => ({ addNotification }), [addNotification]);
 };
