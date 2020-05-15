@@ -9,8 +9,8 @@ export const getUserInformations = async () => {
     await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
     const provider = new firebase.auth.GoogleAuthProvider();
-    const firebaseResponse = await firebase.auth().signInWithPopup(provider);
-    const { user } = firebaseResponse;
+    await firebase.auth().signInWithRedirect(provider);
+    const { user } = await firebase.auth().getRedirectResult();
 
     if (!user) {
       const response: IServiceResponse<IUser> = {

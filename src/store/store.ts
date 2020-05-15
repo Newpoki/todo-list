@@ -9,15 +9,13 @@ import {
 
 /** Interface du state du store de l'application */
 export interface IStoreState {
-  user: IUserReducerState;
   todosLists: ITodosListsReducerState;
+  user: IUserReducerState;
 }
 
 const rootReducerState = {
-  user: userReducer,
   todosLists: todosListsReducer,
+  user: userReducer,
 };
 
-export const store = configureStore({
-  reducer: rootReducerState,
-});
+export const store = configureStore({ reducer: rootReducerState });

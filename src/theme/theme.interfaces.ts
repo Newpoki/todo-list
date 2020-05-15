@@ -13,10 +13,14 @@ export interface IThemeProps {
     light700: "rgba(60, 60, 60, 1)";
     light900: "rgba(0, 0, 0, 0.9)";
     red500: "rgb(255, 48, 33)";
+    blue500: "#2196f3";
+    green500: "#4caf50";
+    orange500: "#ff9800";
   };
   constants: {};
   fontFamilies: {
     open: "Open Sans";
+    roboto: "Roboto";
   };
   spacing: IGetSpacingInPixels;
 }

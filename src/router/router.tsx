@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import firebase from "firebase/app";
 
-import { useTodosLists, useUser } from "hooks";
+import { useTodosLists, useUser, useNotification } from "hooks";
 import { IUser } from "store";
 import { formatFirebaseUser } from "common-utils";
 import { Home } from "./home/home";
@@ -17,6 +17,7 @@ export const Router = () => {
   const [isAppLoaded, changeIsAppLoaded] = React.useState(false);
   const { fetchTodosLists } = useTodosLists();
   const { updateUser } = useUser();
+  const { addNotification } = useNotification();
 
   useEffect(() => {
     /** Ecoute le statut d'authent de l'utilisateur de firebase
@@ -27,11 +28,16 @@ export const Router = () => {
 
         updateUser(formattedUser);
         fetchTodosLists({ userId: user.uid });
+        addNotification({
+          title: "Connexion réussie",
+          content: `Hello ${formattedUser.displayName.split(" ")[0]}`,
+          type: "success",
+        });
       }
 
       changeIsAppLoaded(true);
     });
-  }, [fetchTodosLists, updateUser]);
+  }, [addNotification, fetchTodosLists, updateUser]);
 
   if (!isAppLoaded) return null;
 
