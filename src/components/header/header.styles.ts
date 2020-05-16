@@ -2,10 +2,10 @@
 import styled from "styled-components";
 import { makeStyles, createStyles } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/core/styles/withStyles";
+import * as StyledLink from "../link/link.styles";
 
 /** Imports locaux */
 import { theme } from "theme";
-// import * as StyledLink from "components/Link/Link.style";
 
 export const getHeaderStyle = makeStyles((materialTheme) =>
   createStyles({
@@ -16,7 +16,7 @@ export const getHeaderStyle = makeStyles((materialTheme) =>
       zIndex: 1101,
     },
     appMenuIcon: {
-      color: theme.colors.blue500,
+      color: theme.colors.pink600,
     },
     offset: materialTheme.mixins.toolbar as CSSProperties,
   })
@@ -27,7 +27,7 @@ export const AppName = styled.div`
   /** Laisse le lien affichant le nom de l'application dans le header en blanc
    *  même si c'est la route actuelle
   */
-  .link-is-active {
+  ${StyledLink.Wrapper} {
     color: ${theme.colors.light000};
   }
 `;

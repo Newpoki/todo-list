@@ -1,30 +1,78 @@
-/** Imports NPM */
 import { createStyles, makeStyles } from "@material-ui/core";
 import styled from "styled-components";
 
-/** Imports locaux */
+import * as StyledLink from "../link/link.styles";
 import { theme } from "theme";
 
 export const getMobileHeaderMenuStyle = makeStyles(() =>
   createStyles({
     root: {
-      backgroundColor: theme.colors.light700,
-
-      "& a.link-is-active .MuiListItemIcon-root": {
-        color: theme.colors.blue500
+      "& .MuiListItemIcon-root": {
+        color: theme.colors.light000,
       },
 
-      "& .MuiListItemIcon-root": {
-        color: theme.colors.light000
-      }
+      minWidth: "300px",
     },
     list: {
       flex: 1,
       display: "flex",
-      flexDirection: "column"
-    }
+      flexDirection: "column",
+      padding: "0",
+    },
+    bottomListItem: {
+      justifyContent: "center",
+    },
+    logoutIcon: {
+      minWidth: 0,
+      marginRight: theme.spacing("XS-8"),
+    },
+    divider: {
+      background: theme.colors.purpleToPink,
+    },
   })
 );
+
+export const Wrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: ${theme.colors.light700};
+  padding-top: ${theme.spacing("XXL-32")};
+
+  ${StyledLink.Wrapper}, ${StyledLink.Wrapper}:visited {
+    color: ${theme.colors.light000};
+    display: flex;
+    align-items: center;
+
+    ${theme.constants.linkActiveClassName} {
+      color: ${theme.colors.pink500};
+    }
+  }
+`;
+
+export const AvatarWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Avatar = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+export const DisplayName = styled.p`
+  margin: 0;
+  margin-top: ${theme.spacing("M-16")};
+  font-family: ${theme.fontFamilies.roboto};
+  color: ${theme.colors.light000};
+`;
+
+export const Email = styled.p`
+  margin: 0;
+  font-family: ${theme.fontFamilies.roboto};
+  color: ${theme.colors.light000};
+`;
 
 export const BottomLinksWrapper = styled.div`
   flex: 1;

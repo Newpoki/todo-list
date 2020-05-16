@@ -1,16 +1,10 @@
-/** Imports NPM */
 import React, { memo } from "react";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
-/** Imports locaux */
 import { IMobileHeaderMenuProps } from "./mobile-header-menu.interfaces";
-// import { Link } from "../../../components/Link";
+import { Link } from "../link/link";
 import * as Styled from "./mobile-header-menu.styles";
-import { getMainHeaderLinks } from "./get-main-header-links";
-import { NavLink } from "react-router-dom";
-
-const mainHeaderLinks = getMainHeaderLinks();
 
 /**
  * Composant <MobileHeaderMenu /> qui affiche le menu de l'application en mobile
@@ -23,39 +17,27 @@ export const MobileHeaderMenu = memo(({ isOpen, onClose, user }: IMobileHeaderMe
 
   return (
     <Drawer open={isOpen} onClose={onClose} PaperProps={{ className: classes.root }}>
-      <List className={classes.list}>
-        {mainHeaderLinks.map((link) => (
-          <NavLink to={link.to} onClick={onClose} key={link.to}>
-            <ListItem>
-              <ListItemIcon>
-                <link.icon />
-              </ListItemIcon>
-              <ListItemText>{link.label}</ListItemText>
-            </ListItem>
-          </NavLink>
-        ))}
+      <Styled.Wrapper>
+        <Styled.AvatarWrapper>
+          <Styled.Avatar src={user.photoUrl} alt="Your avatar" />
+          <Styled.DisplayName>{user.displayName}</Styled.DisplayName>
+          <Styled.Email>{user.email}</Styled.Email>
+        </Styled.AvatarWrapper>
 
-        <Styled.BottomLinksWrapper>
-          <Divider />
-          <NavLink to="/profile" onClick={onClose}>
-            <ListItem>
-              <ListItemIcon>
-                {/* <UserAvatar picture={user.picture} /> */}
-                <img src={user.photoUrl} alt="user avatar" />
-              </ListItemIcon>
-              <ListItemText>headerMenuLinkProfile</ListItemText>
+        <List className={classes.list}>
+          <Styled.BottomLinksWrapper>
+            <Divider className={classes.divider} />
+            <ListItem onClick={onClose} className={classes.bottomListItem} button>
+              <Link to="/logout">
+                <ListItemIcon className={classes.logoutIcon}>
+                  <PowerSettingsNewIcon />
+                </ListItemIcon>
+                <ListItemText>Déconnexion</ListItemText>
+              </Link>
             </ListItem>
-          </NavLink>
-          <NavLink to="/logout" onClick={onClose}>
-            <ListItem>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText>headerMenuLinkLogout</ListItemText>
-            </ListItem>
-          </NavLink>
-        </Styled.BottomLinksWrapper>
-      </List>
+          </Styled.BottomLinksWrapper>
+        </List>
+      </Styled.Wrapper>
     </Drawer>
   );
 });

@@ -1,17 +1,10 @@
-/** Imports NPM */
 import React, { useState, useCallback, MouseEvent, memo } from "react";
-import { Menu, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { Menu, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
-/** Imports locaux */
-// import { Link } from "components";
-import { getMainHeaderLinks } from "./get-main-header-links";
+import { Link } from "../link/link";
 import * as Styled from "./desktop-header-menu.styles";
 import { IDesktopHeaderMenuProps } from "./desktop-header-menu.interfaces";
-import { NavLink } from "react-router-dom";
-// import { UserAvatar } from "components/UserAvatar";
-
-const mainHeaderLinks = getMainHeaderLinks();
 
 /**
  * Composant <MobileHeaderMenu /> qui affiche le menu de l'application en desktop
@@ -33,16 +26,9 @@ export const DesktopHeaderMenu = memo(({ user }: IDesktopHeaderMenuProps) => {
 
   return (
     <Styled.Wrapper>
-      <Styled.HeaderMainLinksWrapper>
-        {mainHeaderLinks.map((link) => (
-          <NavLink to={link.to} key={link.to}>
-            {link.label}
-          </NavLink>
-        ))}
-      </Styled.HeaderMainLinksWrapper>
-      <Styled.UserAvatarWrapper onClick={handleUserAvatarClick}>
-        <img src={user.photoUrl} alt="user avatar" />
-      </Styled.UserAvatarWrapper>
+      <Styled.AvatarWrapper onClick={handleUserAvatarClick}>
+        <Styled.Avatar src={user.photoUrl} alt="Your avatar" />
+      </Styled.AvatarWrapper>
 
       <Menu
         elevation={0}
@@ -51,35 +37,32 @@ export const DesktopHeaderMenu = memo(({ user }: IDesktopHeaderMenuProps) => {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
         PaperProps={{ className: classes.paper }}
+        MenuListProps={{ className: classes.list }}
         open={!!anchorEl}
         onClose={handleClose}
       >
         <div>
-          <NavLink to="/profile">
-            <ListItem onClick={handleClose}>
-              <ListItemIcon>
-                {/* <UserAvatar picture={user.picture} size="large" /> */}
-                <img src={user.photoUrl} alt="user avatar" />
-              </ListItemIcon>
-              <ListItemText>
-                <Styled.UserAvatarFromMenuInfosWrapper>
-                  <Styled.ProfilUserDisplayNameWrapper>
-                    {user.displayName}
-                  </Styled.ProfilUserDisplayNameWrapper>
-                  <Styled.ProfilUserEmailWrapper>{user.email}</Styled.ProfilUserEmailWrapper>
-                </Styled.UserAvatarFromMenuInfosWrapper>
-              </ListItemText>
-            </ListItem>
-          </NavLink>
+          <ListItem onClick={handleClose} className={classes.profilInfosItem}>
+            <ListItemIcon className={classes.avatarInMenuWrapper}>
+              <Styled.AvatarFromMenuInfos src={user.photoUrl} alt="Your avatar" />
+            </ListItemIcon>
+            <ListItemText>
+              <Styled.DisplayNameAndEmailWrapper>
+                <Styled.DisplayName>{user.displayName}</Styled.DisplayName>
+                <Styled.Email>{user.email}</Styled.Email>
+              </Styled.DisplayNameAndEmailWrapper>
+            </ListItemText>
+          </ListItem>
 
-          <NavLink to="/logout">
-            <ListItem onClick={handleClose}>
-              <ListItemIcon>
-                <ExitToAppIcon />
+          <Divider className={classes.divider} />
+          <ListItem onClick={handleClose} className={classes.logoutItem}>
+            <Link to="/logout" className={classes.logoutLink}>
+              <ListItemIcon className={classes.logoutIcon}>
+                <PowerSettingsNewIcon />
               </ListItemIcon>
-              <ListItemText>headerMenuLinkLogout</ListItemText>
-            </ListItem>
-          </NavLink>
+              <ListItemText>Déconnexion</ListItemText>
+            </Link>
+          </ListItem>
         </div>
       </Menu>
     </Styled.Wrapper>

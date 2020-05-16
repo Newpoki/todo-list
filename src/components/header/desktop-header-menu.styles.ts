@@ -1,58 +1,79 @@
-/** Imports NPM */
 import styled from "styled-components";
-
-/** Imports locaux */
-// import * as StyledLink from "components/Link/Link.style";
 import { makeStyles, createStyles } from "@material-ui/core";
+
 import { theme } from "theme";
 
 export const getDesktopHeaderMenuStyle = makeStyles(() =>
   createStyles({
     paper: {
       backgroundColor: theme.colors.light700,
+    },
+    list: {
+      padding: 0,
+    },
+    profilInfosItem: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    avatarInMenuWrapper: {
+      marginTop: theme.spacing("XS-8"),
+    },
+    divider: {
+      background: theme.colors.purpleToPink,
+    },
+    logoutIcon: {
+      minWidth: 0,
+      marginRight: theme.spacing("XS-8"),
+      color: theme.colors.light000,
+    },
 
-      "& a.link-is-active .MuiListItemIcon-root": {
-        color: theme.colors.blue500,
-      },
+    logoutItem: {
+      justifyContent: "center",
+    },
 
-      "& .MuiListItemIcon-root": {
-        color: theme.colors.light000,
-      },
+    logoutLink: {
+      color: theme.colors.light000,
+      display: "flex",
+      alignItems: "center",
     },
   })
 );
-/** Wrapper du composant DesktopHeaderMenu */
 export const Wrapper = styled.div`
   margin-left: auto;
   display: flex;
   align-items: center;
 `;
 
-/** Wrapper de l'icone de l'avatar qui ouvre le menu des liens secondaires*/
-export const UserAvatarWrapper = styled.div`
+export const AvatarWrapper = styled.div`
   cursor: pointer;
   margin-left: ${theme.spacing("S-12")};
 `;
 
-/** Wrapper des liens affiché dans la appbar du header */
-export const HeaderMainLinksWrapper = styled.div`
-  display: flex;
-
-  /** Ajoute l'espace entre les liens principaux */
-`;
-/* & ${StyledLink.Wrapper} {
-    margin-right: ${theme.spacing.s};
-  } */
-
-/** Wrapper du nom et de l'email de l'utilisateur */
-export const UserAvatarFromMenuInfosWrapper = styled.div`
-  margin-left: ${theme.spacing("XS-8")};
+export const Avatar = styled.img`
+  width: 32px;
+  height: 32px;
 `;
 
-/** Wrapper de l'email de l'utilisateur */
-export const ProfilUserEmailWrapper = styled.div`
-  font-size: 0.875rem;
+export const AvatarFromMenuInfos = styled.img`
+  width: 96px;
+  height: 96px;
 `;
 
-/** Wrapper du nom d'affichage de l'utilisateur */
-export const ProfilUserDisplayNameWrapper = styled.div``;
+export const DisplayNameAndEmailWrapper = styled.div`
+  margin-top: ${theme.spacing("M-16")};
+  margin-bottom: ${theme.spacing("M-16")};
+`;
+
+export const Email = styled.p`
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+  color: ${theme.colors.light000};
+`;
+
+export const DisplayName = styled.p`
+  margin: 0;
+  text-align: center;
+  color: ${theme.colors.light000};
+`;

@@ -6,10 +6,9 @@ import { AppBar, Toolbar, IconButton, useMediaQuery, useTheme } from "@material-
 /** Imports locaux */
 import * as Styled from "./header.styles";
 import { MobileHeaderMenu } from "./mobile-header-menu";
-// import { Link } from "components";
+import { Link } from "components";
 import { DesktopHeaderMenu } from "./desktop-header-menu";
 import { IHeaderProps } from "./header.interfaces";
-import { NavLink } from "react-router-dom";
 
 /** Header affiché sur les routes où l'utilisateur est connecté */
 export const Header = memo(({ user }: IHeaderProps) => {
@@ -45,7 +44,7 @@ export const Header = memo(({ user }: IHeaderProps) => {
             </IconButton>
           )}
           <Styled.AppName>
-            <NavLink to="/">My CRA</NavLink>
+            <Link to="/">todo-bem</Link>
           </Styled.AppName>
           {!isOnMobile && <DesktopHeaderMenu user={user} />}
         </Toolbar>
