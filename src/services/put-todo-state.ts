@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 
 import { ITodosList, IUpdateTodoStatePayload } from "store";
-import { IServiceResponse } from "./interfaces";
+import { IOldServiceResponse } from "./interfaces";
 import { updateExistingTodoState } from "common-utils";
 
 export const putTodoState = async ({
@@ -12,7 +12,8 @@ export const putTodoState = async ({
 }: IUpdateTodoStatePayload) => {
   try {
     const collection = firebase.firestore().collection("/todosLists");
-    const existingData = (await collection.doc(userId).get()).data()?.data as ITodosList[];
+    const existingData = (await collection.doc((userId as any) as string).get()).data()
+      ?.data as ITodosList[];
 
     const updatedTodosLists = updateExistingTodoState(
       existingData,
@@ -21,13 +22,13 @@ export const putTodoState = async ({
       newTodoState
     );
 
-    await collection.doc(userId).set({ data: updatedTodosLists });
+    await collection.doc((userId as any) as string).set({ data: updatedTodosLists });
 
-    const response: IServiceResponse<ITodosList[]> = { data: updatedTodosLists };
+    const response: IOldServiceResponse<ITodosList[]> = { data: updatedTodosLists };
 
     return response;
   } catch (err) {
-    const response: IServiceResponse<ITodosList[]> = {
+    const response: IOldServiceResponse<ITodosList[]> = {
       error: {
         code: 500,
       },

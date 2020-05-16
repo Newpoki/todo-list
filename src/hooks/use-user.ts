@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getUserGetRequestStatus, getUserData, userThunks, userActions, IUser } from "store";
+import {
+  getUserGetRequestStatus,
+  getUserData,
+  userThunks,
+  IGetUserWithGoogleTokenPayload,
+} from "store";
 import { useMemo, useCallback } from "react";
 
 export const useUser = () => {
@@ -8,24 +13,19 @@ export const useUser = () => {
   const userData = useSelector(getUserData);
   const getRequestStatus = useSelector(getUserGetRequestStatus);
 
-  const startConnection = useCallback(() => {
-    dispatch(userThunks.connection());
-  }, [dispatch]);
-
-  const updateUser = useCallback(
-    (payload: IUser) => {
-      dispatch(userActions.updateUser(payload));
+  const getUserWithToken = useCallback(
+    (payload: IGetUserWithGoogleTokenPayload) => {
+      dispatch(userThunks.getUserWithToken(payload));
     },
     [dispatch]
   );
 
   return useMemo(
     () => ({
-      startConnection,
-      updateUser,
+      getUserWithToken,
       getRequestStatus,
       userData,
     }),
-    [startConnection, updateUser, getRequestStatus, userData]
+    [getUserWithToken, getRequestStatus, userData]
   );
 };

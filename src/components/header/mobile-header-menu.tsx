@@ -19,8 +19,8 @@ export const MobileHeaderMenu = memo(({ isOpen, onClose, user }: IMobileHeaderMe
     <Drawer open={isOpen} onClose={onClose} PaperProps={{ className: classes.root }}>
       <Styled.Wrapper>
         <Styled.AvatarWrapper>
-          <Styled.Avatar src={user.photoUrl} alt="Your avatar" />
-          <Styled.DisplayName>{user.displayName}</Styled.DisplayName>
+          <Styled.Avatar src={user.image} alt="Your avatar" />
+          <Styled.DisplayName>{user.firstName}</Styled.DisplayName>
           <Styled.Email>{user.email}</Styled.Email>
         </Styled.AvatarWrapper>
 

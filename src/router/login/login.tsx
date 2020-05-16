@@ -1,15 +1,17 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ButtonBase } from "@material-ui/core";
 
 import * as Styled from "./login.styles";
-import { useUser } from "hooks";
+import { RouteComponentProps } from "react-router-dom";
 
-export const Login = () => {
-  const { startConnection } = useUser();
+export const Login = (props: RouteComponentProps) => {
+  const handleGoogleRedirection = useCallback(() => {
+    window.location.href = "http://localhost/google";
+  }, []);
 
-  const handleConnection = useCallback(() => {
-    startConnection();
-  }, [startConnection]);
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
 
   return (
     <Styled.Wrapper>
@@ -19,7 +21,7 @@ export const Login = () => {
         <span>pour ne plus rien oublier.</span>
       </Styled.Description>
       <Styled.GoogleAuthentButtonWrapper>
-        <ButtonBase onClick={handleConnection}>
+        <ButtonBase onClick={handleGoogleRedirection}>
           <Styled.GoogleAuthentText>Connexion avec Google</Styled.GoogleAuthentText>
         </ButtonBase>
       </Styled.GoogleAuthentButtonWrapper>

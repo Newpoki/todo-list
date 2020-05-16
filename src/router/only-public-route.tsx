@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 
 import { useUser } from "hooks";
@@ -15,7 +15,7 @@ export const OnlyPublicRoute = memo(({ render, ...others }: RouteProps) => {
     <Route
       {...others}
       render={({ location, history, match }) =>
-        userData.id === "" ? (
+        userData.id === 0 ? (
           render && render({ location, history, match })
         ) : (
           <Redirect

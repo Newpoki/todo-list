@@ -14,7 +14,7 @@ export const HomeHeader = ({ isLoading }: IHomeHeaderProps) => {
 
   const { todosLists, onGoingTodosListsNumber, doneTodosListsNumber } = useTodosLists();
 
-  const { displayName } = userData;
+  const { firstName } = userData;
 
   if (isLoading) {
     return (
@@ -36,7 +36,7 @@ export const HomeHeader = ({ isLoading }: IHomeHeaderProps) => {
 
   return (
     <Styled.Wrapper>
-      <Styled.Title>Hello {displayName.split(" ")[0]}</Styled.Title>
+      <Styled.Title>Hello {firstName.split(" ")[0]}</Styled.Title>
 
       {todosLists.length > 0 && (
         <>

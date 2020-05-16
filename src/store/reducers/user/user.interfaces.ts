@@ -6,8 +6,16 @@ export interface IUserReducerState {
 }
 
 export interface IUser {
-  id: string;
-  displayName: string;
+  createdAt: string;
   email: string;
-  photoUrl: string;
+  firstName: string;
+  id: number;
+  image: string;
+  lastName: string;
+  provider: string;
+  updatedAt: string;
+}
+
+export interface IGetUserWithGoogleTokenPayload {
+  token: string;
 }

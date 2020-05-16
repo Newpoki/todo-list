@@ -16,7 +16,7 @@ export const OnlyPrivateRoute = memo(({ render, ...others }: RouteProps) => {
     <Route
       {...others}
       render={({ location, history, match }) =>
-        userData.id !== "" ? (
+        userData.id !== 0 ? (
           render && render({ location, history, match })
         ) : (
           <Redirect

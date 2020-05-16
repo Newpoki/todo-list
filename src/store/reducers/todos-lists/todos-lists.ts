@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
-  IServiceResponse,
+  IOldServiceResponse,
   getTodosLists,
   postTodosLists,
   deleteTodosLists,
@@ -29,15 +29,15 @@ export const todosListsInitialState: ITodosListsReducerState = {
   putRequestStatus: "NOT_CALLED",
 };
 
-const fetchTodosLists = createAsyncThunk<IServiceResponse<ITodosList[]>, IFetchTodosListsPayload>(
-  "todosLists/fetchTodosLists",
-  async ({ userId }) => {
-    const response = await getTodosLists(userId);
-    return response;
-  }
-);
+const fetchTodosLists = createAsyncThunk<
+  IOldServiceResponse<ITodosList[]>,
+  IFetchTodosListsPayload
+>("todosLists/fetchTodosLists", async ({ userId }) => {
+  const response = await getTodosLists(userId);
+  return response;
+});
 
-const addTodosList = createAsyncThunk<IServiceResponse<ITodosList>, IAddTodosListPayload>(
+const addTodosList = createAsyncThunk<IOldServiceResponse<ITodosList>, IAddTodosListPayload>(
   "todosLists/addTodosList",
   async (payload: IAddTodosListPayload) => {
     const response = await postTodosLists(payload);
@@ -46,14 +46,14 @@ const addTodosList = createAsyncThunk<IServiceResponse<ITodosList>, IAddTodosLis
 );
 
 const deleteTodosList = createAsyncThunk<
-  IServiceResponse<ITodosList["id"]>,
+  IOldServiceResponse<ITodosList["id"]>,
   IDeleteTodosListPayload
 >("todosLists/deleteTodosList", async (payload) => {
   const response = await deleteTodosLists(payload);
   return response;
 });
 
-const addTodo = createAsyncThunk<IServiceResponse<ITodosList[]>, IAddTodoPayload>(
+const addTodo = createAsyncThunk<IOldServiceResponse<ITodosList[]>, IAddTodoPayload>(
   "todosLists/addTodo",
   async (payload) => {
     const response = await postTodo(payload);
@@ -61,7 +61,7 @@ const addTodo = createAsyncThunk<IServiceResponse<ITodosList[]>, IAddTodoPayload
   }
 );
 
-const deleteTodoRequest = createAsyncThunk<IServiceResponse<ITodosList[]>, IDeleteTodoPayload>(
+const deleteTodoRequest = createAsyncThunk<IOldServiceResponse<ITodosList[]>, IDeleteTodoPayload>(
   "todosList/deleteTodoRequest",
   async (payload) => {
     const response = await deleteTodo(payload);
@@ -69,13 +69,13 @@ const deleteTodoRequest = createAsyncThunk<IServiceResponse<ITodosList[]>, IDele
   }
 );
 
-const updateTodoState = createAsyncThunk<IServiceResponse<ITodosList[]>, IUpdateTodoStatePayload>(
-  "todosList/updateTodoState",
-  async (payload) => {
-    const response = await putTodoState(payload);
-    return response;
-  }
-);
+const updateTodoState = createAsyncThunk<
+  IOldServiceResponse<ITodosList[]>,
+  IUpdateTodoStatePayload
+>("todosList/updateTodoState", async (payload) => {
+  const response = await putTodoState(payload);
+  return response;
+});
 
 export const todosLists = createSlice({
   name: "todosLists",

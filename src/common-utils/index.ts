@@ -18,7 +18,6 @@ export * from "./create-id";
 export * from "./create-todo";
 export * from "./create-todos-list";
 export * from "./delete-todo-from-existing-todos-list";
-export * from "./format-firebase-user";
 export * from "./format-to-fr-date";
 export * from "./get-todos-list-displayed-date";
 export * from "./get-todos-list-state";

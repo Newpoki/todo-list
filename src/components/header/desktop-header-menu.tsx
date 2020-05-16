@@ -27,7 +27,7 @@ export const DesktopHeaderMenu = memo(({ user }: IDesktopHeaderMenuProps) => {
   return (
     <Styled.Wrapper>
       <Styled.AvatarWrapper onClick={handleUserAvatarClick}>
-        <Styled.Avatar src={user.photoUrl} alt="Your avatar" />
+        <Styled.Avatar src={user.image} alt="Your avatar" />
       </Styled.AvatarWrapper>
 
       <Menu
@@ -44,11 +44,11 @@ export const DesktopHeaderMenu = memo(({ user }: IDesktopHeaderMenuProps) => {
         <div>
           <ListItem onClick={handleClose} className={classes.profilInfosItem}>
             <ListItemIcon className={classes.avatarInMenuWrapper}>
-              <Styled.AvatarFromMenuInfos src={user.photoUrl} alt="Your avatar" />
+              <Styled.AvatarFromMenuInfos src={user.image} alt="Your avatar" />
             </ListItemIcon>
             <ListItemText>
               <Styled.DisplayNameAndEmailWrapper>
-                <Styled.DisplayName>{user.displayName}</Styled.DisplayName>
+                <Styled.DisplayName>{user.firstName}</Styled.DisplayName>
                 <Styled.Email>{user.email}</Styled.Email>
               </Styled.DisplayNameAndEmailWrapper>
             </ListItemText>
