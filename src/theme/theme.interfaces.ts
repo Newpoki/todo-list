@@ -17,7 +17,9 @@ export interface IThemeProps {
     green500: "#4caf50";
     orange500: "#ff9800";
   };
-  constants: {};
+  constants: {
+    linkActiveClassName: "link-is-active";
+  };
   fontFamilies: {
     open: "Open Sans";
     roboto: "Roboto";

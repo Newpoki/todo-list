@@ -63,7 +63,7 @@ export const Avatar = styled.img`
 
 export const DisplayName = styled.p`
   margin: 0;
-  margin-top: ${theme.spacing("M-16")};
+  margin-top: ${theme.spacing("XL-24")};
   font-family: ${theme.fontFamilies.roboto};
   color: ${theme.colors.light000};
 `;

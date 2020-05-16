@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { RouteComponentProps } from "react-router-dom";
 
-import { useTodosLists, useUser } from "hooks";
-import { Footer, Header } from "components";
+import { useTodosLists } from "hooks";
+import { Footer } from "components";
 import { HomeHeader } from "./home-header";
 import { HomePreviewRenderer } from "./home-preview-renderer";
 import * as Styled from "./home.styles";
@@ -11,7 +11,6 @@ type IHomeProps = RouteComponentProps;
 
 export const Home = ({ history }: IHomeProps) => {
   const { requestsStatus } = useTodosLists();
-  const { userData } = useUser();
 
   const isLoading = requestsStatus.get === "PENDING" || requestsStatus.delete === "PENDING";
 
@@ -21,7 +20,6 @@ export const Home = ({ history }: IHomeProps) => {
 
   return (
     <Styled.Wrapper>
-      <Header user={userData} />
       <HomeHeader isLoading={isLoading} />
       <HomePreviewRenderer isLoading={isLoading} history={history} />
 

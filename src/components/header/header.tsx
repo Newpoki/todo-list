@@ -1,12 +1,10 @@
-/** Imports NPM */
 import React, { memo, useState, useCallback, useEffect } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AppBar, Toolbar, IconButton, useMediaQuery, useTheme } from "@material-ui/core";
 
-/** Imports locaux */
 import * as Styled from "./header.styles";
 import { MobileHeaderMenu } from "./mobile-header-menu";
-import { Link } from "components";
+import { Link } from "../link/link";
 import { DesktopHeaderMenu } from "./desktop-header-menu";
 import { IHeaderProps } from "./header.interfaces";
 
@@ -49,6 +47,7 @@ export const Header = memo(({ user }: IHeaderProps) => {
           {!isOnMobile && <DesktopHeaderMenu user={user} />}
         </Toolbar>
       </AppBar>
+
       {isOnMobile && (
         <MobileHeaderMenu isOpen={isMobileMenuOpen} onClose={handleMobileMenuClose} user={user} />
       )}
