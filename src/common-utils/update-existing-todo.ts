@@ -1,4 +1,5 @@
 import { ITodosList, ITodo } from "store";
+import { getTodosListState } from "./get-todos-list-state";
 
 export const updateExistingTodo = (
   todosListsData: ITodosList[],
@@ -8,11 +9,14 @@ export const updateExistingTodo = (
 ) => {
   const updatedTodosLists = todosListsData.map((todosList) => {
     if (todosList.id === todosListId) {
+      const updatedTodos = todosList.list.map((todo) => {
+        return todo.id === todoId ? { ...todo, ...updatedTodoPart } : todo;
+      });
+
       return {
         ...todosList,
-        list: todosList.list.map((todo) => {
-          return todo.id === todoId ? { ...todo, ...updatedTodoPart } : todo;
-        }),
+        state: getTodosListState(updatedTodos),
+        list: updatedTodos,
       };
     } else {
       return todosList;

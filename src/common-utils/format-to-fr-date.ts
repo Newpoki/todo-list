@@ -7,7 +7,7 @@ interface IFormatToFrDateOptions {
 const defaultOptions = { withHours: false };
 
 export const formatToFrDate = (isoDate: string, options?: Partial<IFormatToFrDateOptions>) => {
-  const date = new Date();
+  const date = new Date(isoDate);
 
   const overrideOptions: IFormatToFrDateOptions = { ...defaultOptions, ...options };
 

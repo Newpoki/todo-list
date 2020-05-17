@@ -1,4 +1,5 @@
 import { ITodosList, ITodo } from "store";
+import { getTodosListState } from "./get-todos-list-state";
 
 export const deleteTodoFromExistingTodosList = (
   todosListsData: ITodosList[],
@@ -7,9 +8,12 @@ export const deleteTodoFromExistingTodosList = (
 ) => {
   const todosListsWithoutTodo = todosListsData.map((todosList) => {
     if (todosList.id === todosListId) {
+      const filteredTodos = todosList.list.filter((todo) => todo.id !== todoId);
+
       return {
         ...todosList,
-        list: todosList.list.filter((todo) => todo.id !== todoId),
+        state: getTodosListState(filteredTodos),
+        list: filteredTodos,
       };
     } else {
       return todosList;
