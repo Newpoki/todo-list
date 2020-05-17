@@ -23,7 +23,7 @@ export const useTodosLists = () => {
 
   const fetchTodosLists = useCallback(
     (payload: IFetchTodosListsPayload) => {
-      dispatch(todosListsThunks.fetchTodosLists(payload));
+      dispatch(todosListsThunks.getTodosLists(payload));
     },
     [dispatch]
   );

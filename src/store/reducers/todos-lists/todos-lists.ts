@@ -2,12 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
   IOldServiceResponse,
-  getTodosLists,
   postTodosLists,
   deleteTodosLists,
   postTodo,
   deleteTodo,
   putTodoState,
+  fetchTodosLists,
+  IServiceResponse,
+  isSuccessResponse,
 } from "services";
 
 import {
@@ -16,7 +18,7 @@ import {
   IAddTodoPayload,
   IUpdateTodoStatePayload,
   IDeleteTodoPayload,
-  IFetchTodosListsPayload,
+  IFetchTodosListsPayload as IGetTodosListsPayload,
   IAddTodosListPayload,
   IDeleteTodosListPayload,
 } from "./todos-lists.interfaces";
@@ -30,13 +32,13 @@ export const todosListsInitialState: ITodosListsReducerState = {
   putRequestStatus: "NOT_CALLED",
 };
 
-const fetchTodosLists = createAsyncThunk<
-  IOldServiceResponse<ITodosList[]>,
-  IFetchTodosListsPayload
->("todosLists/fetchTodosLists", async ({ userId }) => {
-  const response = await getTodosLists(userId);
-  return response;
-});
+const getTodosLists = createAsyncThunk<IServiceResponse<ITodosList[]>, IGetTodosListsPayload>(
+  "todosLists/fetchTodosLists",
+  async (payload) => {
+    const response = await fetchTodosLists(payload);
+    return response;
+  }
+);
 
 const addTodosList = createAsyncThunk<IOldServiceResponse<ITodosList>, IAddTodosListPayload>(
   "todosLists/addTodosList",
@@ -86,18 +88,16 @@ export const todosLists = createSlice({
     builder.addCase(userActions.disconnect.type, () => {
       return todosListsInitialState;
     });
-    builder.addCase(fetchTodosLists.fulfilled, (state: ITodosListsReducerState, { payload }) => {
-      if (payload.data) {
+    builder.addCase(getTodosLists.fulfilled, (state: ITodosListsReducerState, { payload }) => {
+      if (isSuccessResponse(payload)) {
         state.data = payload.data;
         state.getRequestStatus = "SUCCESS";
-      } else {
-        state.getRequestStatus = "ERROR";
       }
     });
-    builder.addCase(fetchTodosLists.pending, (state: ITodosListsReducerState) => {
+    builder.addCase(getTodosLists.pending, (state: ITodosListsReducerState) => {
       state.getRequestStatus = "PENDING";
     });
-    builder.addCase(fetchTodosLists.rejected, (state: ITodosListsReducerState) => {
+    builder.addCase(getTodosLists.rejected, (state: ITodosListsReducerState) => {
       state.getRequestStatus = "ERROR";
     });
 
@@ -185,7 +185,7 @@ export const todosLists = createSlice({
 export const todosListsReducer = todosLists.reducer;
 export const todosListsActions = todosLists.actions;
 export const todosListsThunks = {
-  fetchTodosLists,
+  getTodosLists,
   addTodosList,
   deleteTodosList,
   addTodo,

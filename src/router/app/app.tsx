@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { useUser } from "hooks";
+import { useUser, useTodosLists } from "hooks";
 import { Header } from "components";
 import { OnlyPrivateRoute } from "../only-private-route";
 import { AddTodo } from "../add-todo/add-todo";
@@ -10,7 +10,14 @@ import { Home } from "../home/home";
 import { Unknown } from "../unknown/unknown";
 
 export const App = () => {
-  const { userData, handleDisconnection } = useUser();
+  const { userData, handleDisconnection, token } = useUser();
+  const { fetchTodosLists, todosLists, requestsStatus } = useTodosLists();
+
+  useEffect(() => {
+    if (todosLists.length === 0 && requestsStatus.get === "NOT_CALLED") {
+      fetchTodosLists({ token });
+    }
+  }, [fetchTodosLists, requestsStatus.get, todosLists.length, token, userData.id]);
 
   return (
     <>

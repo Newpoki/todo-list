@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { fetchUserWithToken, IServiceResponse, ISuccessServiceResponse } from "services";
+import { fetchUserWithToken, IServiceResponse, isSuccessResponse } from "services";
 import {
   IUserReducerState,
   IUser,
@@ -28,12 +28,6 @@ export const userInitialState: IUserReducerState = {
   token: localStorageManager.userToken.get() ?? "",
 };
 
-function isSucessResponse<TData>(
-  response: IServiceResponse<TData>
-): response is ISuccessServiceResponse<TData> {
-  return !!(response as ISuccessServiceResponse<TData>).data;
-}
-
 /**
  * Thunk qui récupère les données d'un joueur associé via un token.
  * Si le token est valide -> On le stock en local storage
@@ -44,7 +38,7 @@ const getUserWithToken = createAsyncThunk<IServiceResponse<IUser>, IGetUserWithT
   async ({ token }: IGetUserWithTokenPayload) => {
     const response = await fetchUserWithToken(token);
 
-    if (isSucessResponse(response)) {
+    if (isSuccessResponse(response)) {
       localStorageManager.userToken.set(token);
     } else {
       localStorageManager.userToken.remove();
@@ -59,13 +53,13 @@ export const user = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    disconnect: (state) => {
+    disconnect: () => {
       return userDefaultState;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserWithToken.fulfilled, (state: IUserReducerState, { payload }) => {
-      if (isSucessResponse(payload)) {
+      if (isSuccessResponse(payload)) {
         state.data = payload.data;
         state.getRequestStatus = "SUCCESS";
       }

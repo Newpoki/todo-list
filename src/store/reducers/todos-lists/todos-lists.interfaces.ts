@@ -22,7 +22,7 @@ export interface ITodosList {
 }
 
 export interface IFetchTodosListsPayload {
-  userId: IUser["id"];
+  token: string;
 }
 
 export interface IAddTodosListPayload {
