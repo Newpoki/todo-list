@@ -1,28 +1,38 @@
-import firebase from "firebase/app";
+import axios, { AxiosRequestConfig } from "axios";
 
-import { ITodosList, IDeleteTodoPayload } from "store";
-import { IOldServiceResponse } from "./interfaces";
-import { deleteTodoFromExistingTodosList } from "common-utils";
+import { ITodosList, ITodo } from "store";
+import { IServiceResponse } from "./interfaces";
 
-export const deleteTodo = async ({ userId, todosListId, todoId }: IDeleteTodoPayload) => {
+interface IDeleteTodosInput {
+  token: string;
+  todosListId: ITodosList["id"];
+  todoId: ITodo["id"];
+}
+
+export interface IDeleteTodoOutput {
+  todosListId: ITodosList["id"];
+  todoId: ITodo["id"];
+}
+
+export const deleteTodo = async ({
+  token,
+  todosListId,
+  todoId,
+}: IDeleteTodosInput): Promise<IServiceResponse<IDeleteTodoOutput>> => {
+  const config: AxiosRequestConfig = { headers: { Authorization: `Bearer ${token}` } };
+
   try {
-    const collection = firebase.firestore().collection("/todosLists");
-    const existingData = (await collection.doc((userId as any) as string).get()).data()
-      ?.data as ITodosList[];
+    await axios.delete<IDeleteTodoOutput>(
+      `http://localhost/todolists/${todosListId}/todos/${todoId}`,
+      config
+    );
 
-    const updatedTodosLists = deleteTodoFromExistingTodosList(existingData, todosListId, todoId);
-
-    await collection.doc((userId as any) as string).set({ data: updatedTodosLists });
-
-    const response: IOldServiceResponse<ITodosList[]> = { data: updatedTodosLists };
+    const response: IServiceResponse<IDeleteTodoOutput> = { data: { todoId, todosListId } };
 
     return response;
   } catch (err) {
-    const response: IOldServiceResponse<ITodosList[]> = {
-      error: {
-        code: 500,
-      },
-    };
+    const response: IServiceResponse<IDeleteTodoOutput> = { error: err.response };
+
     return response;
   }
 };

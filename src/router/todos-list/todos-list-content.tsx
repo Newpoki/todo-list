@@ -14,7 +14,7 @@ interface ITodosListContentProps {
 
 export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProps) => {
   const { updateTodoState, deleteTodo } = useTodosLists();
-  const { userData } = useUser();
+  const { userData, token } = useUser();
 
   const toggleTodosListState = useCallback(
     (todosListId: ITodosList["id"], todoId: ITodo["id"], todoState: ITodoState) => {
@@ -36,13 +36,13 @@ export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProp
       evt.stopPropagation();
 
       const payload: IDeleteTodoPayload = {
-        userId: userData.id,
+        token,
         todoId,
         todosListId,
       };
       deleteTodo(payload);
     },
-    [deleteTodo, userData.id]
+    [deleteTodo, token]
   );
 
   if (isLoading) {

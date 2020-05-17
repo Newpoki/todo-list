@@ -1,28 +1,39 @@
-import firebase from "firebase/app";
+import axios, { AxiosRequestConfig } from "axios";
 
-import { ITodosList, IAddTodoPayload } from "store";
-import { IOldServiceResponse } from "./interfaces";
-import { addTodoToExistingTodosList } from "common-utils";
+import { ITodo, ITodosList, IAddTodoPayload } from "store";
+import { IServiceResponse } from "./interfaces";
 
-export const postTodo = async ({ userId, todosListId, todo }: IAddTodoPayload) => {
+interface IPostTodoInput {
+  token: string;
+  data: IAddTodoPayload["data"];
+  todosListId: ITodosList["id"];
+}
+
+export interface IPostTodoOutput {
+  todosListId: ITodosList["id"];
+  todo: ITodo;
+}
+
+export const postTodo = async ({
+  token,
+  todosListId,
+  data,
+}: IPostTodoInput): Promise<IServiceResponse<IPostTodoOutput>> => {
+  const config: AxiosRequestConfig = { headers: { Authorization: `Bearer ${token}` } };
+  console.log(data);
   try {
-    const collection = firebase.firestore().collection("/todosLists");
-    const existingData = (await collection.doc((userId as any) as string).get()).data()
-      ?.data as ITodosList[];
+    const addedTodo = await axios.post<ITodo>(
+      `http://localhost/todolists/${todosListId}/todos`,
+      data,
+      config
+    );
 
-    const updatedTodosLists = addTodoToExistingTodosList(existingData, todosListId, todo);
-
-    await collection.doc((userId as any) as string).set({ data: updatedTodosLists });
-
-    const response: IOldServiceResponse<ITodosList[]> = { data: updatedTodosLists };
-
+    const response: IServiceResponse<IPostTodoOutput> = {
+      data: { todo: addedTodo.data, todosListId },
+    };
     return response;
   } catch (err) {
-    const response: IOldServiceResponse<ITodosList[]> = {
-      error: {
-        code: 500,
-      },
-    };
+    const response: IServiceResponse<IPostTodoOutput> = { error: err.response };
     return response;
   }
 };

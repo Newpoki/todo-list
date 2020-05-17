@@ -25,7 +25,7 @@ export const TodosList = ({ match }: ITodosListProps) => {
     requestsStatus.delete === "PENDING" ||
     requestsStatus.put === "PENDING";
 
-  const todosListId = match.params.id;
+  const todosListId = parseInt(match.params.id, 10);
   const todosList = useSelector(getTodosListById(todosListId));
 
   return (
@@ -33,8 +33,9 @@ export const TodosList = ({ match }: ITodosListProps) => {
       <Styled.TodosListDateWrapper>
         <TodosListDate todosList={todosList} isLoading={isLoading} />
       </Styled.TodosListDateWrapper>
-
       <TodosListContent isLoading={isLoading} todosList={todosList} />
+      {/* TODO: Déplacer l'appel du composant dans le composant qui affiche le contenu pour ne plus
+      avoir id undefined */}
       <TodosListAddTodoForm todosList={todosList} isLoading={isLoading} />
     </Styled.Wrapper>
   );

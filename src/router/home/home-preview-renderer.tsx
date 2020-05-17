@@ -14,7 +14,7 @@ interface IHomePreviewRendererProps {
 
 export const HomePreviewRenderer = ({ history, isLoading }: IHomePreviewRendererProps) => {
   const { todosLists, deleteTodosList } = useTodosLists();
-  const { userData } = useUser();
+  const { token } = useUser();
 
   const handlePreviewClick = useCallback(
     (todosListId: ITodosList["id"]) => {
@@ -25,13 +25,10 @@ export const HomePreviewRenderer = ({ history, isLoading }: IHomePreviewRenderer
 
   const handleDeleteTodosList = useCallback(
     (todosListId: ITodosList["id"]) => {
-      const payload: IDeleteTodosListPayload = {
-        todosListId,
-        userId: userData.id,
-      };
+      const payload: IDeleteTodosListPayload = { todosListId, token };
       deleteTodosList(payload);
     },
-    [deleteTodosList, userData.id]
+    [deleteTodosList, token]
   );
 
   if (isLoading) {

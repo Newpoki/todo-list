@@ -1,29 +1,28 @@
-import firebase from "firebase/app";
+import axios, { AxiosRequestConfig } from "axios";
 
-import { ITodosList, IDeleteTodosListPayload } from "store";
-import { IOldServiceResponse } from "./interfaces";
+import { ITodosList } from "store";
+import { IServiceResponse } from "./interfaces";
 
-export const deleteTodosLists = async ({ userId, todosListId }: IDeleteTodosListPayload) => {
+interface IDeleteTodosListsInput {
+  token: string;
+  todosListId: ITodosList["id"];
+}
+
+export const deleteTodosLists = async ({
+  token,
+  todosListId,
+}: IDeleteTodosListsInput): Promise<IServiceResponse<ITodosList["id"]>> => {
+  const config: AxiosRequestConfig = { headers: { Authorization: `Bearer ${token}` } };
+
   try {
-    const collection = firebase.firestore().collection("/todosLists");
-    const existingData = (await collection.doc((userId as any) as string).get()).data()
-      ?.data as ITodosList[];
+    await axios.delete<void>(`http://localhost/todolists/${todosListId}`, config);
 
-    const updatedTodosLists = existingData.filter((todoList) => todoList.id !== todosListId);
-
-    await collection.doc((userId as any) as string).set({ data: updatedTodosLists });
-
-    const response: IOldServiceResponse<ITodosList["id"]> = {
-      data: todosListId,
-    };
+    const response: IServiceResponse<ITodosList["id"]> = { data: todosListId };
 
     return response;
   } catch (err) {
-    const response: IOldServiceResponse<ITodosList["id"]> = {
-      error: {
-        code: 500,
-      },
-    };
+    const response: IServiceResponse<ITodosList["id"]> = { error: err.response };
+
     return response;
   }
 };

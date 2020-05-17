@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosError } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 import { ITodosList, IRawTodoList } from "store";
 import { IServiceResponse } from "./interfaces";

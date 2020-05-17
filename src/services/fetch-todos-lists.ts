@@ -10,11 +10,7 @@ interface IFetchTodosListsInput {
 export const fetchTodosLists = async ({
   token,
 }: IFetchTodosListsInput): Promise<IServiceResponse<ITodosList[]>> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const config: AxiosRequestConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   try {
     const todosLists = await axios.get<ITodosList[]>("http://localhost/todolists/", config);

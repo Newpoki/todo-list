@@ -6,7 +6,7 @@ import { ClickAwayListener } from "@material-ui/core";
 import { FormApi } from "final-form";
 
 import { FinalFormInput } from "components";
-import { todoContentValidator, createTodo, scrollToBottom } from "common-utils";
+import { todoContentValidator, scrollToBottom } from "common-utils";
 import { useTodosLists, useUser } from "hooks";
 import { ITodosList, IAddTodoPayload } from "store";
 import * as Styled from "./todos-list-add-todo-form.styles";
@@ -15,7 +15,7 @@ import * as Styled from "./todos-list-add-todo-form.styles";
 const todosListAddTodoLabel = "todosListAddTodoLabel";
 
 interface ITodosListAddTodoForm {
-  todosListAddTodoLabel: string;
+  [todosListAddTodoLabel]: string;
 }
 
 interface ITodosListAddTodoFormProps {
@@ -30,30 +30,30 @@ const todosListAddTodoFormInitialValues: ITodosListAddTodoForm = {
 export const TodosListAddTodoForm = ({ todosList, isLoading }: ITodosListAddTodoFormProps) => {
   const [isFormDisplayed, toggleFormDisplay] = useState(false);
   const { addTodo } = useTodosLists();
-  const { userData } = useUser();
+  const { token } = useUser();
 
   /** Ajoute le todo à la todosList et vide le champ du formulaire*/
   const handleAddTodo = useCallback(
-    (formValues: ITodosListAddTodoForm, form: FormApi<ITodosListAddTodoForm>) => {
-      const todo = createTodo(formValues.todosListAddTodoLabel);
+    (values: ITodosListAddTodoForm, form: FormApi<ITodosListAddTodoForm>) => {
+      const data: IAddTodoPayload["data"] = { label: values.todosListAddTodoLabel };
 
       const payload: IAddTodoPayload = {
-        todo,
+        data,
+        token,
         // On retourne null dans le render, donc todosList.id est forcément défini lorsqu'on appelle cette fonction
         todosListId: todosList?.id as ITodosList["id"],
-        userId: userData.id,
       };
 
+      // Petit hack pour être bien sur que le todo a bien été ajouté. Sinon, ne scroll pas jusqu'en bas
+      // TODO: Promisifié l'appel
       addTodo(payload);
       // On reset le champ après l'ajout
       form.change(todosListAddTodoLabel, todosListAddTodoFormInitialValues.todosListAddTodoLabel);
-
-      // Petit hack pour être bien sur que le todo a bien été ajouté. Sinon, ne scroll pas jusqu'en bas
       setTimeout(() => {
         scrollToBottom();
-      }, 50);
+      }, 100);
     },
-    [addTodo, todosList, userData.id]
+    [addTodo, todosList, token]
   );
 
   /** Affiche ou cache le formulaire et reset l'état du champ du todo

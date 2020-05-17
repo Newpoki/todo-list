@@ -4,7 +4,7 @@ import { IUser } from "../user/user.interfaces";
 export type ITodoState = "DONE" | "ON_GOING";
 
 export interface ITodo {
-  id: string;
+  id: number;
   label: string;
   state: ITodoState;
   createdAt: string;
@@ -18,7 +18,7 @@ export interface IRawTodoList {
 }
 
 export interface ITodosList {
-  id: string;
+  id: number;
   title: string;
   createdAt: string;
   updatedAt?: string;
@@ -33,15 +33,12 @@ export interface IFetchTodosListsPayload {
 
 export interface IAddTodosListPayload {
   token: string;
-  data: {
-    title: string;
-    list: string[];
-  };
+  data: IRawTodoList;
 }
 
 export interface IDeleteTodosListPayload {
-  userId: IUser["id"];
   todosListId: ITodosList["id"];
+  token: string;
 }
 
 export interface IUpdateTodoStatePayload {
@@ -52,13 +49,13 @@ export interface IUpdateTodoStatePayload {
 }
 
 export interface IAddTodoPayload {
-  userId: IUser["id"];
   todosListId: ITodosList["id"];
-  todo: ITodo;
+  data: { label: string };
+  token: string;
 }
 
 export interface IDeleteTodoPayload {
-  userId: IUser["id"];
+  token: string;
   todosListId: ITodosList["id"];
   todoId: ITodo["id"];
 }
