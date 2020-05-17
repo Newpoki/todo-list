@@ -1,13 +1,19 @@
 import { ITodosList, ITodo } from "store";
 
-export const addTodoToExistingTodosList = (
+export const updateExistingTodo = (
   todosListsData: ITodosList[],
   todosListId: ITodosList["id"],
-  todo: ITodo
+  todoId: ITodo["id"],
+  updatedTodoPart: Partial<ITodo>
 ) => {
   const updatedTodosLists = todosListsData.map((todosList) => {
     if (todosList.id === todosListId) {
-      return { ...todosList, list: [...todosList.list, todo] };
+      return {
+        ...todosList,
+        list: todosList.list.map((todo) => {
+          return todo.id === todoId ? { ...todo, ...updatedTodoPart } : todo;
+        }),
+      };
     } else {
       return todosList;
     }

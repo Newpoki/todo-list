@@ -25,6 +25,11 @@ import {
   IDeleteTodosListPayload,
 } from "./todos-lists.interfaces";
 import { userActions } from "../user/user";
+import {
+  addTodoToExistingTodosList,
+  deleteTodoFromExistingTodosList,
+  updateExistingTodo,
+} from "common-utils";
 
 export const todosListsInitialState: ITodosListsReducerState = {
   data: [],
@@ -146,15 +151,9 @@ export const todosLists = createSlice({
     // ADD TODO
     builder.addCase(addTodo.fulfilled, (state: ITodosListsReducerState, { payload }) => {
       if (isSuccessResponse(payload)) {
-        const updatedTodosLists = state.data.map((todosList) => {
-          if (todosList.id === payload.data.todosListId) {
-            return { ...todosList, list: [...todosList.list, payload.data.todo] };
-          } else {
-            return todosList;
-          }
-        });
+        const { todosListId, todo } = payload.data;
 
-        state.data = updatedTodosLists;
+        state.data = addTodoToExistingTodosList(state.data, todosListId, todo);
         state.postRequestStatus = "SUCCESS";
       } else {
         state.postRequestStatus = "ERROR";
@@ -170,18 +169,9 @@ export const todosLists = createSlice({
     // DELETE TODO
     builder.addCase(deleteTodoRequest.fulfilled, (state: ITodosListsReducerState, { payload }) => {
       if (isSuccessResponse(payload)) {
-        const filteredTodosLists = state.data.map((todosList) => {
-          if (todosList.id === payload.data.todosListId) {
-            return {
-              ...todosList,
-              list: todosList.list.filter((todo) => todo.id !== payload.data.todoId),
-            };
-          } else {
-            return todosList;
-          }
-        });
+        const { todosListId, todoId } = payload.data;
 
-        state.data = filteredTodosLists;
+        state.data = deleteTodoFromExistingTodosList(state.data, todosListId, todoId);
         state.deleteRequestStatus = "SUCCESS";
       } else {
         state.deleteRequestStatus = "ERROR";
@@ -197,22 +187,9 @@ export const todosLists = createSlice({
     // UPDATE TODO
     builder.addCase(updateTodo.fulfilled, (state: ITodosListsReducerState, { payload }) => {
       if (isSuccessResponse(payload)) {
-        const updatedTodosLists = state.data.map((todosList) => {
-          if (todosList.id === payload.data.todosListId) {
-            return {
-              ...todosList,
-              list: todosList.list.map((todo) => {
-                return todo.id === payload.data.todoId
-                  ? { ...todo, ...payload.data.updatedTodoPart }
-                  : todo;
-              }),
-            };
-          } else {
-            return todosList;
-          }
-        });
+        const { todosListId, todoId, updatedTodoPart } = payload.data;
 
-        state.data = updatedTodosLists;
+        state.data = updateExistingTodo(state.data, todosListId, todoId, updatedTodoPart);
         state.putRequestStatus = "SUCCESS";
       } else {
         state.putRequestStatus = "ERROR";

@@ -22,4 +22,4 @@ export * from "./delete-todo-from-existing-todos-list";
 export * from "./format-to-fr-date";
 export * from "./get-todos-list-displayed-date";
 export * from "./get-todos-list-state";
-export * from "./update-existing-todo-state";
+export * from "./update-existing-todo";
