@@ -2,10 +2,10 @@ import React from "react";
 
 import * as Styled from "./add-todo-tasks-renderer.styles";
 import ClearIcon from "@material-ui/icons/Clear";
-import { ITodo, ITodosList } from "store";
+import { ITempTodo } from "./add-todo";
 
 interface IAddTodoTasksRendererProps {
-  tasks: ITodosList["list"];
+  tasks: ITempTodo[];
   onRemoveTask: (taskId: string) => void;
 }
 
@@ -22,7 +22,7 @@ export const AddTodoTasksRenderer = ({ tasks, onRemoveTask }: IAddTodoTasksRende
     <>
       <Styled.TasksTitle>Tâches ajoutées</Styled.TasksTitle>
       <Styled.TasksWrapper>
-        {tasks.map((task: ITodo) => {
+        {tasks.map((task: ITempTodo) => {
           return (
             <Styled.TaskWrapper key={task.id}>
               <Styled.TaskLabel>- {task.label}</Styled.TaskLabel>

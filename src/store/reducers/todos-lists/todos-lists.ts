@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
   IOldServiceResponse,
-  postTodosLists,
+  postTodosList,
   deleteTodosLists,
   postTodo,
   deleteTodo,
@@ -40,10 +40,11 @@ const getTodosLists = createAsyncThunk<IServiceResponse<ITodosList[]>, IGetTodos
   }
 );
 
-const addTodosList = createAsyncThunk<IOldServiceResponse<ITodosList>, IAddTodosListPayload>(
+const addTodosList = createAsyncThunk<IServiceResponse<ITodosList>, IAddTodosListPayload>(
   "todosLists/addTodosList",
   async (payload: IAddTodosListPayload) => {
-    const response = await postTodosLists(payload);
+    const response = await postTodosList(payload);
+
     return response;
   }
 );
@@ -102,7 +103,7 @@ export const todosLists = createSlice({
     });
 
     builder.addCase(addTodosList.fulfilled, (state: ITodosListsReducerState, { payload }) => {
-      if (payload.data) {
+      if (isSuccessResponse(payload)) {
         const newTodosLists = [payload.data, ...state.data];
 
         state.data = newTodosLists;

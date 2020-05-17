@@ -8,7 +8,9 @@ const defaultOptions = {
   withHours: false,
 };
 
-export const formatToFrDate = (timestamp: number, options?: Partial<IFormatToFrDateOptions>) => {
+export const formatToFrDate = (timestamp: string, options?: Partial<IFormatToFrDateOptions>) => {
+  const date = new Date();
+
   const overrideOptions: IFormatToFrDateOptions = {
     ...defaultOptions,
     ...options,
@@ -16,5 +18,5 @@ export const formatToFrDate = (timestamp: number, options?: Partial<IFormatToFrD
 
   const dateFormat = overrideOptions.withHours ? "dd/MM/yyyy à kk:mm:ss" : "dd/MM/yyyy";
 
-  return format(timestamp, dateFormat);
+  return format(date, dateFormat);
 };

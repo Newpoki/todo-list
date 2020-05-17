@@ -22,13 +22,13 @@ export const updateExistingTodoState = (
     const concernedTodo = concernedTodosList.list.find((todo) => todo.id === todoId);
 
     if (concernedTodo) {
-      const actualTimeStamp = Date.now();
+      const updatedAt = new Date().toISOString();
 
       // Le todo mis à jour
       const updatedTodo: ITodo = {
         ...concernedTodo,
         state: newTodoState,
-        updatedAt: actualTimeStamp,
+        updatedAt: updatedAt,
       };
 
       // Liste de todos de la todoList mise à jour
@@ -40,7 +40,7 @@ export const updateExistingTodoState = (
       const updatedTodosList: ITodosList = {
         ...concernedTodosList,
         list: updatedList,
-        updatedAt: actualTimeStamp,
+        updatedAt: updatedAt,
         state: getTodosListState(updatedList),
       };
 

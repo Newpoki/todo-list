@@ -1,6 +1,6 @@
 import { formatToFrDate } from "./format-to-fr-date";
 
-export const getTodosListdisplayedDate = (createdAt: number, updatedAt?: number) => {
+export const getTodosListdisplayedDate = (createdAt: string, updatedAt?: string) => {
   if (updatedAt) {
     const formatedDate = formatToFrDate(updatedAt, { withHours: true });
     return `Mise à jour le ${formatedDate}`;

@@ -14,7 +14,7 @@ export const App = () => {
   const { fetchTodosLists, todosLists, requestsStatus } = useTodosLists();
 
   useEffect(() => {
-    if (todosLists.length === 0 && requestsStatus.get === "NOT_CALLED") {
+    if (todosLists.length === 0 && requestsStatus.get === "NOT_CALLED" && token !== "") {
       fetchTodosLists({ token });
     }
   }, [fetchTodosLists, requestsStatus.get, todosLists.length, token, userData.id]);

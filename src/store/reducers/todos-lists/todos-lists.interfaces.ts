@@ -7,15 +7,21 @@ export interface ITodo {
   id: string;
   label: string;
   state: ITodoState;
-  createdAt: number;
-  updatedAt?: number;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+/** Interface d'une todoList brut, ne contenant que le titre et la liste des todo */
+export interface IRawTodoList {
+  title: string;
+  list: string[];
 }
 
 export interface ITodosList {
   id: string;
   title: string;
-  createdAt: number;
-  updatedAt?: number;
+  createdAt: string;
+  updatedAt?: string;
   isFavorite: boolean;
   list: ITodo[];
   state: ITodoState;
@@ -26,8 +32,11 @@ export interface IFetchTodosListsPayload {
 }
 
 export interface IAddTodosListPayload {
-  userId: IUser["id"];
-  todosList: ITodosList;
+  token: string;
+  data: {
+    title: string;
+    list: string[];
+  };
 }
 
 export interface IDeleteTodosListPayload {

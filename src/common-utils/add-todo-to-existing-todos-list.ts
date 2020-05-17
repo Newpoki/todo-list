@@ -24,7 +24,7 @@ export const addTodoToExistingTodosList = (
     const updatedTodosList: ITodosList = {
       ...concernedTodosList,
       list: updatedList,
-      updatedAt: Date.now(),
+      updatedAt: new Date().toISOString(),
       state: getTodosListState(updatedList),
     };
 

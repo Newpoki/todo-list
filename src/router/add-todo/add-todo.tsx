@@ -5,10 +5,10 @@ import { RouteComponentProps } from "react-router-dom";
 
 import * as Styled from "./add-todo.styles";
 import { FinalFormInput, Footer } from "components";
-import { todoTitleValidator, checkIsEmpty, createTodosList, createTodo } from "common-utils";
+import { todoTitleValidator, checkIsEmpty, createId } from "common-utils";
 import { AddTodoTasksRenderer } from "./add-todo-tasks-renderer";
 import { useTodosLists, useUser } from "hooks";
-import { ITodo, IAddTodosListPayload } from "store";
+import { IAddTodosListPayload, IRawTodoList } from "store";
 
 interface IAddTodoForm {
   addTodoTitle: string;
@@ -16,6 +16,12 @@ interface IAddTodoForm {
 }
 
 type IAddTodoProps = RouteComponentProps;
+
+/** Interface d'un todo avant ajout dans la base de donnée */
+export interface ITempTodo {
+  id: string;
+  label: string;
+}
 
 const addTodoLabelNameAndId = "addTodoLabel";
 
@@ -26,19 +32,22 @@ const addTodoInitialValues: IAddTodoForm = {
 
 export const AddTodo = ({ history }: IAddTodoProps) => {
   const { addTodosList } = useTodosLists();
-  const { userData } = useUser();
-  const [tasks, updateTasks] = useState<ITodo[]>([]);
+  const { token } = useUser();
+  const [tasks, updateTasks] = useState<ITempTodo[]>([]);
 
   const onSubmit = useCallback(
     (form: IAddTodoForm) => {
-      const todosList = createTodosList(form.addTodoTitle, tasks);
-      const payload: IAddTodosListPayload = { userId: userData.id, todosList };
-      // TODO: Dispatch une action qui ajoute la todosList en bdd
+      const data: IRawTodoList = {
+        title: form.addTodoTitle,
+        list: tasks.map((rawTodo) => rawTodo.label),
+      };
+
+      const payload: IAddTodosListPayload = { token, data };
       // TODO: Déplacer la redirection dans le thunk qui fait l'ajout en bdd
       addTodosList(payload);
       history.push("/");
     },
-    [tasks, userData.id, addTodosList, history]
+    [tasks, token, addTodosList, history]
   );
 
   const handleAddNewTask = useCallback(
@@ -51,7 +60,11 @@ export const AddTodo = ({ history }: IAddTodoProps) => {
 
         // On vérifie car l'api form peut retourner undefined si le champ n'existe pas
         if (!checkIsEmpty(newTodoLabel)) {
-          const newTodo = createTodo(newTodoLabel);
+          const newTodo: ITempTodo = {
+            id: createId(Date.now()),
+            label: newTodoLabel,
+          };
+
           updateTasks([...tasks, newTodo]);
           form.change(addTodoLabelNameAndId, "");
         }

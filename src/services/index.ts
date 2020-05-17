@@ -6,7 +6,7 @@ export * from "./utils/is-success-response";
 
 /** Services */
 export * from "./get-todos-lists";
-export * from "./post-todos-lists";
+export * from "./post-todos-list";
 export * from "./deletes-todos-list";
 export * from "./post-todo";
 export * from "./delete-todo";
