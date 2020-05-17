@@ -1,11 +1,11 @@
 import React, { useCallback, MouseEvent } from "react";
-import { SkeletonLoader } from "components";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 
-import * as Styled from "./todos-list-content.styles";
-import { ITodosList, IUpdateTodoStatePayload, ITodoState, ITodo, IDeleteTodoPayload } from "store";
+import { SkeletonLoader } from "components";
+import { ITodosList, IUpdateTodoPayload, ITodo, IDeleteTodoPayload } from "store";
 import { useTodosLists, useUser } from "hooks";
+import * as Styled from "./todos-list-content.styles";
 
 interface ITodosListContentProps {
   isLoading: boolean;
@@ -14,20 +14,20 @@ interface ITodosListContentProps {
 
 export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProps) => {
   const { updateTodoState, deleteTodo } = useTodosLists();
-  const { userData, token } = useUser();
+  const { token } = useUser();
 
   const toggleTodosListState = useCallback(
-    (todosListId: ITodosList["id"], todoId: ITodo["id"], todoState: ITodoState) => {
-      const payload: IUpdateTodoStatePayload = {
-        userId: userData.id,
+    (todosListId: ITodosList["id"], todo: ITodo) => {
+      const payload: IUpdateTodoPayload = {
+        token,
         todosListId,
-        todoId,
-        newTodoState: todoState === "ON_GOING" ? "DONE" : "ON_GOING",
+        todoId: todo.id,
+        data: { state: todo.state === "ON_GOING" ? "DONE" : "ON_GOING" },
       };
 
       updateTodoState(payload);
     },
-    [updateTodoState, userData.id]
+    [token, updateTodoState]
   );
 
   const handleDeleteTodo = useCallback(
@@ -78,7 +78,7 @@ export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProp
             return (
               <Styled.TodoWrapper
                 key={todo.id}
-                onClick={() => toggleTodosListState(todosList.id, todo.id, todo.state)}
+                onClick={() => toggleTodosListState(todosList.id, todo)}
               >
                 <Styled.TodoStateIconWrapper state={todo.state}>
                   <CheckCircleOutlineIcon />

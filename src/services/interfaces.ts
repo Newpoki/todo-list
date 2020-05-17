@@ -1,12 +1,5 @@
 import { AxiosError } from "axios";
 
-export interface IOldServiceResponse<IData> {
-  data?: IData;
-  error?: {
-    code: number;
-  };
-}
-
 export interface ISuccessServiceResponse<IData> {
   data: IData;
 }

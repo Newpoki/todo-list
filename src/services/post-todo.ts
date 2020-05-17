@@ -20,7 +20,7 @@ export const postTodo = async ({
   data,
 }: IPostTodoInput): Promise<IServiceResponse<IPostTodoOutput>> => {
   const config: AxiosRequestConfig = { headers: { Authorization: `Bearer ${token}` } };
-  console.log(data);
+
   try {
     const addedTodo = await axios.post<ITodo>(
       `http://localhost/todolists/${todosListId}/todos`,
@@ -31,6 +31,7 @@ export const postTodo = async ({
     const response: IServiceResponse<IPostTodoOutput> = {
       data: { todo: addedTodo.data, todosListId },
     };
+
     return response;
   } catch (err) {
     const response: IServiceResponse<IPostTodoOutput> = { error: err.response };

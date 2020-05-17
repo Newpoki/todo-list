@@ -1,24 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
-  IOldServiceResponse,
   postTodosList,
   deleteTodosLists,
   postTodo,
   deleteTodo,
-  putTodoState,
+  putTodo,
   fetchTodosLists,
   IServiceResponse,
   isSuccessResponse,
   IPostTodoOutput,
   IDeleteTodoOutput,
+  IPutTodoOutput,
 } from "services";
 
 import {
   ITodosListsReducerState,
   ITodosList,
   IAddTodoPayload,
-  IUpdateTodoStatePayload,
+  IUpdateTodoPayload,
   IDeleteTodoPayload,
   IFetchTodosListsPayload as IGetTodosListsPayload,
   IAddTodosListPayload,
@@ -75,13 +75,13 @@ const deleteTodoRequest = createAsyncThunk<IServiceResponse<IDeleteTodoOutput>, 
   }
 );
 
-const updateTodoState = createAsyncThunk<
-  IOldServiceResponse<ITodosList[]>,
-  IUpdateTodoStatePayload
->("todosList/updateTodoState", async (payload) => {
-  const response = await putTodoState(payload);
-  return response;
-});
+const updateTodo = createAsyncThunk<IServiceResponse<IPutTodoOutput>, IUpdateTodoPayload>(
+  "todosList/updateTodo",
+  async (payload) => {
+    const response = await putTodo(payload);
+    return response;
+  }
+);
 
 export const todosLists = createSlice({
   name: "todosLists",
@@ -170,7 +170,7 @@ export const todosLists = createSlice({
     // DELETE TODO
     builder.addCase(deleteTodoRequest.fulfilled, (state: ITodosListsReducerState, { payload }) => {
       if (isSuccessResponse(payload)) {
-        const filteredTodosList = state.data.map((todosList) => {
+        const filteredTodosLists = state.data.map((todosList) => {
           if (todosList.id === payload.data.todosListId) {
             return {
               ...todosList,
@@ -181,7 +181,7 @@ export const todosLists = createSlice({
           }
         });
 
-        state.data = filteredTodosList;
+        state.data = filteredTodosLists;
         state.deleteRequestStatus = "SUCCESS";
       } else {
         state.deleteRequestStatus = "ERROR";
@@ -194,18 +194,34 @@ export const todosLists = createSlice({
       state.deleteRequestStatus = "ERROR";
     });
 
-    builder.addCase(updateTodoState.fulfilled, (state: ITodosListsReducerState, { payload }) => {
-      if (payload.data) {
-        state.data = payload.data;
+    // UPDATE TODO
+    builder.addCase(updateTodo.fulfilled, (state: ITodosListsReducerState, { payload }) => {
+      if (isSuccessResponse(payload)) {
+        const updatedTodosLists = state.data.map((todosList) => {
+          if (todosList.id === payload.data.todosListId) {
+            return {
+              ...todosList,
+              list: todosList.list.map((todo) => {
+                return todo.id === payload.data.todoId
+                  ? { ...todo, ...payload.data.updatedTodoPart }
+                  : todo;
+              }),
+            };
+          } else {
+            return todosList;
+          }
+        });
+
+        state.data = updatedTodosLists;
         state.putRequestStatus = "SUCCESS";
       } else {
         state.putRequestStatus = "ERROR";
       }
     });
-    builder.addCase(updateTodoState.pending, (state: ITodosListsReducerState) => {
+    builder.addCase(updateTodo.pending, (state: ITodosListsReducerState) => {
       state.putRequestStatus = "PENDING";
     });
-    builder.addCase(updateTodoState.rejected, (state: ITodosListsReducerState) => {
+    builder.addCase(updateTodo.rejected, (state: ITodosListsReducerState) => {
       state.putRequestStatus = "ERROR";
     });
   },
@@ -219,5 +235,5 @@ export const todosListsThunks = {
   deleteTodosList,
   addTodo,
   deleteTodoRequest,
-  updateTodoState,
+  updateTodo,
 };

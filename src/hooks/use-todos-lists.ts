@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  IUpdateTodoStatePayload,
+  IUpdateTodoPayload,
   IDeleteTodoPayload,
   IAddTodoPayload,
   getTodosLists,
@@ -57,8 +57,8 @@ export const useTodosLists = () => {
   );
 
   const updateTodoState = useCallback(
-    (payload: IUpdateTodoStatePayload) => {
-      dispatch(todosListsThunks.updateTodoState(payload));
+    (payload: IUpdateTodoPayload) => {
+      dispatch(todosListsThunks.updateTodo(payload));
     },
     [dispatch]
   );

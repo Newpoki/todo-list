@@ -1,5 +1,4 @@
 import { IAnyRequestStatus } from "services";
-import { IUser } from "../user/user.interfaces";
 
 export type ITodoState = "DONE" | "ON_GOING";
 
@@ -41,11 +40,11 @@ export interface IDeleteTodosListPayload {
   token: string;
 }
 
-export interface IUpdateTodoStatePayload {
-  userId: IUser["id"];
+export interface IUpdateTodoPayload {
   todosListId: ITodosList["id"];
   todoId: ITodo["id"];
-  newTodoState: ITodoState;
+  data: Partial<ITodo>;
+  token: string;
 }
 
 export interface IAddTodoPayload {
