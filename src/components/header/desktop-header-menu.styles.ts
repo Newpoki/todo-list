@@ -30,13 +30,16 @@ export const getDesktopHeaderMenuStyle = makeStyles(() =>
 
     logoutItem: {
       justifyContent: "center",
-    },
-
-    logoutLink: {
-      color: theme.colors.light000,
+      color: theme.colors.pink600,
       display: "flex",
       alignItems: "center",
     },
+
+    logoutItemText: {
+      color: theme.colors.light000,
+    },
+
+    logoutLink: {},
   })
 );
 export const Wrapper = styled.div`
@@ -53,11 +56,13 @@ export const AvatarWrapper = styled.div`
 export const Avatar = styled.img`
   width: 32px;
   height: 32px;
+  border-radius: 50%;
 `;
 
 export const AvatarFromMenuInfos = styled.img`
   width: 96px;
   height: 96px;
+  border-radius: 50%;
 `;
 
 export const DisplayNameAndEmailWrapper = styled.div`

@@ -20,6 +20,7 @@ import {
   IAddTodosListPayload,
   IDeleteTodosListPayload,
 } from "./todos-lists.interfaces";
+import { userActions } from "../user/user";
 
 export const todosListsInitialState: ITodosListsReducerState = {
   data: [],
@@ -82,6 +83,9 @@ export const todosLists = createSlice({
   initialState: todosListsInitialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(userActions.disconnect.type, () => {
+      return todosListsInitialState;
+    });
     builder.addCase(fetchTodosLists.fulfilled, (state: ITodosListsReducerState, { payload }) => {
       if (payload.data) {
         state.data = payload.data;

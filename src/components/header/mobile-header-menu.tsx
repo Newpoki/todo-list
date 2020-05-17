@@ -3,7 +3,6 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider } from "@ma
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
 import { IMobileHeaderMenuProps } from "./mobile-header-menu.interfaces";
-import { Link } from "../link/link";
 import * as Styled from "./mobile-header-menu.styles";
 
 /**
@@ -12,32 +11,32 @@ import * as Styled from "./mobile-header-menu.styles";
  * @param onClose - () => void - Callback qui ferme le menu
  * @param user - IUser - Utilisateur connecté
  */
-export const MobileHeaderMenu = memo(({ isOpen, onClose, user }: IMobileHeaderMenuProps) => {
-  const classes = Styled.getMobileHeaderMenuStyle();
+export const MobileHeaderMenu = memo(
+  ({ isOpen, onClose, user, onDisconnect }: IMobileHeaderMenuProps) => {
+    const classes = Styled.getMobileHeaderMenuStyle();
 
-  return (
-    <Drawer open={isOpen} onClose={onClose} PaperProps={{ className: classes.root }}>
-      <Styled.Wrapper>
-        <Styled.AvatarWrapper>
-          <Styled.Avatar src={user.image} alt="Your avatar" />
-          <Styled.DisplayName>{user.firstName}</Styled.DisplayName>
-          <Styled.Email>{user.email}</Styled.Email>
-        </Styled.AvatarWrapper>
+    return (
+      <Drawer open={isOpen} onClose={onClose} PaperProps={{ className: classes.root }}>
+        <Styled.Wrapper>
+          <Styled.AvatarWrapper>
+            <Styled.Avatar src={user.image} alt="Your avatar" />
+            <Styled.DisplayName>{user.firstName}</Styled.DisplayName>
+            <Styled.Email>{user.email}</Styled.Email>
+          </Styled.AvatarWrapper>
 
-        <List className={classes.list}>
-          <Styled.BottomLinksWrapper>
-            <Divider className={classes.divider} />
-            <ListItem onClick={onClose} className={classes.bottomListItem} button>
-              <Link to="/logout">
+          <List className={classes.list}>
+            <Styled.BottomLinksWrapper>
+              <Divider className={classes.divider} />
+              <ListItem onClick={onDisconnect} className={classes.logoutItem} button>
                 <ListItemIcon className={classes.logoutIcon}>
                   <PowerSettingsNewIcon />
                 </ListItemIcon>
-                <ListItemText>Déconnexion</ListItemText>
-              </Link>
-            </ListItem>
-          </Styled.BottomLinksWrapper>
-        </List>
-      </Styled.Wrapper>
-    </Drawer>
-  );
-});
+                <ListItemText className={classes.logoutItemText}>Déconnexion</ListItemText>
+              </ListItem>
+            </Styled.BottomLinksWrapper>
+          </List>
+        </Styled.Wrapper>
+      </Drawer>
+    );
+  }
+);

@@ -19,8 +19,15 @@ export const getMobileHeaderMenuStyle = makeStyles(() =>
       flexDirection: "column",
       padding: "0",
     },
-    bottomListItem: {
+    logoutItem: {
+      display: "flex",
       justifyContent: "center",
+      color: theme.colors.pink600,
+    },
+    logoutItemText: {
+      color: theme.colors.light000,
+      // Cancel le style qui fait que le texte prend toute la largeur disponible
+      flex: "initial",
     },
     logoutIcon: {
       minWidth: 0,
@@ -59,6 +66,7 @@ export const AvatarWrapper = styled.div`
 export const Avatar = styled.img`
   width: 100px;
   height: 100px;
+  border-radius: 50%;
 `;
 
 export const DisplayName = styled.p`

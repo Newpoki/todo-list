@@ -10,4 +10,6 @@ export interface IMobileHeaderMenuProps {
 
   /** Utilisateur connecté */
   user: IUser;
+
+  onDisconnect: () => void;
 }

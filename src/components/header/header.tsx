@@ -9,7 +9,7 @@ import { DesktopHeaderMenu } from "./desktop-header-menu";
 import { IHeaderProps } from "./header.interfaces";
 
 /** Header affiché sur les routes où l'utilisateur est connecté */
-export const Header = memo(({ user }: IHeaderProps) => {
+export const Header = memo(({ user, onDisconnect }: IHeaderProps) => {
   const materialTheme = useTheme();
   const classes = Styled.getHeaderStyle();
   const [isMobileMenuOpen, changeIsMobileMenuOpen] = useState(false);
@@ -44,12 +44,17 @@ export const Header = memo(({ user }: IHeaderProps) => {
           <Styled.AppName>
             <Link to="/">todo-bem</Link>
           </Styled.AppName>
-          {!isOnMobile && <DesktopHeaderMenu user={user} />}
+          {!isOnMobile && <DesktopHeaderMenu user={user} onDisconnect={onDisconnect} />}
         </Toolbar>
       </AppBar>
 
       {isOnMobile && (
-        <MobileHeaderMenu isOpen={isMobileMenuOpen} onClose={handleMobileMenuClose} user={user} />
+        <MobileHeaderMenu
+          isOpen={isMobileMenuOpen}
+          onClose={handleMobileMenuClose}
+          user={user}
+          onDisconnect={onDisconnect}
+        />
       )}
     </>
   );

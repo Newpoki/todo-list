@@ -2,7 +2,6 @@ import React, { useState, useCallback, MouseEvent, memo } from "react";
 import { Menu, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
-import { Link } from "../link/link";
 import * as Styled from "./desktop-header-menu.styles";
 import { IDesktopHeaderMenuProps } from "./desktop-header-menu.interfaces";
 
@@ -10,7 +9,7 @@ import { IDesktopHeaderMenuProps } from "./desktop-header-menu.interfaces";
  * Composant <MobileHeaderMenu /> qui affiche le menu de l'application en desktop
  * @param user - IUser - Utilisateur actuellement connecté
  */
-export const DesktopHeaderMenu = memo(({ user }: IDesktopHeaderMenuProps) => {
+export const DesktopHeaderMenu = memo(({ user, onDisconnect }: IDesktopHeaderMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const classes = Styled.getDesktopHeaderMenuStyle();
 
@@ -55,13 +54,11 @@ export const DesktopHeaderMenu = memo(({ user }: IDesktopHeaderMenuProps) => {
           </ListItem>
 
           <Divider className={classes.divider} />
-          <ListItem onClick={handleClose} className={classes.logoutItem}>
-            <Link to="/logout" className={classes.logoutLink}>
-              <ListItemIcon className={classes.logoutIcon}>
-                <PowerSettingsNewIcon />
-              </ListItemIcon>
-              <ListItemText>Déconnexion</ListItemText>
-            </Link>
+          <ListItem onClick={onDisconnect} className={classes.logoutItem} button>
+            <ListItemIcon className={classes.logoutIcon}>
+              <PowerSettingsNewIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.logoutItemText}>Déconnexion</ListItemText>
           </ListItem>
         </div>
       </Menu>

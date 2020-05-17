@@ -59,8 +59,8 @@ export const user = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    updateUser: (state, { payload }: { payload: IUser }) => {
-      state.data = payload;
+    disconnect: (state) => {
+      return userDefaultState;
     },
   },
   extraReducers: (builder) => {

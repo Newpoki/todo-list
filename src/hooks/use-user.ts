@@ -1,15 +1,20 @@
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useMemo, useCallback } from "react";
+
 import {
   getUserGetRequestStatus,
   getUserData,
   userThunks,
   IGetUserWithGoogleTokenPayload,
   getUserToken,
+  userActions,
 } from "store";
-import { useMemo, useCallback } from "react";
+import { localStorageManager } from "common-utils";
 
 export const useUser = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const userData = useSelector(getUserData);
   const getRequestStatus = useSelector(getUserGetRequestStatus);
@@ -22,13 +27,20 @@ export const useUser = () => {
     [dispatch]
   );
 
+  const handleDisconnection = useCallback(() => {
+    dispatch(userActions.disconnect());
+    localStorageManager.userToken.remove();
+    history.push("/login");
+  }, [dispatch, history]);
+
   return useMemo(
     () => ({
       getUserWithToken,
+      handleDisconnection,
       getRequestStatus,
       userData,
       token,
     }),
-    [getUserWithToken, getRequestStatus, userData, token]
+    [getUserWithToken, handleDisconnection, getRequestStatus, userData, token]
   );
 };

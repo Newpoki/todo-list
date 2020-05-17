@@ -10,11 +10,11 @@ import { Home } from "../home/home";
 import { Unknown } from "../unknown/unknown";
 
 export const App = () => {
-  const { userData } = useUser();
+  const { userData, handleDisconnection } = useUser();
 
   return (
     <>
-      <Header user={userData} />
+      <Header user={userData} onDisconnect={handleDisconnection} />
       <Switch>
         <OnlyPrivateRoute path="/add-todo" render={(props) => <AddTodo {...props} />} exact />
         <OnlyPrivateRoute
