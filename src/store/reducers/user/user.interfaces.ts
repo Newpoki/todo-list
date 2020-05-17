@@ -1,10 +1,5 @@
 import { IAnyRequestStatus } from "services";
 
-export interface IUserReducerState {
-  getRequestStatus: IAnyRequestStatus;
-  data: IUser;
-}
-
 export interface IUser {
   createdAt: string;
   email: string;
@@ -17,5 +12,10 @@ export interface IUser {
 }
 
 export interface IGetUserWithGoogleTokenPayload {
+  token: string;
+}
+export interface IUserReducerState {
+  getRequestStatus: IAnyRequestStatus;
+  data: IUser;
   token: string;
 }

@@ -6,8 +6,9 @@ import {
   IUser,
   IGetUserWithGoogleTokenPayload as IGetUserWithTokenPayload,
 } from "./user.interfaces";
+import { localStorageManager } from "common-utils";
 
-export const userInitialState: IUserReducerState = {
+const userDefaultState: IUserReducerState = {
   data: {
     createdAt: "",
     email: "",
@@ -18,22 +19,41 @@ export const userInitialState: IUserReducerState = {
     provider: "",
     updatedAt: "",
   },
+  token: "",
   getRequestStatus: "NOT_CALLED",
 };
 
-const getUserWithToken = createAsyncThunk<IServiceResponse<IUser>, IGetUserWithTokenPayload>(
-  "user/getUserWithToken",
-  async ({ token }: IGetUserWithTokenPayload) => {
-    const response = await fetchUserWithToken(token);
-    return response;
-  }
-);
+export const userInitialState: IUserReducerState = {
+  ...userDefaultState,
+  token: localStorageManager.userToken.get() ?? "",
+};
 
 function isSucessResponse<TData>(
   response: IServiceResponse<TData>
 ): response is ISuccessServiceResponse<TData> {
   return !!(response as ISuccessServiceResponse<TData>).data;
 }
+
+/**
+ * Thunk qui récupère les données d'un joueur associé via un token.
+ * Si le token est valide -> On le stock en local storage
+ * Si le token est invalide -> On le supprime du local storage et on redirige vers le login (seul cas d'erreur possible, il a expiré)
+ */
+const getUserWithToken = createAsyncThunk<IServiceResponse<IUser>, IGetUserWithTokenPayload>(
+  "user/getUserWithToken",
+  async ({ token }: IGetUserWithTokenPayload) => {
+    const response = await fetchUserWithToken(token);
+
+    if (isSucessResponse(response)) {
+      localStorageManager.userToken.set(token);
+    } else {
+      localStorageManager.userToken.remove();
+      window.location.href = "/login";
+    }
+
+    return response;
+  }
+);
 
 export const user = createSlice({
   name: "user",

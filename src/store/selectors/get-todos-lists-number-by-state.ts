@@ -1,4 +1,5 @@
-import { IStoreState, ITodoState } from "store";
+import { IStoreState } from "../store";
+import { ITodoState } from "../reducers/todos-lists/todos-lists.interfaces";
 
 export const getTodosListsNumberByState = (todosListState: ITodoState) => (
   state: IStoreState

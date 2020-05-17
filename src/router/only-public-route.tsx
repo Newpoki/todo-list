@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 
 import { useUser } from "hooks";

@@ -12,6 +12,9 @@ export * from "./form/rules/check-is-empty";
 export * from "./form/validators/todo-title";
 export * from "./form/validators/todo-content";
 
+// Local-storage utils
+export * from "./local-storage/local-storage-manager";
+
 // Autres utils
 export * from "./add-todo-to-existing-todos-list";
 export * from "./create-id";

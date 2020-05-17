@@ -4,6 +4,7 @@ import {
   getUserData,
   userThunks,
   IGetUserWithGoogleTokenPayload,
+  getUserToken,
 } from "store";
 import { useMemo, useCallback } from "react";
 
@@ -12,6 +13,7 @@ export const useUser = () => {
 
   const userData = useSelector(getUserData);
   const getRequestStatus = useSelector(getUserGetRequestStatus);
+  const token = useSelector(getUserToken);
 
   const getUserWithToken = useCallback(
     (payload: IGetUserWithGoogleTokenPayload) => {
@@ -25,7 +27,8 @@ export const useUser = () => {
       getUserWithToken,
       getRequestStatus,
       userData,
+      token,
     }),
-    [getUserWithToken, getRequestStatus, userData]
+    [getUserWithToken, getRequestStatus, userData, token]
   );
 };
