@@ -3,9 +3,10 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { SkeletonLoader } from "components";
-import { ITodosList, IUpdateTodoPayload, ITodo, IDeleteTodoPayload } from "store";
+import { ITodosList, ITodo } from "store";
 import { useTodosLists, useUser } from "hooks";
 import * as Styled from "./todos-list-content.styles";
+import { IPutTodosInput, IDeleteTodosInput } from "services";
 
 interface ITodosListContentProps {
   isLoading: boolean;
@@ -18,7 +19,7 @@ export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProp
 
   const toggleTodosListState = useCallback(
     (todosListId: ITodosList["id"], todo: ITodo) => {
-      const payload: IUpdateTodoPayload = {
+      const payload: IPutTodosInput = {
         token,
         todosListId,
         todoId: todo.id,
@@ -35,7 +36,7 @@ export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProp
       // Empêche le toggle du state du todo
       evt.stopPropagation();
 
-      const payload: IDeleteTodoPayload = {
+      const payload: IDeleteTodosInput = {
         token,
         todoId,
         todosListId,

@@ -11,9 +11,6 @@ export interface IUser {
   updatedAt: string;
 }
 
-export interface IGetUserWithGoogleTokenPayload {
-  token: string;
-}
 export interface IUserReducerState {
   getRequestStatus: IAnyRequestStatus;
   data: IUser;

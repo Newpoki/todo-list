@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { ITodosList } from "store";
 import { IServiceResponse } from "./interfaces";
 
-interface IFetchTodosListsInput {
+export interface IFetchTodosListsInput {
   token: string;
 }
 

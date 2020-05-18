@@ -26,39 +26,6 @@ export interface ITodosList {
   state: ITodoState;
 }
 
-export interface IFetchTodosListsPayload {
-  token: string;
-}
-
-export interface IAddTodosListPayload {
-  token: string;
-  data: IRawTodoList;
-}
-
-export interface IDeleteTodosListPayload {
-  todosListId: ITodosList["id"];
-  token: string;
-}
-
-export interface IUpdateTodoPayload {
-  todosListId: ITodosList["id"];
-  todoId: ITodo["id"];
-  data: Partial<ITodo>;
-  token: string;
-}
-
-export interface IAddTodoPayload {
-  todosListId: ITodosList["id"];
-  data: { label: string };
-  token: string;
-}
-
-export interface IDeleteTodoPayload {
-  token: string;
-  todosListId: ITodosList["id"];
-  todoId: ITodo["id"];
-}
-
 export interface ITodosListsReducerState {
   data: ITodosList[];
   getRequestStatus: IAnyRequestStatus;

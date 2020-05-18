@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { ITodosList, IRawTodoList } from "store";
 import { IServiceResponse } from "./interfaces";
 
-interface IPostTodosListInput {
+export interface IPostTodosListInput {
   token: string;
   data: IRawTodoList;
 }

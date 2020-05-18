@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { ITodosList, ITodo } from "store";
 import { IServiceResponse } from "./interfaces";
 
-interface IPutTodosInput {
+export interface IPutTodosInput {
   token: string;
   todosListId: ITodosList["id"];
   todoId: ITodo["id"];

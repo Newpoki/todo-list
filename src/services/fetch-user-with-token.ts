@@ -4,7 +4,13 @@ import axios from "axios";
 import { IUser } from "store";
 import { IServiceResponse } from "./interfaces";
 
-export const fetchUserWithToken = async (token: string): Promise<IServiceResponse<IUser>> => {
+export interface IFetchUserWithTokenInput {
+  token: string;
+}
+
+export const fetchUserWithToken = async ({
+  token,
+}: IFetchUserWithTokenInput): Promise<IServiceResponse<IUser>> => {
   const config: AxiosRequestConfig = { headers: { Authorization: `Bearer ${token}` } };
 
   try {

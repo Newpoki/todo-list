@@ -28,15 +28,17 @@ export const TodosList = ({ match }: ITodosListProps) => {
   const todosListId = parseInt(match.params.id, 10);
   const todosList = useSelector(getTodosListById(todosListId));
 
+  // TODO: Ajouter appel service getTodoList pour être sur d'avoir une todoList
+
   return (
     <Styled.Wrapper>
       <Styled.TodosListDateWrapper>
         <TodosListDate todosList={todosList} isLoading={isLoading} />
       </Styled.TodosListDateWrapper>
+
       <TodosListContent isLoading={isLoading} todosList={todosList} />
-      {/* TODO: Déplacer l'appel du composant dans le composant qui affiche le contenu pour ne plus
-      avoir id undefined */}
-      <TodosListAddTodoForm todosList={todosList} isLoading={isLoading} />
+
+      <TodosListAddTodoForm todosList={todosList} />
     </Styled.Wrapper>
   );
 };

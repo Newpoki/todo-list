@@ -12,18 +12,15 @@ import {
   IPostTodoOutput,
   IDeleteTodoOutput,
   IPutTodoOutput,
+  IFetchTodosListsInput,
+  IPostTodosListInput,
+  IDeleteTodosListsInput,
+  IPostTodoInput,
+  IPutTodosInput,
+  IDeleteTodosInput,
 } from "services";
 
-import {
-  ITodosListsReducerState,
-  ITodosList,
-  IAddTodoPayload,
-  IUpdateTodoPayload,
-  IDeleteTodoPayload,
-  IFetchTodosListsPayload as IGetTodosListsPayload,
-  IAddTodosListPayload,
-  IDeleteTodosListPayload,
-} from "./todos-lists.interfaces";
+import { ITodosListsReducerState, ITodosList } from "./todos-lists.interfaces";
 import { userActions } from "../user/user";
 import {
   addTodoToExistingTodosList,
@@ -39,7 +36,7 @@ export const todosListsInitialState: ITodosListsReducerState = {
   putRequestStatus: "NOT_CALLED",
 };
 
-const getTodosLists = createAsyncThunk<IServiceResponse<ITodosList[]>, IGetTodosListsPayload>(
+const getTodosLists = createAsyncThunk<IServiceResponse<ITodosList[]>, IFetchTodosListsInput>(
   "todosLists/fetchTodosLists",
   async (payload) => {
     const response = await fetchTodosLists(payload);
@@ -47,9 +44,9 @@ const getTodosLists = createAsyncThunk<IServiceResponse<ITodosList[]>, IGetTodos
   }
 );
 
-const addTodosList = createAsyncThunk<IServiceResponse<ITodosList>, IAddTodosListPayload>(
+const addTodosList = createAsyncThunk<IServiceResponse<ITodosList>, IPostTodosListInput>(
   "todosLists/addTodosList",
-  async (payload: IAddTodosListPayload) => {
+  async (payload: IPostTodosListInput) => {
     const response = await postTodosList(payload);
 
     return response;
@@ -58,13 +55,13 @@ const addTodosList = createAsyncThunk<IServiceResponse<ITodosList>, IAddTodosLis
 
 const deleteTodosList = createAsyncThunk<
   IServiceResponse<ITodosList["id"]>,
-  IDeleteTodosListPayload
+  IDeleteTodosListsInput
 >("todosLists/deleteTodosList", async (payload) => {
   const response = await deleteTodosLists(payload);
   return response;
 });
 
-const addTodo = createAsyncThunk<IServiceResponse<IPostTodoOutput>, IAddTodoPayload>(
+const addTodo = createAsyncThunk<IServiceResponse<IPostTodoOutput>, IPostTodoInput>(
   "todosLists/addTodo",
   async (payload) => {
     const response = await postTodo(payload);
@@ -72,7 +69,7 @@ const addTodo = createAsyncThunk<IServiceResponse<IPostTodoOutput>, IAddTodoPayl
   }
 );
 
-const deleteTodoRequest = createAsyncThunk<IServiceResponse<IDeleteTodoOutput>, IDeleteTodoPayload>(
+const deleteTodoRequest = createAsyncThunk<IServiceResponse<IDeleteTodoOutput>, IDeleteTodosInput>(
   "todosList/deleteTodoRequest",
   async (payload) => {
     const response = await deleteTodo(payload);
@@ -80,7 +77,7 @@ const deleteTodoRequest = createAsyncThunk<IServiceResponse<IDeleteTodoOutput>, 
   }
 );
 
-const updateTodo = createAsyncThunk<IServiceResponse<IPutTodoOutput>, IUpdateTodoPayload>(
+const updateTodo = createAsyncThunk<IServiceResponse<IPutTodoOutput>, IPutTodosInput>(
   "todosList/updateTodo",
   async (payload) => {
     const response = await putTodo(payload);

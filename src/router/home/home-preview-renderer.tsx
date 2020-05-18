@@ -5,7 +5,8 @@ import { useTodosLists, useUser } from "hooks";
 
 import * as Styled from "./home-preview-renderer.styles";
 import { TodosListPreview, SkeletonLoader } from "components";
-import { ITodosList, IDeleteTodosListPayload } from "store";
+import { ITodosList } from "store";
+import { IDeleteTodosListsInput } from "services";
 
 interface IHomePreviewRendererProps {
   history: RouteComponentProps["history"];
@@ -25,7 +26,7 @@ export const HomePreviewRenderer = ({ history, isLoading }: IHomePreviewRenderer
 
   const handleDeleteTodosList = useCallback(
     (todosListId: ITodosList["id"]) => {
-      const payload: IDeleteTodosListPayload = { todosListId, token };
+      const payload: IDeleteTodosListsInput = { todosListId, token };
       deleteTodosList(payload);
     },
     [deleteTodosList, token]

@@ -2,15 +2,9 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo, useCallback } from "react";
 
-import {
-  getUserGetRequestStatus,
-  getUserData,
-  userThunks,
-  IGetUserWithGoogleTokenPayload,
-  getUserToken,
-  userActions,
-} from "store";
+import { getUserGetRequestStatus, getUserData, userThunks, getUserToken, userActions } from "store";
 import { localStorageManager } from "common-utils";
+import { IFetchUserWithTokenInput } from "services";
 
 export const useUser = () => {
   const dispatch = useDispatch();
@@ -21,7 +15,7 @@ export const useUser = () => {
   const token = useSelector(getUserToken);
 
   const getUserWithToken = useCallback(
-    (payload: IGetUserWithGoogleTokenPayload) => {
+    (payload: IFetchUserWithTokenInput) => {
       dispatch(userThunks.getUserWithToken(payload));
     },
     [dispatch]

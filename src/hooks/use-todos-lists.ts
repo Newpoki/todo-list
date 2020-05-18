@@ -1,17 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  IUpdateTodoPayload,
-  IDeleteTodoPayload,
-  IAddTodoPayload,
   getTodosLists,
   getTodosListsNumberByState,
   getTodosListsRequestStatus,
   todosListsThunks,
-  IFetchTodosListsPayload,
-  IAddTodosListPayload,
-  IDeleteTodosListPayload,
 } from "store";
 import { useMemo, useCallback } from "react";
+import {
+  IFetchTodosListsInput,
+  IPostTodosListInput,
+  IDeleteTodosListsInput,
+  IPostTodoInput,
+  IPutTodosInput,
+  IDeleteTodosInput,
+} from "services";
 
 export const useTodosLists = () => {
   const dispatch = useDispatch();
@@ -22,42 +24,42 @@ export const useTodosLists = () => {
   const doneTodosListsNumber = useSelector(getTodosListsNumberByState("DONE"));
 
   const fetchTodosLists = useCallback(
-    (payload: IFetchTodosListsPayload) => {
+    (payload: IFetchTodosListsInput) => {
       dispatch(todosListsThunks.getTodosLists(payload));
     },
     [dispatch]
   );
 
   const addTodosList = useCallback(
-    (payload: IAddTodosListPayload) => {
+    (payload: IPostTodosListInput) => {
       dispatch(todosListsThunks.addTodosList(payload));
     },
     [dispatch]
   );
 
   const deleteTodosList = useCallback(
-    (payload: IDeleteTodosListPayload) => {
+    (payload: IDeleteTodosListsInput) => {
       dispatch(todosListsThunks.deleteTodosList(payload));
     },
     [dispatch]
   );
 
   const addTodo = useCallback(
-    (payload: IAddTodoPayload) => {
+    (payload: IPostTodoInput) => {
       dispatch(todosListsThunks.addTodo(payload));
     },
     [dispatch]
   );
 
   const deleteTodo = useCallback(
-    (payload: IDeleteTodoPayload) => {
+    (payload: IDeleteTodosInput) => {
       dispatch(todosListsThunks.deleteTodoRequest(payload));
     },
     [dispatch]
   );
 
   const updateTodoState = useCallback(
-    (payload: IUpdateTodoPayload) => {
+    (payload: IPutTodosInput) => {
       dispatch(todosListsThunks.updateTodo(payload));
     },
     [dispatch]

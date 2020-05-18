@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-import { ITodo, ITodosList, IAddTodoPayload } from "store";
+import { ITodo, ITodosList } from "store";
 import { IServiceResponse } from "./interfaces";
 
-interface IPostTodoInput {
+export interface IPostTodoInput {
   token: string;
-  data: IAddTodoPayload["data"];
+  data: { label: string };
   todosListId: ITodosList["id"];
 }
 

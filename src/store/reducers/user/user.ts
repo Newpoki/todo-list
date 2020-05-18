@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { fetchUserWithToken, IServiceResponse, isSuccessResponse } from "services";
 import {
-  IUserReducerState,
-  IUser,
-  IGetUserWithGoogleTokenPayload as IGetUserWithTokenPayload,
-} from "./user.interfaces";
+  fetchUserWithToken,
+  IServiceResponse,
+  isSuccessResponse,
+  IFetchUserWithTokenInput,
+} from "services";
+import { IUserReducerState, IUser } from "./user.interfaces";
 import { localStorageManager } from "common-utils";
 
 const userDefaultState: IUserReducerState = {
@@ -33,13 +34,13 @@ export const userInitialState: IUserReducerState = {
  * Si le token est valide -> On le stock en local storage
  * Si le token est invalide -> On le supprime du local storage et on redirige vers le login (seul cas d'erreur possible, il a expiré)
  */
-const getUserWithToken = createAsyncThunk<IServiceResponse<IUser>, IGetUserWithTokenPayload>(
+const getUserWithToken = createAsyncThunk<IServiceResponse<IUser>, IFetchUserWithTokenInput>(
   "user/getUserWithToken",
-  async ({ token }: IGetUserWithTokenPayload) => {
-    const response = await fetchUserWithToken(token);
+  async (payload: IFetchUserWithTokenInput) => {
+    const response = await fetchUserWithToken(payload);
 
     if (isSuccessResponse(response)) {
-      localStorageManager.userToken.set(token);
+      localStorageManager.userToken.set(payload.token);
     } else {
       localStorageManager.userToken.remove();
       window.location.href = "/login";

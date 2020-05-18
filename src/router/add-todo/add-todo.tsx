@@ -8,7 +8,8 @@ import { FinalFormInput, Footer } from "components";
 import { todoTitleValidator, checkIsEmpty, createId } from "common-utils";
 import { AddTodoTasksRenderer } from "./add-todo-tasks-renderer";
 import { useTodosLists, useUser } from "hooks";
-import { IAddTodosListPayload, IRawTodoList } from "store";
+import { IRawTodoList } from "store";
+import { IPostTodosListInput } from "services";
 
 interface IAddTodoForm {
   addTodoTitle: string;
@@ -42,7 +43,7 @@ export const AddTodo = ({ history }: IAddTodoProps) => {
         list: tasks.map((rawTodo) => rawTodo.label),
       };
 
-      const payload: IAddTodosListPayload = { token, data };
+      const payload: IPostTodosListInput = { token, data };
       // TODO: Déplacer la redirection dans le thunk qui fait l'ajout en bdd
       addTodosList(payload);
       history.push("/");
