@@ -37,7 +37,7 @@ export const putTodo = async ({
 
     return response;
   } catch (err) {
-    const response: IServiceResponse<IPutTodoOutput> = { error: err.response };
+    const response: IServiceResponse<IPutTodoOutput> = { error: err.response.data };
 
     return response;
   }

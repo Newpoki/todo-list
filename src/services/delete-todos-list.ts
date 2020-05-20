@@ -21,7 +21,7 @@ export const deleteTodosLists = async ({
 
     return response;
   } catch (err) {
-    const response: IServiceResponse<ITodosList["id"]> = { error: err.response };
+    const response: IServiceResponse<ITodosList["id"]> = { error: err.response.data };
 
     return response;
   }

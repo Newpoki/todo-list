@@ -17,10 +17,10 @@ export const fetchTodosLists = async ({
 
     const response: IServiceResponse<ITodosList[]> = { data: todosLists.data };
 
-    return response;
+    return Promise.resolve(response);
   } catch (err) {
-    const response: IServiceResponse<ITodosList[]> = { error: err.response };
+    const response: IServiceResponse<ITodosList[]> = { error: err.response.data };
 
-    return response;
+    return Promise.reject(response);
   }
 };

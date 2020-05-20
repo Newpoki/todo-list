@@ -19,3 +19,5 @@ const rootReducerState = {
 };
 
 export const store = configureStore({ reducer: rootReducerState });
+
+export type IAppDispatch = typeof store.dispatch;

@@ -26,7 +26,7 @@ export const postTodosList = async ({
     const response: IServiceResponse<ITodosList> = { data: addedTodosList.data };
     return response;
   } catch (err) {
-    const response: IServiceResponse<ITodosList> = { error: err.response };
+    const response: IServiceResponse<ITodosList> = { error: err.response.data };
     return response;
   }
 };
