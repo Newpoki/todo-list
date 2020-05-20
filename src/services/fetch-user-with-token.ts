@@ -8,6 +8,12 @@ export interface IFetchUserWithTokenInput {
   token: string;
 }
 
+// export const fetchUserWithToken = async ({ token }: IFetchUserWithTokenInput) => {
+//   const config: AxiosRequestConfig = { headers: { Authorization: `Bearer ${token}` } };
+
+//   return axios.get<IUser>("http://localhost/users/me", config);
+// };
+
 export const fetchUserWithToken = async ({
   token,
 }: IFetchUserWithTokenInput): Promise<IServiceResponse<IUser>> => {
@@ -18,10 +24,10 @@ export const fetchUserWithToken = async ({
 
     const response: IServiceResponse<IUser> = { data: user.data };
 
-    return response;
+    return Promise.resolve(response);
   } catch (err) {
-    const response: IServiceResponse<IUser> = { error: err.response };
+    const response: IServiceResponse<IUser> = { error: err.response.data };
 
-    return response;
+    return Promise.reject(response);
   }
 };

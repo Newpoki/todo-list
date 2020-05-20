@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createStore } from "@reduxjs/toolkit";
 
 import {
   fetchUserWithToken,
@@ -8,6 +8,7 @@ import {
 } from "services";
 import { IUserReducerState, IUser } from "./user.interfaces";
 import { localStorageManager } from "common-utils";
+import { IStoreState } from "../../store";
 
 const userDefaultState: IUserReducerState = {
   data: {
@@ -29,26 +30,29 @@ export const userInitialState: IUserReducerState = {
   token: localStorageManager.userToken.get() ?? "",
 };
 
+export type IStore = ReturnType<typeof createStore>;
+export type IRootState = ReturnType<IStore["getState"]>;
+export type IRootDispatch = IStore["dispatch"];
+
+export interface IThunkActionApi<TError = any> {
+  state: IStoreState;
+  dispatch: IRootDispatch;
+  rejectValue: TError;
+}
 /**
  * Thunk qui récupère les données d'un joueur associé via un token.
  * Si le token est valide -> On le stock en local storage
  * Si le token est invalide -> On le supprime du local storage et on redirige vers le login (seul cas d'erreur possible, il a expiré)
  */
-const getUserWithToken = createAsyncThunk<IServiceResponse<IUser>, IFetchUserWithTokenInput>(
-  "user/getUserWithToken",
-  async (payload: IFetchUserWithTokenInput) => {
-    const response = await fetchUserWithToken(payload);
+const getUserWithToken = createAsyncThunk<
+  IServiceResponse<IUser>,
+  IFetchUserWithTokenInput,
+  IThunkActionApi
+>("user/getUserWithToken", async (payload: IFetchUserWithTokenInput) => {
+  const response = await fetchUserWithToken(payload);
 
-    if (isSuccessResponse(response)) {
-      localStorageManager.userToken.set(payload.token);
-    } else {
-      localStorageManager.userToken.remove();
-      window.location.href = "/login";
-    }
-
-    return response;
-  }
-);
+  return response;
+});
 
 export const user = createSlice({
   name: "user",

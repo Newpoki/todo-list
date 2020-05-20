@@ -15,14 +15,21 @@ export const useUser = () => {
   const token = useSelector(getUserToken);
 
   const getUserWithToken = useCallback(
-    (payload: IFetchUserWithTokenInput) => {
-      dispatch(userThunks.getUserWithToken(payload));
+    async (payload: IFetchUserWithTokenInput) => {
+      try {
+        await dispatch<any>(userThunks.getUserWithToken(payload));
+        localStorageManager.userToken.set(payload.token);
+      } catch (err) {
+        localStorageManager.userToken.remove();
+        history.push("/login");
+      }
     },
-    [dispatch]
+    [dispatch, history]
   );
 
   const handleDisconnection = useCallback(() => {
     dispatch(userActions.disconnect());
+
     localStorageManager.userToken.remove();
     history.push("/login");
   }, [dispatch, history]);

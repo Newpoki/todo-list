@@ -5,15 +5,20 @@ import * as Styled from "./login.styles";
 import { RouteComponentProps } from "react-router-dom";
 import { useUser } from "hooks";
 
-export const Login = ({ history }: RouteComponentProps) => {
-  const { token, userData, getRequestStatus } = useUser();
+export const Login = ({ location }: RouteComponentProps<{ token: string }>) => {
+  const { userData, getRequestStatus, getUserWithToken } = useUser();
 
-  // Si on a un token dans le store, on redirige vers la page de succès qui requête les données du joueur
+  // const token = match.params.token;
+  const tokenFromUrl = location.pathname.split("/")[2];
+  const tokenFromStore = useUser().token;
+  const token = tokenFromUrl ?? tokenFromStore;
+
+  // Si on a un token dans l'url ou le store, on requête les données du joueur
   useEffect(() => {
     if (token && userData.id === 0 && getRequestStatus !== "ERROR") {
-      history.push(`/login/success/${token}`);
+      getUserWithToken({ token });
     }
-  }, [getRequestStatus, history, token, userData.id]);
+  }, [getRequestStatus, getUserWithToken, token, userData.id]);
 
   const handleGoogleRedirection = useCallback(() => {
     window.location.href = "http://localhost/google";
