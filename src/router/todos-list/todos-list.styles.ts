@@ -6,6 +6,7 @@ import * as StyledRouter from "../router.styles";
 export const Wrapper = styled(StyledRouter.Wrapper)`
   background: ${theme.colors.purpleToPink};
   padding: ${theme.spacing("XL-24")};
+  padding-bottom: 0;
 `;
 
 export const TodosListDateWrapper = styled.div`

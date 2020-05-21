@@ -3,14 +3,20 @@ import styled from "styled-components";
 
 import * as StyledRouter from "../router.styles";
 import * as StyledFooter from "components/footer/footer.styles";
+import * as StyledHomePreviewRender from "./home-preview-renderer.styles";
 
 export const Wrapper = styled(StyledRouter.Wrapper)`
   background: ${theme.colors.purpleToPink};
   padding: ${theme.spacing("XL-24")};
+  padding-bottom: 0;
 
   ${StyledFooter.ContentWrapper} {
     align-items: center;
     justify-content: center;
+  }
+
+  ${StyledHomePreviewRender.Wrapper} {
+    margin-bottom: ${theme.spacing("XXL-32")};
   }
 `;
 

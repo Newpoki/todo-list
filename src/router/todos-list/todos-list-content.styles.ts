@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  margin-bottom: ${theme.spacing("XL-24")};
 `;
 
 export const Title = styled.h1`
