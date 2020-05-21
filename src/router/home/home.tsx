@@ -7,9 +7,11 @@ import { HomeHeader } from "./home-header";
 import { HomePreviewRenderer } from "./home-preview-renderer";
 import * as Styled from "./home.styles";
 
-type IHomeProps = RouteComponentProps;
+interface IHomeProps extends RouteComponentProps {
+  isOnMobile: boolean;
+}
 
-export const Home = ({ history }: IHomeProps) => {
+export const Home = ({ history, isOnMobile }: IHomeProps) => {
   const { requestsStatus } = useTodosLists();
 
   const isLoading = requestsStatus.get === "PENDING" || requestsStatus.delete === "PENDING";
@@ -20,8 +22,8 @@ export const Home = ({ history }: IHomeProps) => {
 
   return (
     <Styled.Wrapper>
-      <HomeHeader isLoading={isLoading} />
-      <HomePreviewRenderer isLoading={isLoading} history={history} />
+      <HomeHeader isLoading={isLoading} isOnMobile={isOnMobile} />
+      <HomePreviewRenderer isLoading={isLoading} history={history} isOnMobile={isOnMobile} />
 
       {!isLoading && (
         <>

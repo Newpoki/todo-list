@@ -11,9 +11,14 @@ import { IDeleteTodosListsInput } from "services";
 interface IHomePreviewRendererProps {
   history: RouteComponentProps["history"];
   isLoading: boolean;
+  isOnMobile: boolean;
 }
 
-export const HomePreviewRenderer = ({ history, isLoading }: IHomePreviewRendererProps) => {
+export const HomePreviewRenderer = ({
+  history,
+  isLoading,
+  isOnMobile,
+}: IHomePreviewRendererProps) => {
   const { todosLists, deleteTodosList } = useTodosLists();
   const { token } = useUser();
 
@@ -59,16 +64,18 @@ export const HomePreviewRenderer = ({ history, isLoading }: IHomePreviewRenderer
   }
 
   return (
-    <Styled.Wrapper>
+    <Styled.Wrapper isOnMobile={isOnMobile}>
       {todosLists.map((todosList) => {
         return (
-          <ButtonBase onClick={() => handlePreviewClick(todosList.id)} key={todosList.id}>
-            <Styled.TodosListPreviewWrapper>
-              <Styled.TodosListPreviewContentWrapper>
-                <TodosListPreview {...todosList} onDeleteIconClick={handleDeleteTodosList} />
-              </Styled.TodosListPreviewContentWrapper>
-            </Styled.TodosListPreviewWrapper>
-          </ButtonBase>
+          <Styled.ButtonWrapper isOnMobile={isOnMobile}>
+            <ButtonBase onClick={() => handlePreviewClick(todosList.id)} key={todosList.id}>
+              <Styled.TodosListPreviewWrapper>
+                <Styled.TodosListPreviewContentWrapper>
+                  <TodosListPreview {...todosList} onDeleteIconClick={handleDeleteTodosList} />
+                </Styled.TodosListPreviewContentWrapper>
+              </Styled.TodosListPreviewWrapper>
+            </ButtonBase>
+          </Styled.ButtonWrapper>
         );
       })}
     </Styled.Wrapper>

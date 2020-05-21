@@ -8,10 +8,13 @@ import { TodosList } from "../todos-list/todos-list";
 import { Home } from "../home/home";
 import { Unknown } from "../unknown/unknown";
 import { AddTodosList } from "router/add-todos-list/add-todos-list";
+import { useMediaQuery, useTheme } from "@material-ui/core";
 
 export const App = () => {
   const { userData, handleDisconnection, token } = useUser();
   const { fetchTodosLists, todosLists, requestsStatus } = useTodosLists();
+  const materialTheme = useTheme();
+  const isOnMobile = useMediaQuery(materialTheme.breakpoints.down("sm"));
 
   useEffect(() => {
     if (todosLists.length === 0 && requestsStatus.get === "NOT_CALLED" && token !== "") {
@@ -29,7 +32,11 @@ export const App = () => {
           render={(props) => <TodosList {...props} />}
           exact
         />
-        <OnlyPrivateRoute path="/" render={(props) => <Home {...props} />} exact />
+        <OnlyPrivateRoute
+          path="/"
+          render={(props) => <Home {...props} isOnMobile={isOnMobile} />}
+          exact
+        />
         <Route component={Unknown} />
       </Switch>
     </>
