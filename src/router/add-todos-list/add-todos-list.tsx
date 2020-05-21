@@ -3,10 +3,10 @@ import { Form } from "react-final-form";
 import { FormApi } from "final-form";
 import { RouteComponentProps } from "react-router-dom";
 
-import * as Styled from "./add-todo.styles";
+import * as Styled from "./add-todos-list.styles";
 import { FinalFormInput, Footer } from "components";
 import { todoTitleValidator, checkIsEmpty, createId } from "common-utils";
-import { AddTodoTasksRenderer } from "./add-todo-tasks-renderer";
+import { AddTodoTasksRenderer } from "./add-todos-list-tasks-renderer";
 import { useTodosLists, useUser } from "hooks";
 import { IRawTodoList } from "store";
 import { IPostTodosListInput } from "services";
@@ -31,7 +31,7 @@ const addTodoInitialValues: IAddTodoForm = {
   [addTodoLabelNameAndId]: "",
 };
 
-export const AddTodo = ({ history }: IAddTodoProps) => {
+export const AddTodosList = ({ history }: IAddTodoProps) => {
   const { addTodosList } = useTodosLists();
   const { token } = useUser();
   const [tasks, updateTasks] = useState<ITempTodo[]>([]);

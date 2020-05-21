@@ -1,8 +1,8 @@
 import React from "react";
 
-import * as Styled from "./add-todo-tasks-renderer.styles";
+import * as Styled from "./add-todos-list-tasks-renderer.styles";
 import ClearIcon from "@material-ui/icons/Clear";
-import { ITempTodo } from "./add-todo";
+import { ITempTodo } from "./add-todos-list";
 
 interface IAddTodoTasksRendererProps {
   tasks: ITempTodo[];

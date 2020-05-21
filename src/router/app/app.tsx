@@ -4,10 +4,10 @@ import { Switch, Route } from "react-router-dom";
 import { useUser, useTodosLists } from "hooks";
 import { Header } from "components";
 import { OnlyPrivateRoute } from "../only-private-route";
-import { AddTodo } from "../add-todo/add-todo";
 import { TodosList } from "../todos-list/todos-list";
 import { Home } from "../home/home";
 import { Unknown } from "../unknown/unknown";
+import { AddTodosList } from "router/add-todos-list/add-todos-list";
 
 export const App = () => {
   const { userData, handleDisconnection, token } = useUser();
@@ -23,7 +23,7 @@ export const App = () => {
     <>
       <Header user={userData} onDisconnect={handleDisconnection} />
       <Switch>
-        <OnlyPrivateRoute path="/add-todo" render={(props) => <AddTodo {...props} />} exact />
+        <OnlyPrivateRoute path="/add-todo" render={(props) => <AddTodosList {...props} />} exact />
         <OnlyPrivateRoute
           path="/todos-list/:id"
           render={(props) => <TodosList {...props} />}
