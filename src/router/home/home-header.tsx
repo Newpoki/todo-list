@@ -10,11 +10,11 @@ interface IHomeHeaderProps {
 }
 
 export const HomeHeader = ({ isLoading, isOnMobile }: IHomeHeaderProps) => {
-  const { userData } = useUser();
+  const { user } = useUser();
 
   const { todosLists, onGoingTodosListsNumber, doneTodosListsNumber } = useTodosLists();
 
-  const { firstName } = userData;
+  const { firstName } = user;
 
   if (isLoading) {
     return (

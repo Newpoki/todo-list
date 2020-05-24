@@ -7,7 +7,7 @@ import { FormApi } from "final-form";
 
 import { FinalFormInput } from "components";
 import { todoContentValidator, scrollToBottom } from "common-utils";
-import { useTodosLists, useUser } from "hooks";
+import { useTodosLists, useAuth } from "hooks";
 import { ITodosList } from "store";
 import * as Styled from "./todos-list-add-todo-form.styles";
 import { IPostTodoInput } from "services";
@@ -30,7 +30,7 @@ const todosListAddTodoFormInitialValues: ITodosListAddTodoForm = {
 export const TodosListAddTodoForm = memo(({ todosList }: ITodosListAddTodoFormProps) => {
   const [isFormDisplayed, toggleFormDisplay] = useState(false);
   const { addTodo } = useTodosLists();
-  const { token } = useUser();
+  const { token } = useAuth();
 
   /** Ajoute le todo à la todosList et vide le champ du formulaire*/
   const handleAddTodo = useCallback(

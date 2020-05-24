@@ -4,6 +4,7 @@ import { useMediaQuery } from "@material-ui/core";
 
 import { Router } from "./router";
 import "react-toastify/dist/ReactToastify.css";
+import { Route, Switch } from "react-router-dom";
 
 const notificationDefaultOptions: ToastOptions = {
   position: "top-center",
@@ -26,7 +27,10 @@ export const App = React.memo(() => {
         style={{ width: isOnMobile ? "100%" : "auto" }}
         {...notificationDefaultOptions}
       />
-      <Router />
+      {/* <Router /> */}
+      <Switch>
+        <Route path="/" component={Router} />
+      </Switch>
     </>
   );
 });

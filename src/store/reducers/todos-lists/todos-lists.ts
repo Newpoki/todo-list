@@ -21,12 +21,12 @@ import {
 } from "services";
 
 import { ITodosListsReducerState, ITodosList } from "./todos-lists.interfaces";
-import { userActions } from "../user/user";
 import {
   addTodoToExistingTodosList,
   deleteTodoFromExistingTodosList,
   updateExistingTodo,
 } from "common-utils";
+import { authActions } from "../auth/auth";
 
 export const todosListsInitialState: ITodosListsReducerState = {
   data: [],
@@ -91,7 +91,7 @@ export const todosLists = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     // DECONNEXION UTILISATEUR
-    builder.addCase(userActions.disconnect.type, () => {
+    builder.addCase(authActions.disconnect.type, () => {
       return todosListsInitialState;
     });
 

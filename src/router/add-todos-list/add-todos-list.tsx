@@ -7,7 +7,7 @@ import * as Styled from "./add-todos-list.styles";
 import { FinalFormInput, Footer } from "components";
 import { todoTitleValidator, checkIsEmpty, createId } from "common-utils";
 import { AddTodoTasksRenderer } from "./add-todos-list-tasks-renderer";
-import { useTodosLists, useUser } from "hooks";
+import { useTodosLists, useAuth } from "hooks";
 import { IRawTodoList } from "store";
 import { IPostTodosListInput } from "services";
 
@@ -33,7 +33,7 @@ const addTodoInitialValues: IAddTodoForm = {
 
 export const AddTodosList = ({ history }: IAddTodoProps) => {
   const { addTodosList } = useTodosLists();
-  const { token } = useUser();
+  const { token } = useAuth();
   const [tasks, updateTasks] = useState<ITempTodo[]>([]);
 
   const onSubmit = useCallback(

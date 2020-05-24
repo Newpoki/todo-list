@@ -7,9 +7,8 @@ import {
   IFetchUserWithTokenInput,
 } from "services";
 import { IUserReducerState, IUser } from "./user.interfaces";
-import { localStorageManager } from "common-utils";
 
-const userDefaultState: IUserReducerState = {
+const userInitialState: IUserReducerState = {
   data: {
     createdAt: "",
     email: "",
@@ -20,13 +19,7 @@ const userDefaultState: IUserReducerState = {
     provider: "",
     updatedAt: "",
   },
-  token: "",
   getRequestStatus: "NOT_CALLED",
-};
-
-export const userInitialState: IUserReducerState = {
-  ...userDefaultState,
-  token: localStorageManager.userToken.get() ?? "",
 };
 
 export type IStore = ReturnType<typeof createStore>;
@@ -49,15 +42,10 @@ const getUserWithToken = createAsyncThunk<IServiceResponse<IUser>, IFetchUserWit
 export const user = createSlice({
   name: "user",
   initialState: userInitialState,
-  reducers: {
-    disconnect: () => {
-      return userDefaultState;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUserWithToken.fulfilled, (state: IUserReducerState, action) => {
       if (isSuccessResponse(action.payload)) {
-        state.token = action.meta.arg.token;
         state.data = action.payload.data;
         state.getRequestStatus = "SUCCESS";
       }

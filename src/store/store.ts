@@ -5,15 +5,19 @@ import {
   ITodosListsReducerState,
   userReducer,
   todosListsReducer,
+  IAuthReducerState,
+  authReducer,
 } from "./reducers";
 
 /** Interface du state du store de l'application */
 export interface IStoreState {
+  auth: IAuthReducerState;
   todosLists: ITodosListsReducerState;
   user: IUserReducerState;
 }
 
 const rootReducerState = {
+  auth: authReducer,
   todosLists: todosListsReducer,
   user: userReducer,
 };

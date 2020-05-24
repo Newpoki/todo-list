@@ -14,5 +14,4 @@ export interface IUser {
 export interface IUserReducerState {
   getRequestStatus: IAnyRequestStatus;
   data: IUser;
-  token: string;
 }

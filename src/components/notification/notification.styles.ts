@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
+  margin-right: ${theme.spacing("S-12")};
 `;
 
 export const IconWrapper = styled.div`

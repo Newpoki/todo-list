@@ -4,7 +4,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import { SkeletonLoader } from "components";
 import { ITodosList, ITodo } from "store";
-import { useTodosLists, useUser } from "hooks";
+import { useTodosLists, useAuth } from "hooks";
 import * as Styled from "./todos-list-content.styles";
 import { IPutTodosInput, IDeleteTodosInput } from "services";
 
@@ -15,7 +15,7 @@ interface ITodosListContentProps {
 
 export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProps) => {
   const { updateTodoState, deleteTodo } = useTodosLists();
-  const { token } = useUser();
+  const { token } = useAuth();
 
   const toggleTodosListState = useCallback(
     (todosListId: ITodosList["id"], todo: ITodo) => {

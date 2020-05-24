@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { ButtonBase } from "@material-ui/core";
-import { useTodosLists, useUser } from "hooks";
+import { useTodosLists, useAuth } from "hooks";
 
 import * as Styled from "./home-preview-renderer.styles";
 import { TodosListPreview, SkeletonLoader } from "components";
@@ -20,7 +20,7 @@ export const HomePreviewRenderer = ({
   isOnMobile,
 }: IHomePreviewRendererProps) => {
   const { todosLists, deleteTodosList } = useTodosLists();
-  const { token } = useUser();
+  const { token } = useAuth();
 
   const handlePreviewClick = useCallback(
     (todosListId: ITodosList["id"]) => {

@@ -1,19 +1,18 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
 
+import { useAuth } from "hooks";
+import { NotAuth } from "./not_auth/not_auth";
+import { MustAuth } from "./must_auth/must_auth";
 import { App } from "./app/app";
-import { OnlyPrivateRoute } from "./only-private-route";
-import { OnlyPublicRoute } from "./only-public-route";
-import { Login } from "./login/login";
-import { Unknown } from "./unknown/unknown";
 
-export const Router = () => {
+export const Router = (): JSX.Element => {
+  const { state } = useAuth();
+
   return (
-    <Switch>
-      <OnlyPublicRoute path="/login" render={(props) => <Login {...props} />} />
-
-      <OnlyPrivateRoute path="/" render={(props) => <App />} />
-      <Route component={Unknown} />
-    </Switch>
+    <>
+      {state === "NOT_AUTH" && <NotAuth />}
+      {state === "MUST_AUTH" && <MustAuth />}
+      {state === "AUTH" && <App />}
+    </>
   );
 };
