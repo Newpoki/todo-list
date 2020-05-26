@@ -1,6 +1,6 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
 
-import { SkeletonLoader } from "components";
 import * as Styled from "./home-header.styles";
 import { useUser, useTodosLists } from "hooks";
 
@@ -16,33 +16,33 @@ export const HomeHeader = ({ isLoading, isOnMobile }: IHomeHeaderProps) => {
 
   const { firstName } = user;
 
-  if (isLoading) {
-    return (
-      <Styled.Wrapper isOnMobile={isOnMobile}>
-        <Styled.Title isOnMobile={isOnMobile}>
-          <SkeletonLoader width="70%" />
-        </Styled.Title>
-
-        <Styled.TotalTodosListsNumber isOnMobile={isOnMobile}>
-          <SkeletonLoader width="40%" />
-        </Styled.TotalTodosListsNumber>
-
-        <Styled.TotalTodosListsNumber isOnMobile={isOnMobile}>
-          <SkeletonLoader width="40%" />
-        </Styled.TotalTodosListsNumber>
-      </Styled.Wrapper>
-    );
-  }
+  if (todosLists.length === 0 && !isLoading) return null;
 
   return (
     <Styled.Wrapper isOnMobile={isOnMobile}>
-      <Styled.Title isOnMobile={isOnMobile}>Hello {firstName.split(" ")[0]}</Styled.Title>
-
-      {todosLists.length > 0 && (
+      {isLoading && (
         <>
+          <Styled.Title isOnMobile={isOnMobile}>
+            <Skeleton width={isOnMobile ? "50%" : "400px"} />
+          </Styled.Title>
+
+          <Styled.TotalTodosListsNumber isOnMobile={isOnMobile}>
+            <Skeleton width={isOnMobile ? "40%" : "200px"} />
+          </Styled.TotalTodosListsNumber>
+
+          <Styled.TotalTodosListsNumber isOnMobile={isOnMobile}>
+            <Skeleton width={isOnMobile ? "40%" : "200px"} />
+          </Styled.TotalTodosListsNumber>
+        </>
+      )}
+
+      {todosLists.length > 0 && !isLoading && (
+        <>
+          <Styled.Title isOnMobile={isOnMobile}>Hello {firstName.split(" ")[0]}</Styled.Title>
           <Styled.TotalTodosListsNumber isOnMobile={isOnMobile}>
             <strong>{onGoingTodosListsNumber} </strong>
             {onGoingTodosListsNumber > 1 ? "listes en cours" : "liste en cours"}
+            )}
           </Styled.TotalTodosListsNumber>
 
           <Styled.TotalTodosListsNumber isOnMobile={isOnMobile}>

@@ -1,10 +1,10 @@
 import React from "react";
 
-import { SkeletonLoader } from "components";
 import { ITodosList } from "store";
 import { formatToFrDate } from "common-utils";
 import * as Styled from "./todos-list-date.styles";
 import { getDateData } from "./utils/get-date-data";
+import Skeleton from "react-loading-skeleton";
 
 interface ITodosListDateProps {
   todosList?: ITodosList;
@@ -18,21 +18,21 @@ export const TodosListDate = ({ todosList, isLoading }: ITodosListDateProps) => 
         <Styled.DateWrapper>
           <Styled.DayNumberMonthYearWrapper>
             <Styled.DayNumber>
-              <SkeletonLoader width="50px" />
+              <Skeleton width="50px" />
             </Styled.DayNumber>
             <Styled.MonthYearWrapper>
               <Styled.Month>
-                <SkeletonLoader width="50px" />
+                <Skeleton width="50px" />
               </Styled.Month>
               <Styled.Year>
-                <SkeletonLoader />
+                <Skeleton />
               </Styled.Year>
             </Styled.MonthYearWrapper>
           </Styled.DayNumberMonthYearWrapper>
         </Styled.DateWrapper>
 
         <Styled.UpdatedAt isDisplayed={false}>
-          <SkeletonLoader width="70%" />
+          <Skeleton width="70%" />
         </Styled.UpdatedAt>
       </Styled.Wrapper>
     );

@@ -5,9 +5,9 @@ export const GlobalStyles = createGlobalStyle`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    flex: 1;
   }
 
-  min-height: 100vh;
 
   body {
     margin: 0;

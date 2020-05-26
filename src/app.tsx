@@ -5,6 +5,9 @@ import { useMediaQuery } from "@material-ui/core";
 import { Router } from "./router";
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch } from "react-router-dom";
+import * as Styled from "./app.styles";
+import { theme } from "theme";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const notificationDefaultOptions: ToastOptions = {
   position: "top-center",
@@ -22,15 +25,16 @@ export const App = React.memo(() => {
   const isOnMobile = useMediaQuery("(max-width: 960px)");
 
   return (
-    <>
-      <ToastContainer
-        style={{ width: isOnMobile ? "100%" : "auto" }}
-        {...notificationDefaultOptions}
-      />
-      {/* <Router /> */}
-      <Switch>
-        <Route path="/" component={Router} />
-      </Switch>
-    </>
+    <SkeletonTheme color={theme.colors.light300} highlightColor={theme.colors.pink600}>
+      <Styled.Wrapper>
+        <ToastContainer
+          style={{ width: isOnMobile ? "100%" : "auto" }}
+          {...notificationDefaultOptions}
+        />
+        <Switch>
+          <Route path="/" component={Router} />
+        </Switch>
+      </Styled.Wrapper>
+    </SkeletonTheme>
   );
 });

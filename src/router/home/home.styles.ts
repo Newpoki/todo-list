@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import * as StyledRouter from "../router.styles";
 import * as StyledFooter from "components/footer/footer.styles";
-import * as StyledHomePreviewRender from "./home-preview-renderer.styles";
 
 export const Wrapper = styled(StyledRouter.Wrapper)`
   background: ${theme.colors.purpleToPink};
@@ -17,10 +16,6 @@ export const Wrapper = styled(StyledRouter.Wrapper)`
 
   ${StyledFooter.Wrapper} {
     background-color: ${theme.colors.light700};
-  }
-
-  ${StyledHomePreviewRender.Wrapper} {
-    margin-bottom: ${theme.spacing("XXL-32")};
   }
 `;
 

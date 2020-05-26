@@ -5,7 +5,9 @@ import { theme } from "theme";
 const todoListPreviewMaxHeight = "150px";
 const todoListPreviewPadding = theme.spacing("XS-8");
 
-export const Wrapper = styled.div<{ isOnMobile: boolean }>`
+export const Wrapper = styled.div<{ isOnMobile: boolean; isLoadingEndedAndHasNoContent: boolean }>`
+  margin-bottom: ${theme.spacing("XXL-32")};
+
   ${({ isOnMobile }) =>
     !isOnMobile &&
     css`
@@ -13,6 +15,15 @@ export const Wrapper = styled.div<{ isOnMobile: boolean }>`
       align-items: flex-start;
       flex-wrap: wrap;
       justify-content: space-between;
+    `};
+
+  ${({ isLoadingEndedAndHasNoContent }) =>
+    isLoadingEndedAndHasNoContent &&
+    css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
     `};
 `;
 
@@ -29,6 +40,7 @@ export const ButtonWrapper = styled.div<{ isOnMobile: boolean }>`
   margin-bottom: ${theme.spacing("M-16")};
   /* Permet de changer la couleur du ripple effect */
   color: ${theme.colors.pink600};
+  height: ${todoListPreviewMaxHeight};
 
   .MuiButtonBase-root {
     text-align: left;
@@ -48,7 +60,6 @@ export const ButtonWrapper = styled.div<{ isOnMobile: boolean }>`
 export const TodosListPreviewWrapper = styled.div`
   background-color: ${theme.colors.light000};
   border-radius: 4px;
-  height: ${todoListPreviewMaxHeight};
   padding: ${todoListPreviewPadding};
   width: 100%;
 `;

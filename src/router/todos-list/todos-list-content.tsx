@@ -2,11 +2,11 @@ import React, { useCallback, MouseEvent } from "react";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CloseIcon from "@material-ui/icons/Close";
 
-import { SkeletonLoader } from "components";
 import { ITodosList, ITodo } from "store";
 import { useTodosLists, useAuth } from "hooks";
 import * as Styled from "./todos-list-content.styles";
 import { IPutTodosInput, IDeleteTodosInput } from "services";
+import Skeleton from "react-loading-skeleton";
 
 interface ITodosListContentProps {
   isLoading: boolean;
@@ -50,9 +50,9 @@ export const TodosListContent = ({ isLoading, todosList }: ITodosListContentProp
     return (
       <Styled.Wrapper style={{ lineHeight: 2.5 }}>
         <Styled.Title>
-          <SkeletonLoader width="60%" height="30px" />
+          <Skeleton width="60%" height="30px" />
         </Styled.Title>
-        <SkeletonLoader count={10} height="20px" />
+        <Skeleton count={10} height="20px" />
       </Styled.Wrapper>
     );
   }

@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 import { theme } from "theme";
 
-export const Wrapper = styled.header<{ isOnMobile: boolean }>`
+export const Wrapper = styled.div<{ isOnMobile: boolean }>`
   margin-bottom: ${theme.spacing("L-20")};
   display: flex;
   flex-direction: column;
@@ -10,6 +10,7 @@ export const Wrapper = styled.header<{ isOnMobile: boolean }>`
   ${({ isOnMobile }) =>
     !isOnMobile &&
     css`
+      margin: 0 auto;
       align-items: center;
       margin-bottom: ${theme.spacing("3XL-40")};
     `}
@@ -27,6 +28,7 @@ export const Title = styled.h1<{ isOnMobile: boolean }>`
     !isOnMobile &&
     css`
       font-size: 40px;
+      text-align: center;
     `}
 `;
 
@@ -45,5 +47,6 @@ export const TotalTodosListsNumber = styled.h2<{ isOnMobile: boolean }>`
     !isOnMobile &&
     css`
       font-size: 20px;
+      text-align: center;
     `}
 `;
